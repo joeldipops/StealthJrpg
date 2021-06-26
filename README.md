@@ -15,21 +15,32 @@ This is a stealth JRPG where the goal of turn-based battles is to sneak past or 
 - All party member's Willpower (WIL) reduced to 0
 - All members inflicted with CAUGHT status. 
 
+# Progression
+## Skill Trees
+- Each party member has two main job branches, there may be much shorter branches here and there.
+- Some smaller branches will be locked behind items, so sort of a combination of FF IX and X
+  - For example, "Hack Cameras" may initially only be available when you have an item equipped.  But if you reach it in your skill tree and have the item available, you can then learn it permanently.
+
+
 # Party Members
 ## Little Kid
+Job Branches: Thief/Stealth, Hacker
 - Highest Stealth
 - Learns skills like Vanish
 - Probably best at dealing with Cameras / Robots or whatever
 - Out of combat, can crawl through vents 'n that.
 
 ## Teenager.
+Job Branches: Healer, Ranged
 - Highest Dexterity
 - Gets skills affecting enemies at range such as Throw.
 
 ## Mother
+Job Branches: Tank, Buffs 
 - Let's give her best Speed and Highest Willpower.  Probably plays the role of tank??
 
 ## Father
+Job Branches: Saboteur, Fighter
 - Only party member able to really fight head-on
 - Bit of a glass cannon
 - Maybe he can also do some AOE effects that others can't (I'm thinking he has the strength to move heavy tables and stuff like that for barricades, or bust open doors or something)
