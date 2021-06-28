@@ -7,6 +7,12 @@ Free your siblings/parents, escape the facility and eventually put a stop to wha
 
 This is a stealth JRPG where the goal of turn-based battles is to sneak past or quietly disable enemies rather than attacking them head on with axes, gun-blades and fists.
 
+# Battle Screen
+
+- Ring of 8 tiles, plus 1 in the centre.  
+- Any number of mobs can occupy each tile.
+- Relative positions within a tile will be determined by order enterted and direction entered from.
+
 # Win Conditions
 - Reduce all Enemies Awareness (AWR) or Suspicion (SUS) to 0
 - Occasionally, have all party members reach a certain tile.
