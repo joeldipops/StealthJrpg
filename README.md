@@ -84,32 +84,50 @@ Determines turn order
 Which tile you occupy
 
 # Skills
+## Active Skills
 
-## Move
+### Use
+Perform some environment specific action like flicking a switch. 
+
+### Move
 - Move to an adjacent tile
 - Raise suspicion of enemies within certain range
 
-## Hide
+### Hide
 - Buffs Stealth
 
-## Vanish 
+### Vanish 
 - Gives Hidden status
 
-## Distract
+## Disable
+Lowers AWR of Electronic mobs when on same tile.
+
+### Distract
 - Raise enemies' SUS and cause their direction to change towards you.
 
-## Throw
+### Throw
 - Raise enemies' SUS but cause their direction to change to wherever you choose.
 
-## Advanced forms of the previous 2 that cause the enemies to move as well.
-
+### Advanced forms of the previous 2 that cause the enemies to move as well.
 
 (basic heals)
-## Focus
+### Focus
 - Restores own WIL but can raise SUS of nearby enemies.
 
-## Rally
+### Rally
 - Restores WIL of nearby PCs but can raise SUS of nearby enemies.
+
+## Struggle Skills
+Can only be used when in the Caught Status and only against the mob that caught you
+
+### Scream
+Inflicts DEAFENED with chance to be freed.
+
+### Bite
+Lowers AWR with chance to be freed.
+
+## Passive Skills
+Exist
 
 # Conditions
 
@@ -134,6 +152,18 @@ Can act more/less often
 
 ## Distracted
 May be unable to act or use certain skills on a given turn
+
+
+# Gameplay Outline
+
+## Prologue
+1. You start out as Little Kid alone
+2. Over a few tutorial fights build up Move, Hide, Vanish and Disable skills.
+3. Mostly fighting stationary Cameras, a Camera Drone here and some Rats for Training.
+4. First miniboss has your first Human enemy as well as a bunch of Cameras.  Some USE action is required to dispense with the human.
+5. Soon after you acquire the Distract skill, find Teenager and enter your first boss fight.
+  - Teenager starts off CAUGHT, and you are introduced to Struggle Skills.
+  - Will also need to use Distract to win  
 
 
 
