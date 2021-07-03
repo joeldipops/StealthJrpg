@@ -111,8 +111,12 @@ Lowers AWR of Electronic mobs when on same tile.
 ### Distract
 - Raise enemies' SUS and cause their direction to change towards you.
 
-### Throw
+### Throw Stone
 - Raise enemies' SUS but cause their direction to change to wherever you choose.
+
+### Throw (Item)
+- Certain thrown consumables will have different effects on enemies.
+- eg. Throw (Hack Dart) - allows a party member to use Disable (and other hacking skills?) on any enemies with Hack Dart's attached.
 
 ### Advanced forms of the previous 2 that cause the enemies to move as well.
 
