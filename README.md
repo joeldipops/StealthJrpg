@@ -10,6 +10,8 @@ This is a stealth JRPG where the goal of turn-based battles is to sneak past or 
 # Battle Screen
 
 - Ring of 8 tiles, plus 1 in the centre.  
+- It takes 2 moves to get to and from the middle tile
+- All other tiles are 1 move apart.
 - Any number of mobs can occupy each tile.
 - Relative positions within a tile will be determined by order enterted and direction entered from.
 
@@ -55,7 +57,10 @@ Job Branches: Saboteur, Fighter
 # Stats
 ## PC Stats
 ### Willpower 
-Essentially HP, but can be used to pay for skills as well. 
+Essentially HP, but can be used to pay for skills when you are out of Stamina
+
+### Stamina
+Used to pay for skills. Gradually regenerates.
 
 ## Enemy Stats
 ### Suspicion
