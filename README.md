@@ -249,13 +249,29 @@ All these areas are hard-locked except for *1.D Disused Corridor* which you'll b
 - Teen joins before the fight, but starts off CAUGHT and must use *Struggle Skills* before being able to help take out the enemies
 - There are some Items around the fight that can be USEd to help too.
 
-
-
 # Enemies
 
+## Rat
+
+### Skills
+- Nip: Uses when suspicious. Moves up to 2 spaces, minor willpower damage
+
 ## Camera
+- Vulnerable to HACKING skills.
+- Cannot Move.
+
+### Skills
+- Rotate
+- Summon Drone: Occurs when suspicion is max.
+- Flash: Affects whatever is in direction, Lowers target willpower
 
 ## Camera Drone
+- Vulnerable to HACKING skills.
+
+### Skills
+- Deploy Net: range of 1, low chance to inflict CAUGHT
+- Move: Move up to two spaces.
+- Trap: range of 0, high chance to inflict CAUGHT
 
 ## Broken Camera
 
