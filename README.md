@@ -127,10 +127,13 @@ Lowers AWR of Electronic mobs when on same tile.
 
 (basic heals)
 ### Focus
-- Restores own WIL but can raise SUS of nearby enemies.
+- Restores own WIL
 
 ### Rally
 - Restores WIL of nearby PCs but can raise SUS of nearby enemies.
+
+### Meditate
+- Restores WIL and STM
 
 ## Struggle Skills
 Can only be used when in the Caught Status and only against the mob that caught you
@@ -140,6 +143,16 @@ Inflicts DEAFENED with chance to be freed.
 
 ### Bite
 Lowers AWR with chance to be freed.
+
+### Martyr
+- Own WIL drops to 0
+- Captor's AWR and SUS is lowered
+- All allies WIL is restored
+
+### Martyr+
+- Own WIL drops to 0
+- Gets OUT status, 
+- WIL and STM of allies is completely replenished
 
 ## Passive Skills
 Exist
@@ -161,6 +174,9 @@ Also lowers max awareness, and stacks.
 - When willpower at 0
 - Unable to act
 - If all party members CAUGHT or DOWN, game over.
+
+## Out
+- Can not act or be targeted.
 
 ## Quick/Slow
 Can act more/less often
