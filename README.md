@@ -15,7 +15,7 @@ This is a stealth JRPG where the goal of turn-based battles is to sneak past or 
 - It takes 2 moves to get to and from the middle tile
 - All other tiles are 1 move apart.
 - Any number of mobs can occupy each tile.
-- Relative positions within a tile will be determined by order enterted and direction entered from.
+- Relative positions within a tile will be determined by order entered and direction entered from.
 
 # Win Conditions
 - Reduce all Enemies Awareness (AWR) or Suspicion (SUS) to 0
@@ -68,12 +68,14 @@ Used to pay for skills. Gradually regenerates.
 ### Suspicion
 When at max, enemies will start to engage directly, dealing significant WIL damage and trying to inflict CAUGHT
 When at 0, enemies will be idle.
+Thinking that there might be several suspcion states eg Patrolling (as a range of suspicion), Alert and Hunting
 
 ### Awareness
 When at 0, enemies are out of the encounter
 
 ### Direction
 If looking at or near a PC, suspicion is more likely to be raised and skill effects more likely to hit that PC.
+If suspicion is max, PC will fixate attacks on mob it's pointing towards, change direction to follow it, and will use skills to CATCH that PC.
 
 ## Shared Stats
 
@@ -136,6 +138,11 @@ Lowers AWR of Electronic mobs when on same tile.
 
 ### Meditate
 - Restores WIL and STM
+
+### Tackle
+- Moves user and target to a given tile within ranghe
+- Maxes out SUS towards target
+- Deals significant AWR damage.
 
 ## Struggle Skills
 Can only be used when in the Caught Status and only against the mob that caught you
