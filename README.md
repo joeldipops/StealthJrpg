@@ -9,6 +9,17 @@ Free your siblings/parents, escape the facility and eventually put a stop to wha
 
 This is a stealth JRPG where the goal of turn-based battles is to sneak past or quietly disable enemies rather than attacking them head on with axes, gun-blades and fists.
 
+# Themes
+
+This narrative will explore themes of Power and Trust.  The main plot naturally follows an authoritarian regime exerting their power over the population, and the power that individuals and collectivism have or do not have to subvert it.  We see trust and distrust in some of the following ways:
+- The trust that the siblings have for each other
+- That the parents, as members of a resistance never know how they can trust.
+- They are even concerned that their children inadvertently outed them, leading to their imprisonment/the inciting incident.
+- The parents put most of their heart and soul towards working with the resistance, leading towards a level of neglect of their children, so their is also a lack of trust from the children towards their parents.  Over the course of the narrative, the family will overcome this.
+- On the other hand, the people in power are each playing their own games against each other, and can never fully trust their allies.
+- The climax will come down to the family exploiting the authorities' mistrust of each other inorder to bring them down.  
+- At least one way this will emerge in gameplay is that certain status conditions will be  more effective against characters less inclined to trust their allies. 
+
 # Battle Screen
 
 - Ring of 8 tiles, plus 1 in the centre.  
@@ -144,8 +155,16 @@ Lowers AWR of Electronic mobs when on same tile.
 - Maxes out SUS towards target
 - Deals significant AWR damage.
 
+### Assess
+- Gives a limited indication of an enemy's stats and vulnerabilities.
+- One key idea is that it will give the NUMBER of status condition vulnerbilities the enemy has, so the player will know if it's worth trying.
+- Maybe it will point out what the enemy's strongest and weakest stats.
+
 ## Struggle Skills
 Can only be used when in the Caught Status and only against the mob that caught you
+
+### Analyze
+- Detailed list of enemy's stats and vulnerabilites.  Some kind of dice roll will determine how comprehensive this is.  The luck of this roll can be improved somehow...
 
 ### Scream
 Inflicts DEAFENED with chance to be freed.
