@@ -323,7 +323,7 @@ All these areas are hard-locked except for *1.D Disused Corridor* which you'll b
 
 ## Apprentice Interregator.
 
-# The Big Bad
+# The Big Bads
 Your country is held in the balance of power of four main factions.
 
 ## The Governor
