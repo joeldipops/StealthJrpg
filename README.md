@@ -323,6 +323,20 @@ All these areas are hard-locked except for *1.D Disused Corridor* which you'll b
 
 ## Apprentice Interregator.
 
+# The Big Bad
+Your country is held in the balance of power of four main factions.
+
+## The Governor
+- Is the main power broker and holder of the keys.  Keeps the trains on time etc etc. Relies on the might provided by The General, and some legitimacy provided by The Emperor.  Rivals are kept at bay by the structure of The Party.
+
+## The Emperor
+- Hereditary ruler and largely an unhappy puppet of The Governor.  Has limited political power but does have a force modest security loyal to him and his family.  Fairly unpopular amongst the wider populace, but nevertheless considered the legitimate ruler by most.
+
+## The General
+- The majority of the nation's fighting force are loyal to the General before anyone else, though some do consider The Governor or The Emperor their true leader.  However The General does rely on The Governor for funding, resources, and logistical matters ie keeping the country running stably, and is hence kept in check.
+
+## The Party
+- A cabal of power hungry politicians all jostling to be take The Governor's place at the next opportunity.  The Governor needs them to keep various aspects of the Nation running, and they are kept in check by each other consistently tearing the others down.
 
 
 
