@@ -66,6 +66,8 @@ Job Branches: Saboteur, Fighter
 - Bit of a glass cannon
 - Maybe he can also do some AOE effects that others can't (I'm thinking he has the strength to move heavy tables and stuff like that for barricades, or bust open doors or something)
 
+## Would love to have a Dog and a Robot, just cause....
+
 
 # Stats
 ## PC Stats
@@ -162,6 +164,8 @@ Lowers AWR of Electronic mobs when on same tile.
 
 ## Struggle Skills
 Can only be used when in the Caught Status and only against the mob that caught you
+
+As a nice-to-have, maybe could have some sort of rythm game/qtes for struggle skills to add some sizzle.   Have to put this out of my mind for now and focus on the core mechanics..........
 
 ### Analyze
 - Detailed list of enemy's stats and vulnerabilites.  Some kind of dice roll will determine how comprehensive this is.  The luck of this roll can be improved somehow...
