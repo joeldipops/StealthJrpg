@@ -213,7 +213,11 @@ Also lowers max awareness, and stacks.
 ## Quick/Slow
 Can act more/less often
 
-## Distracted
+## Distractea
+ie having something unrelated on one's mind
+Sus cannot be raised and Awareness cannot be restored.
+
+## Dazed
 May be unable to act or use certain skills on a given turn
 
 # Areas
