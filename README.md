@@ -217,7 +217,7 @@ Can act more/less often
 ie having something unrelated on one's mind
 Sus cannot be raised and Awareness cannot be restored.
 
-## Dazed
+## Frightened
 May be unable to act or use certain skills on a given turn
 
 # Areas
