@@ -92,6 +92,16 @@ If suspicion is max, PC will fixate attacks on mob it's pointing towards, change
 
 ## Shared Stats
 
+### Vulnerabilities
+There won't be any elemental rock-papper-scissors here, but instead a focus on status/debuff vulnerabilities.  Each enemy will be some combination of the below for each status condition
+| level | chance | 
+| --|-- |
+| immune | 0% |
+| resistant | < 50%, depends on stats |
+| vulnerable | ~ 50% depends on stats |
+| weak | ~ 100% |
+
+
 ### Stealth
 Need to develop idea further 
 - Certain actions raise suspicion less if you have higher stealth
