@@ -93,7 +93,7 @@ If suspicion is max, PC will fixate attacks on mob it's pointing towards, change
 ## Shared Stats
 
 ### Vulnerabilities
-There won't be any elemental rock-papper-scissors here, but instead a focus on status/debuff vulnerabilities.  Each enemy will be some combination of the below for each status condition
+There won't be any elemental rock-papper-scissors here, but instead a focus on status/debuff vulnerabilities.  Each enemy will be some combination of the below for each status condition, and the game will give some indication of which one it is when the attack makes contact.
 | level | chance | 
 | --|-- |
 | immune | 0% |
