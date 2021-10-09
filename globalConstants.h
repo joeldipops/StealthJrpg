@@ -169,7 +169,7 @@ const natural HEIGHT = 800;
 const std::string RESOURCE_LOCATION = "images/";
 
 const natural BITS_PER_PIXEL = 32;
-const std::string SAVE_FILE = "grammagic.save";
+const std::string SAVE_FILE = "stealthjrpg.save";
 
 
 #endif

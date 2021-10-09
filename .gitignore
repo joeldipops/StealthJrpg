@@ -1,5 +1,5 @@
 bin/
 obj/
 *~
-grammagic.save
+*.save
 .vscode/settings.json

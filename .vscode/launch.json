@@ -7,7 +7,7 @@
         "name": "(gdb) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/bin/debug/grammagic",
+        "program": "${workspaceFolder}/bin/debug/stealthjrpg",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}/bin/debug/",

@@ -2,7 +2,7 @@
 
 using namespace Resources;
 
-const std::string Strings::Heading = "Grammagic";
+const std::string Strings::Heading = "StealthJrpg";
 const std::string Strings::Victory = "Victory";
 const std::string Strings::Stamina = "Stamina";
 const std::string Strings::Start = "Start";

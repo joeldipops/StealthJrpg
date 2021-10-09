@@ -10,7 +10,7 @@ LIBDIR =
 LIB = 
 LDFLAGS = -lSDL2 -lSDL2_ttf -lSDL2_image
 
-PROGRAM_NAME = grammagic
+PROGRAM_NAME = stealthjrpg
 INC_DEBUG = $(INC)
 CFLAGS_DEBUG = $(CFLAGS) -g
 RESINC_DEBUG = $(RESINC)
