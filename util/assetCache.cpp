@@ -1,5 +1,10 @@
+#include <utility>
+
 #include "assetCache.h"
+#include "../res/sprites.h"
+
 using namespace Util;
+using namespace Resources;
 
 /**
  * Constructor
@@ -8,8 +13,7 @@ AssetCache::AssetCache(SDL_Renderer* renderer) {
     _renderer = renderer;
     _imageAssets = std::map<std::string, SDL_Texture*>();
     _fontAssets = std::map<std::string, TTF_Font*>();
-    _fileAssets = std::map<std::string, SDL_Surface>();
-    _spriteAssets = std::map<Sprite*, SDL_Texture*>();
+    _spriteAssets = std::map<SpriteDefinition*, Sprite*>();
 
 }
 
@@ -20,21 +24,30 @@ AssetCache::~AssetCache(void) {
     emptyCache();
 }
 
-SDL_Texture* AssetCache::getSprite(Sprite* sprite) {
+Sprite* AssetCache::getSprite(SpriteDefinition* def) {
     // If asset is already in the cache, just return it.
-    if (_spriteAssets.count(sprite)) {
-        return _spriteAssets.at(sprite);
+    if (_spriteAssets.count(def)) {
+        return _spriteAssets.at(def);
     }
 
-    SDL_Surface* sheet;
-    if (_fileAssets.count(sprite->Sheet())) {
-        sheet = &_fileAssets.at(sprite->Sheet());
-    } else {
-        sheet = IMG_Load(sprite->Sheet().c_str());
-        _fileAssets[sprite->Sheet()] = *sheet;
-    }
+    SDL_Texture* texture = get(def->sheet());
 
+    // Get the width and height of the whole image.
+    SDL_Rect dimensions;
+    SDL_QueryTexture(texture, NULL, NULL, &dimensions.w, &dimensions.h);
 
+    // Determine the width and height of each sprite.
+    std::pair<int, int> sheetSize = SpriteIndex::SheetDimensions.at(def->sheet());
+    dimensions.w /= sheetSize.first;
+    dimensions.h /= sheetSize.second;
+
+    dimensions.x = dimensions.w * (def->index() % sheetSize.first);
+    dimensions.y = dimensions.h * (def->index() / sheetSize.first);
+
+    Sprite* sprite = new Sprite(texture, &dimensions);
+    _spriteAssets[def] = sprite;
+
+    return sprite;
 }
 
 /**
@@ -82,7 +95,6 @@ SDL_Texture* AssetCache::get(std::string fileName, std::string text, int fontSiz
 
     _imageAssets[key] = result;
     return result;
-
 }
 
 /**
@@ -124,6 +136,10 @@ void AssetCache::discard(std::string key) {
  * Invalidates the entire cache, freeing up memory.
  */
 void AssetCache::emptyCache(void) {
+    for (auto &item : _spriteAssets) {
+        delete item.second;
+    }
+
     for(auto &item : _imageAssets) {
         SDL_DestroyTexture(item.second);
         item.second = nullptr;
@@ -135,4 +151,5 @@ void AssetCache::emptyCache(void) {
 
     _imageAssets = std::map<std::string, SDL_Texture*>();
     _fontAssets = std::map<std::string, TTF_Font*>();
+    _spriteAssets = std::map<SpriteDefinition*, Sprite*>();
 }

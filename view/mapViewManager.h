@@ -5,11 +5,9 @@
 
 namespace Play { class GameMap; class Mob; }
 
-namespace View
-{
+namespace View {
     using namespace Play;
-    class MapViewManager : public ViewManager
-    {
+    class MapViewManager : public ViewManager {
         public:
             MapViewManager(SDL_Renderer*, SDL_Rect, Util::AssetCache*);
             void render(const GameMap*, const Play::PlayState);

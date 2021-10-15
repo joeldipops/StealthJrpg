@@ -8,10 +8,10 @@
 
 #include "../globalConstants.h"
 #include "../magic/magicTypedefs.h"
+#include "sprites.h"
 
 namespace Magic { class Command; class SpellContext; }
-namespace Play
-{
+namespace Play {
     class Mob;
     class BattleField;
     class MapObject;
@@ -21,12 +21,10 @@ namespace Play
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject* context, PlayStateContainer&);
 }
 
-namespace Resources
-{
+namespace Resources {
     struct Commands;
 
-    struct RuneTemplate
-    {
+    struct RuneTemplate {
         std::string Name = "";
         std::string ImagePath = "";
 
@@ -57,8 +55,7 @@ namespace Resources
         Persistence::SavedObjectCode Code = Persistence::SavedObjectCode::UNKNOWN;
     };
 
-    struct JobTemplate
-    {
+    struct JobTemplate {
         std::string Name;
         float StaminaGrowth;
         float SkillGrowth;
@@ -71,18 +68,17 @@ namespace Resources
     /**
      * The default/initial properties and handlers of any map object
      */
-    struct MapObjectTemplate
-    {
+    struct MapObjectTemplate {
         std::string ImagePath;
         bool IsDense;
         Handler<MapObject, PlayStateContainer> OnInspect = nullptr;
+        SpriteDefinition* SpriteDef = nullptr;
     };
 
     /**
      * The default / initial properties and stats of a mob
      */
-    struct MobTemplate : public MapObjectTemplate
-    {
+    struct MobTemplate : public MapObjectTemplate {
         std::string PortraitPath;
         short Stamina;
         float Speed;
@@ -94,20 +90,17 @@ namespace Resources
         std::vector<Magic::Command*> Commands;
     };
 
-    enum PartyMemberCode
-    {
+    enum PartyMemberCode {
         A, B, C, D, E, F
     };
 
-    struct PCTemplate : public MobTemplate
-    {
+    struct PCTemplate : public MobTemplate {
         std::string Name;
         PartyMemberCode MemberCode;
         JobTemplate Class;
     };
 
-    struct EnemyTemplate : public MobTemplate
-    {
+    struct EnemyTemplate : public MobTemplate {
         float Attack;
         int AttackDelay;
         int MovementDelay;
@@ -115,13 +108,11 @@ namespace Resources
         Play::AiAction CombatAction = nullptr;
     };
 
-    struct TerrainTemplate : public MapObjectTemplate
-    {
+    struct TerrainTemplate : public MapObjectTemplate {
         Play::PlayEventHandler OnEnter = nullptr;
     };
 
-    struct Data
-    {
+    struct Data {
         public:
             static const JobTemplate TANK;
             static const JobTemplate WELLSPRING;

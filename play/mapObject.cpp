@@ -1,24 +1,36 @@
 #include "mapObject.h"
+#include "../res/sprites.h"
 
 using namespace Play;
+using namespace Resources;
 
-//{ Lifecycle
+// LIFECYCLE
 
-MapObject::MapObject(const Resources::MapObjectTemplate& tmpl)
-{
+/**
+ * Constructor
+ */
+MapObject::MapObject(const Resources::MapObjectTemplate& tmpl) {
     _isDense = tmpl.IsDense;
+    _spriteDef = tmpl.SpriteDef;
     _imageFileName = tmpl.ImagePath;
     _onInspect = tmpl.OnInspect;
 }
-
-//}
-
-//{ Properties
 
 /**
  * Function trigged when object is inspected by player.
  */
 const Handler<MapObject, PlayStateContainer> MapObject::onInspectFn(void) const { return _onInspect; }
+
+// PROPERTIES
+
+/**
+ * Defines a single image within a spritesheet to represent this mob.
+ */
+SpriteDefinition* MapObject::spriteDef(void) const { return _spriteDef; }
+SpriteDefinition* MapObject::spriteDef(SpriteDefinition* def) {
+    _spriteDef = def;
+    return _spriteDef;
+}
 
 /**
  * Sets and gets the path to this object's image.
@@ -26,8 +38,7 @@ const Handler<MapObject, PlayStateContainer> MapObject::onInspectFn(void) const 
  * @return the filename
  */
 std::string MapObject::imageFileName(void) const { return _imageFileName; }
-std::string MapObject::imageFileName(const std::string& name)
-{
+std::string MapObject::imageFileName(const std::string& name) {
     _imageFileName = name;
     return _imageFileName;
 }
@@ -38,8 +49,7 @@ std::string MapObject::imageFileName(const std::string& name)
  * @return
  */
 int MapObject::x(void) const { return _x; }
-int MapObject::x(int x_)
-{
+int MapObject::x(int x_) {
     _x = x_;
     return x();
 }
@@ -50,8 +60,7 @@ int MapObject::x(int x_)
  * @return
  */
 int MapObject::y(void) const { return _y; }
-int MapObject::y(int y_)
-{
+int MapObject::y(int y_) {
     _y = y_;
     return y();
 }
@@ -62,8 +71,7 @@ int MapObject::y(int y_)
  * @return The density.
  */
 bool MapObject::isDense(void) { return _isDense; }
-bool MapObject::isDense(bool isDense_)
-{
+bool MapObject::isDense(bool isDense_) {
     _isDense = isDense_;
     return _isDense;
 }
@@ -72,15 +80,10 @@ bool MapObject::isDense(bool isDense_)
  * Gets or sets the direction the mob is facing.
  */
 Direction MapObject::facing(void) const { return _facing; }
-Direction MapObject::facing(Direction facing_)
-{
+Direction MapObject::facing(Direction facing_) {
     _facing = facing_;
     return _facing;
 }
-
-//}
-
-//{ Methods
 
 /**
  * Gets or sets the X/Y coordinates of the mob.
@@ -88,8 +91,7 @@ Direction MapObject::facing(Direction facing_)
  * @param y
  * @return
  */
-Location MapObject::location(int x_, int y_)
-{
+Location MapObject::location(int x_, int y_) {
     x(x_);
     y(y_);
     return Location(x_, y_);
@@ -100,14 +102,10 @@ Location MapObject::location(int x_, int y_)
  * @param loc
  * @return
  */
-Location MapObject::location(const Location* loc)
-{
-    if (loc != nullptr)
-    {
+Location MapObject::location(const Location* loc) {
+    if (loc != nullptr) {
         x(loc->X);
         y(loc->Y);
     }
     return Location(&_x, &_y);
 }
-
-//}

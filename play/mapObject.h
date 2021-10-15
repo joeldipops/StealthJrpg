@@ -5,28 +5,28 @@
 
 #include "../globalConstants.h"
 #include "../util/utils.h"
+#include "../res/sprites.h"
 #include "../res/templates.h"
 #include "../util/events.h"
 
 using namespace Util;
 
-namespace Play
-{
+namespace Play {
     class Party;
     struct PlayStateContainer;
     struct MapObjectTemplate;
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject*, PlayStateContainer&);
-    class MapObject
-    {
+    class MapObject {
         public:
             MapObject(const Resources::MapObjectTemplate&);
             virtual ~MapObject(void) {};
             bool isDense(void);
+            Resources::SpriteDefinition* spriteDef(Resources::SpriteDefinition*);
+            Resources::SpriteDefinition* spriteDef(void) const;
             std::string imageFileName(const std::string&);
             std::string imageFileName(void) const;
 
             virtual PlayStateContainer& onInspect(PlayStateContainer&) = 0;
-
 
             Location location(int, int);
             Location location(const Location*);
@@ -47,6 +47,7 @@ namespace Play
         private:
             bool _isDense;
             std::string _imageFileName;
+            Resources::SpriteDefinition* _spriteDef;
             int _x = 0;
             int _y = 0;
             Direction _facing = Direction::NONE;

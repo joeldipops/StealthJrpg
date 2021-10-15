@@ -2,12 +2,14 @@
 #include "battleCommands.h"
 #include "strings.h"
 #include "../play/playStateManager.h"
+#include "sprites.h"
+
 using namespace Resources;
 using namespace Persistence;
 
-//{ Classes
-const JobTemplate getTANK()
-{
+// CLASSES ---------------------
+
+const JobTemplate getTANK() {
     JobTemplate result = JobTemplate();
     result.Name = Strings::Tank;
     result.Code = SavedObjectCode::TANK_CLASS;
@@ -20,8 +22,7 @@ const JobTemplate getTANK()
 }
 const JobTemplate Data::TANK = getTANK();
 
-const JobTemplate getWELLSPRING()
-{
+const JobTemplate getWELLSPRING() {
     JobTemplate result = JobTemplate();
     result.Name = Strings::WellSpring;
     result.Code = SavedObjectCode::WELLSPRING_CLASS;
@@ -34,8 +35,7 @@ const JobTemplate getWELLSPRING()
 }
 const JobTemplate Data::WELLSPRING = getWELLSPRING();
 
-const JobTemplate getGLASSCANON()
-{
+const JobTemplate getGLASSCANON() {
     JobTemplate result = JobTemplate();
     result.Name = Strings::GlassCannon;
     result.Code = SavedObjectCode::GLASSCANNON_CLASS;
@@ -48,8 +48,7 @@ const JobTemplate getGLASSCANON()
 }
 const JobTemplate Data::GLASSCANON = getGLASSCANON();
 
-const JobTemplate getJACK()
-{
+const JobTemplate getJACK() {
     JobTemplate result = JobTemplate();
     result.Name = Strings::Jack;
     result.Code = SavedObjectCode::JACK_CLASS;
@@ -62,8 +61,7 @@ const JobTemplate getJACK()
 }
 const JobTemplate Data::JACK = getJACK();
 
-const JobTemplate getGUARD()
-{
+const JobTemplate getGUARD() {
     JobTemplate result = JobTemplate();
     result.Name = Strings::Guard;
     result.Code = SavedObjectCode::GUARD_CLASS;
@@ -76,8 +74,7 @@ const JobTemplate getGUARD()
 }
 const JobTemplate Data::GUARD = getGUARD();
 
-const JobTemplate getWASP()
-{
+const JobTemplate getWASP() {
     JobTemplate result = JobTemplate();
     result.Name = Strings::Wasp;
     result.Code = SavedObjectCode::WASP_CLASS;
@@ -89,34 +86,33 @@ const JobTemplate getWASP()
     return result;
 }
 const JobTemplate Data::WASP = getWASP();
-//}
 
-//{Runes
 
-static Combatable* all(Mob* caster, SpellContext& field, const std::vector<Combatable*>& candidates, SpellData&)
-{
+// RUNES -----------------
+
+static Combatable* all(Mob* caster, SpellContext& field, const std::vector<Combatable*>& candidates, SpellData&) {
     TargetAll* result = new TargetAll(candidates);
 
     bool isPlayerAllied = field.areAllied(caster, field.pcs().at(0));
 
     // Should the target be considered an ally or an of the caster?
     natural allyCount = 0;
-    for (const Combatable* c : candidates)
-    {
+    for (const Combatable* c : candidates) {
         if (field.areAllied(caster, c))
             allyCount++;
     }
 
 
-    if (allyCount > candidates.size() / 2.0)
+    if (allyCount > candidates.size() / 2.0) {
         field.addToField(result, isPlayerAllied);
-    else
+    } else {
         field.addToField(result, !isPlayerAllied);
+    }
 
     return result;
 }
-const RuneTemplate GetALL()
-{
+
+const RuneTemplate GetALL() {
     RuneTemplate result = RuneTemplate();
     result.Name = "ALL";
     result.Code = Persistence::SavedObjectCode::ALL_RUNE;
@@ -134,13 +130,11 @@ const RuneTemplate GetALL()
 };
 const RuneTemplate Resources::Data::ALL = GetALL();
 
-static Combatable* any (Mob* caster, SpellContext& field, const std::vector<Combatable*>& candidates, SpellData&)
-{
+static Combatable* any (Mob* caster, SpellContext& field, const std::vector<Combatable*>& candidates, SpellData&) {
     int index  = rand() % candidates.size();
     return candidates.at(index);
 }
-const RuneTemplate GetANY()
-{
+const RuneTemplate GetANY() {
     RuneTemplate result = RuneTemplate();
     result.Name = "ANY";
     result.Code = Persistence::SavedObjectCode::ANY_RUNE;
@@ -159,12 +153,10 @@ const RuneTemplate GetANY()
 const RuneTemplate Resources::Data::ANY = GetANY();
 
 
-static Combatable* self (Mob* caster, SpellContext&, SpellData&)
-{
+static Combatable* self (Mob* caster, SpellContext&, SpellData&) {
     return (Combatable*) caster;
 };
-const RuneTemplate GetCASTER()
-{
+const RuneTemplate GetCASTER() {
     RuneTemplate result = RuneTemplate();
     result.Name = "CASTER";
     result.Code = Persistence::SavedObjectCode::CASTER_RUNE;
@@ -183,25 +175,23 @@ const RuneTemplate GetCASTER()
 const RuneTemplate Resources::Data::CASTER = GetCASTER();
 
 
-static std::vector<Combatable*> enemies(Mob* caster, SpellContext& battleField, SpellData&)
-{
+static std::vector<Combatable*> enemies(Mob* caster, SpellContext& battleField, SpellData&) {
     std::vector<Combatable*> result;
     std::vector<Mob*> candidates;
 
-    if (caster->type() == MobType::PlayerCharacter)
+    if (caster->type() == MobType::PlayerCharacter) {
         candidates =  battleField.hostiles();
-    else
+    } else {
         candidates = battleField.pcs();
+    }
 
-    for (Mob* m : candidates)
-    {
+    for (Mob* m : candidates) {
         result.push_back(m);
     }
 
     return result;
 };
-const RuneTemplate GetENEMY()
-{
+const RuneTemplate GetENEMY() {
     RuneTemplate result = RuneTemplate();
     result.Name = "ENEMY";
     result.Code = Persistence::SavedObjectCode::ENEMY_RUNE;
@@ -219,26 +209,25 @@ const RuneTemplate GetENEMY()
 };
 const RuneTemplate Resources::Data::ENEMY = GetENEMY();
 
-static std::vector<Combatable*> allies(Mob* caster, SpellContext& battleField, SpellData&)
-{
+static std::vector<Combatable*> allies(Mob* caster, SpellContext& battleField, SpellData&) {
     std::vector<Combatable*> result;
     std::vector<Mob*> candidates;
 
-    if (caster->type() == MobType::PlayerCharacter)
+    if (caster->type() == MobType::PlayerCharacter) {
         candidates = battleField.pcs();
-    else
+    } else {
         candidates =  battleField.hostiles();
+    }
 
-    for (Mob* m : candidates)
-    {
-        if (m != caster)
+    for (Mob* m : candidates) {
+        if (m != caster) {
             result.push_back(m);
+        }
     }
 
     return result;
 };
-const RuneTemplate GetALLY()
-{
+const RuneTemplate GetALLY() {
     RuneTemplate result = RuneTemplate();
     result.Name = "ALLY";
     result.Code = Persistence::SavedObjectCode::ALLY_RUNE;
@@ -256,26 +245,24 @@ const RuneTemplate GetALLY()
 };
 const RuneTemplate Resources::Data::ALLY = GetALLY();
 
-static std::vector<Combatable*> members(Mob* caster, SpellContext& battleField, SpellData& data)
-{
+static std::vector<Combatable*> members(Mob* caster, SpellContext& battleField, SpellData& data) {
     std::vector<Combatable*> result;
     std::vector<Mob*> candidates;
 
-    if (caster->type() == MobType::PlayerCharacter)
+    if (caster->type() == MobType::PlayerCharacter) {
         candidates = battleField.pcs();
-    else
+    } else {
         candidates =  battleField.hostiles();
+    }
 
-    for (Mob* m : candidates)
-    {
+    for (Mob* m : candidates) {
         result.push_back(m);
     }
 
     return result;
 };
 
-const RuneTemplate GetMEMBER()
-{
+const RuneTemplate GetMEMBER() {
     RuneTemplate result = RuneTemplate();
     result.Name = "MEMBER";
     result.Code = Persistence::SavedObjectCode::MEMBER_RUNE;
@@ -293,29 +280,24 @@ const RuneTemplate GetMEMBER()
 };
 const RuneTemplate Resources::Data::MEMBER = GetMEMBER();
 
-SpellData& modifySpell(SpellData& data, float metaCost, float metaEffect, float metaDuration)
-{
+SpellData& modifySpell(SpellData& data, float metaCost, float metaEffect, float metaDuration) {
     data.cost *= 1 + metaCost;
     data.duration *= 1 + metaEffect;
     data.effect *= 1 + metaDuration;
     return  data;
 }
 
-Combatable* most(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
-{
+Combatable* most(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
     Combatable* result = nullptr;
-    for(natural i = 0; i < candidates.size(); i++)
-    {
+    for(natural i = 0; i < candidates.size(); i++) {
         Combatable* mob = candidates.at(i);
 
-        if (result == nullptr)
+        if (result == nullptr) {
             result = mob;
-        else
-        {
+        } else {
             float resultValue;
             float mobValue;
-            switch(data.stat)
-            {
+            switch(data.stat) {
                 case Stat::SKILL:
                     resultValue = result->skill();
                     mobValue = mob->skill();
@@ -338,15 +320,14 @@ Combatable* most(Mob* caster, SpellContext& battleField, const std::vector<Comba
                     break;
                 default: break;
             }
-            if (data.modality == Modality::HIGH)
-            {
-                if (mobValue > resultValue)
+            if (data.modality == Modality::HIGH) {
+                if (mobValue > resultValue) {
                     result = mob;
-            }
-            else
-            {
-                if (mobValue < resultValue)
+                }
+            } else {
+                if (mobValue < resultValue) {
                     result = mob;
+                }
             }
         }
     }
@@ -354,14 +335,13 @@ Combatable* most(Mob* caster, SpellContext& battleField, const std::vector<Comba
     return result;
 };
 
-void changeStat(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
-{
-    if (data.modality == Modality::LOW)
+void changeStat(Combatable* source, Combatable* target, int cost, int effect, SpellData& data) {
+    if (data.modality == Modality::LOW) {
         effect *= -1;
+    }
 
     source->changeStamina(cost * -1);
-    switch(data.stat)
-    {
+    switch(data.stat) {
         case Stat::STAMINA:
             target->changeStamina(effect);
             return;
@@ -382,13 +362,11 @@ void changeStat(Combatable* source, Combatable* target, int cost, int effect, Sp
     }
 }
 
-SpellData& heavySpell(SpellData& data)
-{
+SpellData& heavySpell(SpellData& data) {
     return modifySpell(data, .9, 1, .1);
 }
 
-const RuneTemplate GetHIGH()
-{
+const RuneTemplate GetHIGH() {
     RuneTemplate result = RuneTemplate();
     result.Name = "HIGH";
     result.Code = Persistence::SavedObjectCode::HIGH_RUNE;
@@ -409,13 +387,11 @@ const RuneTemplate GetHIGH()
 };
 const RuneTemplate Resources::Data::HIGH = GetHIGH();
 
-SpellData& lightSpell(SpellData& data)
-{
+SpellData& lightSpell(SpellData& data) {
     return modifySpell(data, -.5, -.5, 0);
 }
 
-const RuneTemplate GetLOW()
-{
+const RuneTemplate GetLOW() {
     RuneTemplate result = RuneTemplate();
     result.Name = "LOW";
     result.Code = Persistence::SavedObjectCode::LOW_RUNE;
@@ -437,20 +413,17 @@ const RuneTemplate GetLOW()
 const RuneTemplate Resources::Data::LOW = GetLOW();
 
 
-Combatable* mostStamina(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
-{
+Combatable* mostStamina(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
     data.stat = Stat::STAMINA;
     return most(caster, battleField, candidates, data);
 }
 
-void changeStamina(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
-{
+void changeStamina(Combatable* source, Combatable* target, int cost, int effect, SpellData& data) {
     data.stat = Stat::STAMINA;
     changeStat(source, target, cost, effect, data);
 }
 
-const RuneTemplate GetSTAMINA()
-{
+const RuneTemplate GetSTAMINA() {
     RuneTemplate result = RuneTemplate();
     result.Name = "STAMINA";
     result.Code = Persistence::SavedObjectCode::STAMINA_RUNE;
@@ -474,25 +447,21 @@ const RuneTemplate GetSTAMINA()
 };
 const RuneTemplate Resources::Data::STAMINA = GetSTAMINA();
 
-SpellData& fastSpell(SpellData& data)
-{
+SpellData& fastSpell(SpellData& data) {
     return modifySpell(data, 0, 0, -.25);
 }
 
-Combatable* mostSpeed(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
-{
+Combatable* mostSpeed(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
     data.stat = Stat::SPEED;
     return most(caster, battleField, candidates, data);
 }
-
-void changeSpeed(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
-{
+ 
+void changeSpeed(Combatable* source, Combatable* target, int cost, int effect, SpellData& data) {
     data.stat = Stat::SPEED;
     return changeStat(source, target, cost, effect, data);
 }
 
-const RuneTemplate GetSPEED()
-{
+const RuneTemplate GetSPEED() {
     RuneTemplate result = RuneTemplate();
     result.Name = "SPEED";
     result.Code = Persistence::SavedObjectCode::SPEED_RUNE;
@@ -517,20 +486,17 @@ const RuneTemplate GetSPEED()
 };
 const RuneTemplate Resources::Data::SPEED = GetSPEED();
 
-Combatable* mostDefence(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
-{
+Combatable* mostDefence(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
     data.stat = Stat::DEFENSE;
     return most(caster, battleField, candidates, data);
 }
 
-void changeDefence(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
-{
+void changeDefence(Combatable* source, Combatable* target, int cost, int effect, SpellData& data) {
     data.stat = Stat::DEFENSE;
     return changeStat(source, target, cost, effect, data);
 }
 
-const RuneTemplate GetDEFENCE()
-{
+const RuneTemplate GetDEFENCE() {
     RuneTemplate result = RuneTemplate();
     result.Name = "DEFENCE";
     result.Code = Persistence::SavedObjectCode::DEFENCE_RUNE;
@@ -554,20 +520,17 @@ const RuneTemplate GetDEFENCE()
 };
 const RuneTemplate Resources::Data::DEFENCE = GetDEFENCE();
 
-Combatable* mostResistance(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
-{
+Combatable* mostResistance(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
     data.stat = Stat::RESISTANCE;
     return most(caster, battleField, candidates, data);
 }
 
-void changeResistance(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
-{
+void changeResistance(Combatable* source, Combatable* target, int cost, int effect, SpellData& data) {
     data.stat = Stat::RESISTANCE;
     return changeStat(source, target, cost, effect, data);
 }
 
-const RuneTemplate GetRESISTANCE()
-{
+const RuneTemplate GetRESISTANCE() {
     RuneTemplate result = RuneTemplate();
     result.Name = "RESISTANCE";
     result.Code = Persistence::SavedObjectCode::RESISTANCE_RUNE;
@@ -591,20 +554,17 @@ const RuneTemplate GetRESISTANCE()
 };
 const RuneTemplate Resources::Data::RESISTANCE = GetRESISTANCE();
 
-Combatable* mostSkill(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data)
-{
+Combatable* mostSkill(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
     data.stat = Stat::SKILL;
     return most(caster, battleField, candidates, data);
 }
 
-void changeSkill(Combatable* source, Combatable* target, int cost, int effect, SpellData& data)
-{
+void changeSkill(Combatable* source, Combatable* target, int cost, int effect, SpellData& data) {
     data.stat = Stat::SKILL;
     return changeStat(source, target, cost, effect, data);
 }
 
-const RuneTemplate GetSKILL()
-{
+const RuneTemplate GetSKILL() {
     RuneTemplate result = RuneTemplate();
     result.Name = "SKILL";
     result.Code = Persistence::SavedObjectCode::SKILL_RUNE;
@@ -628,12 +588,12 @@ const RuneTemplate GetSKILL()
 };
 const RuneTemplate Resources::Data::SKILL = GetSKILL();
 
-//}
 
-//{Party Members
-PCTemplate GetA() // "Albert" archetype
-{
+// PARTY MEMBERS -----------------
+
+PCTemplate GetA() { // "Albert" archetype
     PCTemplate result;
+    result.SpriteDef = &Resources::SpriteIndex::KID_SOUTH_0;
     result.Name = Strings::AName;
     result.ImagePath = RESOURCE_LOCATION + "a-image.png";
     result.PortraitPath = RESOURCE_LOCATION + "a-portrait.png";
@@ -648,10 +608,10 @@ PCTemplate GetA() // "Albert" archetype
 };
 const PCTemplate Data::A = GetA();
 
-PCTemplate GetB() // "Brienne" Archetype
-{
+PCTemplate GetB() { // "Brienne" Archetype
     PCTemplate result;
     result.Name = Strings::BName;
+    result.SpriteDef = &Resources::SpriteIndex::KID_SOUTH_0;    
     result.ImagePath = RESOURCE_LOCATION + "b-image.png";
     result.PortraitPath = RESOURCE_LOCATION + "b-portrait.png";
     result.Class = Data::WELLSPRING;
@@ -667,10 +627,10 @@ PCTemplate GetB() // "Brienne" Archetype
 };
 const PCTemplate Data::B = GetB();
 
-const PCTemplate GetC() //"All Rounder" archetype
-{
+const PCTemplate GetC() { //"All Rounder" archetype
     PCTemplate result;
     result.Name = Strings::CName;
+    result.SpriteDef = &Resources::SpriteIndex::KID_SOUTH_0;
     result.ImagePath = RESOURCE_LOCATION + "c-image.png";
     result.PortraitPath = RESOURCE_LOCATION + "c-portrait.png";
     result.Class = Data::JACK;
@@ -683,17 +643,13 @@ const PCTemplate GetC() //"All Rounder" archetype
     return result;
 };
 const PCTemplate Data::C = GetC();
-//}
 
-
-PlayStateContainer& receiveTutorial(MapObject* context, PlayStateContainer& data)
-{
+PlayStateContainer& receiveTutorial(MapObject* context, PlayStateContainer& data) {
     data.Message = Strings::Tutorial;
     data.State = PlayState::Message;
     return data;
 }
-const EnemyTemplate GetNPC1()
-{
+const EnemyTemplate GetNPC1() {
     EnemyTemplate result;
     result.ImagePath = RESOURCE_LOCATION + "npc.png";
     result.MovementDelay = 3000;
@@ -703,14 +659,12 @@ const EnemyTemplate GetNPC1()
 }
 const EnemyTemplate Data::NPC1 = GetNPC1();
 
-//{Types of Enemy
-int aiAttack(Play::Mob* context, SpellContext& field)
-{
+// TYPES OF ENEMY ---------------
+int aiAttack(Play::Mob* context, SpellContext& field) {
     return Commands::ATTACK(nullptr, context, field);
 }
 
-const EnemyTemplate GetE1()
-{
+const EnemyTemplate GetE1() {
     EnemyTemplate result;
     result.CombatAction = aiAttack;
     result.ImagePath = RESOURCE_LOCATION + "e1.png";
@@ -729,8 +683,7 @@ const EnemyTemplate GetE1()
 };
 const EnemyTemplate Data::E1 = GetE1();
 
-const EnemyTemplate GetE2()
-{
+const EnemyTemplate GetE2() {
     EnemyTemplate result;
     result.CombatAction = aiAttack;
     result.ImagePath = RESOURCE_LOCATION + "e2.png";
@@ -749,8 +702,7 @@ const EnemyTemplate GetE2()
 };
 const EnemyTemplate Data::E2 = GetE2();
 
-const EnemyTemplate GetB1()
-{
+const EnemyTemplate GetB1() {
     EnemyTemplate result;
     result.CombatAction = aiAttack;
     result.ImagePath = RESOURCE_LOCATION + "b1.png";
@@ -768,11 +720,10 @@ const EnemyTemplate GetB1()
     return result;
 };
 const EnemyTemplate Data::B1 = GetB1();
-//}
 
-//{Types of Terrain
-const TerrainTemplate GetWall()
-{
+
+// TYPES OF TERRAIN --------------
+const TerrainTemplate GetWall() {
     TerrainTemplate result;
     result.ImagePath = RESOURCE_LOCATION + "wall.png";
     result.IsDense = true;
@@ -780,8 +731,7 @@ const TerrainTemplate GetWall()
 };
 const TerrainTemplate Data::Wall = GetWall();
 
-const TerrainTemplate GetGrass()
-{
+const TerrainTemplate GetGrass() {
     TerrainTemplate result;
     result.ImagePath = RESOURCE_LOCATION + "grass.png";
     result.IsDense = false;
@@ -789,8 +739,7 @@ const TerrainTemplate GetGrass()
 };
 const TerrainTemplate Data::Grass = GetGrass();
 
-PlayStateContainer& getAllRunes(MapObject* context, PlayStateContainer& data)
-{
+PlayStateContainer& getAllRunes(MapObject* context, PlayStateContainer& data) {
     std::vector<Rune*> runes;
     runes.push_back(new Rune(Data::ALL));
     runes.push_back(new Rune(Data::ANY));
@@ -814,8 +763,7 @@ PlayStateContainer& getAllRunes(MapObject* context, PlayStateContainer& data)
     return data;
 }
 
-const TerrainTemplate GetCache()
-{
+const TerrainTemplate GetCache() {
     TerrainTemplate result;
     result.ImagePath = RESOURCE_LOCATION + "cache.png";
     result.IsDense = true;
@@ -824,17 +772,15 @@ const TerrainTemplate GetCache()
 };
 const TerrainTemplate Data::Cache = GetCache();
 
-PlayStateContainer& healAtHut(MapObject* context, PlayStateContainer& data)
-{
-    for(Mob* member : data.Map->party()->members())
-    {
+PlayStateContainer& healAtHut(MapObject* context, PlayStateContainer& data) {
+    for(Mob* member : data.Map->party()->members()) {
         member->changeStamina(member->maxStamina() - member->stamina());
     }
     data.Message = "You are fighting fit";
     return data;
 }
-PlayStateContainer& inspectHut(MapObject* context, PlayStateContainer& data)
-{
+
+PlayStateContainer& inspectHut(MapObject* context, PlayStateContainer& data) {
     data.Message = Strings::HutDescription;
     data.State = PlayState::Message;
     return data;
@@ -843,8 +789,7 @@ PlayStateContainer& inspectHut(MapObject* context, PlayStateContainer& data)
 /**
  * A place where you can safely rest.
  */
-const TerrainTemplate GetHut()
-{
+const TerrainTemplate GetHut() {
     TerrainTemplate result;
     result.ImagePath = RESOURCE_LOCATION + "hut.png";
     result.IsDense = false;
@@ -853,4 +798,3 @@ const TerrainTemplate GetHut()
     return result;
 };
 const TerrainTemplate Data::Hut = GetHut();
-//}

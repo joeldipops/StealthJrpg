@@ -13,8 +13,7 @@ MapViewManager::MapViewManager(SDL_Renderer* r, SDL_Rect v, Util::AssetCache* a)
  * @param gameMap Renders the contents of this map to the window.
  * @param state Rendering may differ depending on the current state.
  */
-void MapViewManager::render(const GameMap* gameMap, const Play::PlayState state)
-{
+void MapViewManager::render(const GameMap* gameMap, const Play::PlayState state) {
     // Render Map
     ViewManager::render();
 
@@ -28,30 +27,28 @@ void MapViewManager::render(const GameMap* gameMap, const Play::PlayState state)
  * Renders each terrain in the map.
  * @param mapData The map containing terrain data.
  */
-void MapViewManager::renderTerrain(const GameMap* gameMap, const SDL_Rect& visible)
-{
+void MapViewManager::renderTerrain(const GameMap* gameMap, const SDL_Rect& visible) {
     const std::string blank = "hidden.png";
 
-    for(int y = visible.y; y < visible.h; y++)
-    {
-        for(int x = visible.x; x < visible.w; x++)
-        {
-            if (x >= gameMap->width() || y >= gameMap->height())
+    for(int y = visible.y; y < visible.h; y++) {
+        for(int x = visible.x; x < visible.w; x++) {
+            if (x >= gameMap->width() || y >= gameMap->height()) {
                 continue;
+            }
 
             SDL_Rect rect = { (x - visible.x) * CELL_WIDTH, (y - visible.y) * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT };
             std::string fileName;
 
-            if (x >= 0 && y >= 0)
-            {
+            if (x >= 0 && y >= 0) {
                 const MapCell* cell = gameMap->getCell(x, y);
-                if (cell != nullptr)
+                if (cell != nullptr) {
                     fileName = cell->terrain()->imageFileName();
-                else
+                } else {
                     fileName = blank;
-            }
-            else
+                }
+            } else {
                 fileName = blank;
+            }
 
             SDL_Texture* image = assets()->get(fileName);
             SDL_RenderCopy(renderer(), image, NULL, &rect);
@@ -63,22 +60,24 @@ void MapViewManager::renderTerrain(const GameMap* gameMap, const SDL_Rect& visib
  * Renders each mob in the map.
  * @param mobs The list of mobs to render.
  */
-void MapViewManager::renderContents(const GameMap* gameMap, const SDL_Rect& visible)
-{
-    for (const MapObject* mob : gameMap->contents())
-    {
+void MapViewManager::renderContents(const GameMap* gameMap, const SDL_Rect& visible) {
+    for (const MapObject* mob : gameMap->contents()) {
         const int x = mob->x();
         const int y = mob->y();
-        if (x < 0 || x > gameMap->width())
+        if (x < 0 || x > gameMap->width()) {
             continue;
-        if (y < 0 || y > gameMap->height())
+        }
+        if (y < 0 || y > gameMap->height()) {
             continue;
+        }
 
         // Mob is not visible.
-        if (x < visible.x || x > visible.w)
+        if (x < visible.x || x > visible.w) {
             continue;
-        if (y < visible.y || y > visible.h)
+        }
+        if (y < visible.y || y > visible.h) {
             continue;
+        }
 
         SDL_Rect rect = {
             (x - visible.x) * CELL_WIDTH + (CELL_WIDTH / 4),
@@ -86,19 +85,25 @@ void MapViewManager::renderContents(const GameMap* gameMap, const SDL_Rect& visi
             CELL_WIDTH / 2, CELL_HEIGHT / 2
         };
 
-        SDL_Texture* image = assets()->get(mob->imageFileName());
-        SDL_RenderCopy(renderer(), image, NULL, &rect);
+        if (mob->spriteDef()) {
+            Sprite* sprite = assets()->getSprite(mob->spriteDef());
+            SDL_Rect stencil = sprite->stencil();
+            SDL_RenderCopy(renderer(), sprite->texture(), &stencil, &rect);
+        } else {
+            SDL_Texture* image = assets()->get(mob->imageFileName());
+            SDL_RenderCopy(renderer(), image, NULL, &rect);
+        }
 
-        if (mob->isMob())
+        if (mob->isMob()) {
             renderHealthBar(*(Mob*)mob, x - visible.x, y - visible.y);
+        }
     }
 
     Mob& leader = *(Mob*)gameMap->party()->leader();
     renderHealthBar(leader, leader.x() - visible.x, leader.y() - visible.y);
 }
 
-void MapViewManager::renderHealthBar(const Mob& mob, int x, int y)
-{
+void MapViewManager::renderHealthBar(const Mob& mob, int x, int y) {
     const int barWidth = 2;
     SDL_Rect rect = {
         x * CELL_WIDTH + 1,

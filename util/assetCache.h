@@ -19,7 +19,7 @@ namespace Util {
             AssetCache(SDL_Renderer*);
             ~AssetCache(void);
             SDL_Texture* get(std::string);
-            SDL_Texture* getSprite(Sprite*);
+            Sprite* getSprite(SpriteDefinition*);
             TTF_Font* get(std::string, int);
             SDL_Texture* get(std::string, std::string, int, SDL_Colour);
 
@@ -28,8 +28,7 @@ namespace Util {
 
         private:
             std::map<std::string, SDL_Texture*> _imageAssets;
-            std::map<std::string, SDL_Surface> _fileAssets;
-            std::map<Sprite*, SDL_Texture*> _spriteAssets;
+            std::map<SpriteDefinition*, Sprite*> _spriteAssets;
             std::map<std::string, TTF_Font*> _fontAssets;
             SDL_Renderer* _renderer;
     };

@@ -5,10 +5,8 @@
 #include "../res/templates.h"
 #include "pc.h"
 
-namespace Play
-{
-    class Party : public MapObject
-    {
+namespace Play {
+    class Party : public MapObject {
         public:
             Party(void);
             Party(std::vector<PC*>);
@@ -36,7 +34,8 @@ namespace Play
             void addRunes(Rune*);
             void addRunes(std::vector<Rune*>);
             std::vector<Rune*> _runeCollection;
-
+        protected:
+            void image(const MapObject*);
 
         private:
             std::vector<PC*> _members;
