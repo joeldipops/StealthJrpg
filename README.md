@@ -137,7 +137,7 @@ Perform some environment specific action like flicking a switch.
 ### Vanish 
 - Gives Hidden status
 
-## Disable
+### Disable
 Lowers AWR of Electronic mobs when on same tile.
 
 ### Distract
