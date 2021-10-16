@@ -162,6 +162,11 @@ Lowers AWR of Electronic mobs when on same tile.
 ### Meditate
 - Restores WIL and STM
 
+### Trip
+- Affects enemy on same tile
+- Lowers AWR
+- Raises SUS
+
 ### Tackle
 - Moves user and target to a given tile within ranghe
 - Maxes out SUS towards target
