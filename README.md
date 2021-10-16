@@ -201,6 +201,9 @@ Exist
 
 # Conditions
 
+## Hidden
+Cannot be caught, but abilities can not negatively affect enemies....maybe
+
 ## Blinded
 Lowers max awareness
 
@@ -223,7 +226,7 @@ Also lowers max awareness, and stacks.
 ## Quick/Slow
 Can act more/less often
 
-## Distractea
+## Distracted
 ie having something unrelated on one's mind
 Sus cannot be raised and Awareness cannot be restored.
 
