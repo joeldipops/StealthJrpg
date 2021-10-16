@@ -202,7 +202,7 @@ Exist
 # Conditions
 
 ## Hidden
-Cannot be caught, but abilities can not negatively affect enemies....maybe
+Can only affect and be affected by mobs on same tile.
 
 ## Blinded
 Lowers max awareness
