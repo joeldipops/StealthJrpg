@@ -611,7 +611,7 @@ const PCTemplate Data::A = GetA();
 PCTemplate GetB() { // "Brienne" Archetype
     PCTemplate result;
     result.Name = Strings::BName;
-    result.SpriteDef = &Resources::SpriteIndex::KID_SOUTH_0;    
+    result.SpriteDef = &Resources::SpriteIndex::TEEN_SOUTH_0;
     result.ImagePath = RESOURCE_LOCATION + "b-image.png";
     result.PortraitPath = RESOURCE_LOCATION + "b-portrait.png";
     result.Class = Data::WELLSPRING;
@@ -630,7 +630,7 @@ const PCTemplate Data::B = GetB();
 const PCTemplate GetC() { //"All Rounder" archetype
     PCTemplate result;
     result.Name = Strings::CName;
-    result.SpriteDef = &Resources::SpriteIndex::KID_SOUTH_0;
+    result.SpriteDef = &Resources::SpriteIndex::MUM_SOUTH_0;
     result.ImagePath = RESOURCE_LOCATION + "c-image.png";
     result.PortraitPath = RESOURCE_LOCATION + "c-portrait.png";
     result.Class = Data::JACK;
