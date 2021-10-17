@@ -10,19 +10,21 @@
 #include "../util/events.h"
 
 using namespace Util;
+using namespace Resources;
 
 namespace Play {
     class Party;
     struct PlayStateContainer;
-    struct MapObjectTemplate;
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject*, PlayStateContainer&);
     class MapObject {
         public:
-            MapObject(const Resources::MapObjectTemplate&);
+            MapObject(const MapObjectTemplate&);
             virtual ~MapObject(void) {};
             bool isDense(void);
-            Resources::SpriteDefinition* spriteDef(Resources::SpriteDefinition*);
-            Resources::SpriteDefinition* spriteDef(void) const;
+            void setUpSprite(SpriteDefinition*);
+            void setUpSprite(Direction, SpriteDefinition*);
+            virtual const SpriteDefinition* currentSprite(void) const;
+            const std::map<Direction, SpriteDefinition*> spriteMap(void) const;
             std::string imageFileName(const std::string&);
             std::string imageFileName(void) const;
 
@@ -43,11 +45,12 @@ namespace Play {
 
         protected:
             bool isDense(bool);
+
             const Handler<MapObject, PlayStateContainer> onInspectFn(void) const;
         private:
             bool _isDense;
             std::string _imageFileName;
-            Resources::SpriteDefinition* _spriteDef;
+            std::map<Direction, SpriteDefinition*> _sprites;
             int _x = 0;
             int _y = 0;
             Direction _facing = Direction::NONE;

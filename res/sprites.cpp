@@ -35,11 +35,11 @@ SpriteDefinition::SpriteDefinition(std::string sheet, int index) {
     _index = index;
 }
 
-std::string SpriteDefinition::sheet() {
+std::string SpriteDefinition::sheet() const {
     return _sheet;
 }
 
-int SpriteDefinition::index() {
+int SpriteDefinition::index() const {
     return _index;
 }
 

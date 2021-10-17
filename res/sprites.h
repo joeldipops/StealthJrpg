@@ -21,8 +21,8 @@ namespace Resources {
     struct SpriteDefinition {
         public:
             SpriteDefinition(std::string sheet, int index);
-            std::string sheet();
-            int index();
+            std::string sheet() const;
+            int index() const;
         private:
             std::string _sheet;
             int _index;

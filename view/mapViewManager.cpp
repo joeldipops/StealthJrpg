@@ -1,6 +1,7 @@
 #include "mapViewManager.h"
 #include "../play/gameMap.h"
 #include "../util/assetCache.h"
+
 using namespace View;
 
 /**
@@ -85,8 +86,8 @@ void MapViewManager::renderContents(const GameMap* gameMap, const SDL_Rect& visi
             CELL_WIDTH / 2, CELL_HEIGHT / 2
         };
 
-        if (mob->spriteDef()) {
-            Sprite* sprite = assets()->getSprite(mob->spriteDef());
+        if (mob->currentSprite()) {
+            Sprite* sprite = assets()->getSprite(mob->currentSprite());
             SDL_Rect stencil = sprite->stencil();
             SDL_RenderCopy(renderer(), sprite->texture(), &stencil, &rect);
         } else {

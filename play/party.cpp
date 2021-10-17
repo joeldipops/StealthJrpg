@@ -1,12 +1,14 @@
 #include "party.h"
 #include "enemy.h"
+#include "../res/sprites.h"
 
 using namespace Play;
+using namespace Resources;
 
 // STATIC HELPERS
 
-Resources::MapObjectTemplate getPCDefaultTemplate(void) {
-    Resources::MapObjectTemplate result;
+MapObjectTemplate getPCDefaultTemplate(void) {
+    MapObjectTemplate result;
     result.ImagePath = "";
     result.IsDense = true;
     return result;
@@ -40,8 +42,7 @@ Party::Party(std::vector<PC*> members_)
 /**
  * Destructor
  */
-Party::~Party(void)
-{
+Party::~Party(void) {
     for(natural i = 0; i < _members.size(); i++) {
         delete _members.at(i);
     }
@@ -117,7 +118,7 @@ PC* Party::memberAt(natural index) const {
     return _members.at(index);
 }
 
-PC* Party::addLeader(const Resources::PCTemplate& tmpl) {
+PC* Party::addLeader(const PCTemplate& tmpl) {
     PC* pc = new PC(tmpl);
     if (_members.size() >= 1) {
         delete _members.at(0);
@@ -131,7 +132,7 @@ PC* Party::addLeader(const Resources::PCTemplate& tmpl) {
     return pc;
 }
 
-PC* Party::addMember(const Resources::PCTemplate& tmpl) {
+PC* Party::addMember(const PCTemplate& tmpl) {
 
     if (_members.size() <= 0) {
         return addLeader(tmpl);
@@ -186,8 +187,14 @@ bool Party::isDefeated(void) const {
 }
 
 void Party::image(const MapObject* src) {
-    spriteDef(src->spriteDef());
     imageFileName(src->imageFileName());
+}
+
+/**
+ * The sprite used to represent this mob at the current point in time - follows the party leader.
+ */
+const SpriteDefinition* Party::currentSprite() const {
+    return leader()->spriteMap().at(facing());
 }
 
 int Party::x(int x_) {

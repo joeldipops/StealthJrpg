@@ -13,7 +13,7 @@ AssetCache::AssetCache(SDL_Renderer* renderer) {
     _renderer = renderer;
     _imageAssets = std::map<std::string, SDL_Texture*>();
     _fontAssets = std::map<std::string, TTF_Font*>();
-    _spriteAssets = std::map<SpriteDefinition*, Sprite*>();
+    _spriteAssets = std::map<const SpriteDefinition*, Sprite*>();
 
 }
 
@@ -24,7 +24,7 @@ AssetCache::~AssetCache(void) {
     emptyCache();
 }
 
-Sprite* AssetCache::getSprite(SpriteDefinition* def) {
+Sprite* AssetCache::getSprite(const SpriteDefinition* def) {
     // If asset is already in the cache, just return it.
     if (_spriteAssets.count(def)) {
         return _spriteAssets.at(def);
@@ -151,5 +151,5 @@ void AssetCache::emptyCache(void) {
 
     _imageAssets = std::map<std::string, SDL_Texture*>();
     _fontAssets = std::map<std::string, TTF_Font*>();
-    _spriteAssets = std::map<SpriteDefinition*, Sprite*>();
+    _spriteAssets = std::map<const SpriteDefinition*, Sprite*>();
 }

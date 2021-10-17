@@ -9,11 +9,37 @@ using namespace Resources;
 /**
  * Constructor
  */
-MapObject::MapObject(const Resources::MapObjectTemplate& tmpl) {
+MapObject::MapObject(const MapObjectTemplate& tmpl) {
     _isDense = tmpl.IsDense;
-    _spriteDef = tmpl.SpriteDef;
     _imageFileName = tmpl.ImagePath;
     _onInspect = tmpl.OnInspect;
+
+    if (tmpl.SpriteDef != NULL) {
+        setUpSprite(tmpl.SpriteDef);
+    } else {
+        // Ensure each direction has an entry.
+        setUpSprite(NULL);
+
+        // If nothing specified for NONE, have it match SOUTH.
+        if (tmpl.SpriteMap.count(Direction::NONE) > 0 && tmpl.SpriteMap.at(Direction::NONE) != NULL) {
+            setUpSprite(Direction::NONE, tmpl.SpriteMap.at(Direction::SOUTH));
+        } else if (tmpl.SpriteMap.count(Direction::SOUTH) > 0 && tmpl.SpriteMap.at(Direction::SOUTH) != NULL) {
+            setUpSprite(Direction::NONE, tmpl.SpriteMap.at(Direction::SOUTH));
+        }
+
+        if (tmpl.SpriteMap.count(Direction::NORTH) > 0 && tmpl.SpriteMap.at(Direction::NORTH) != NULL) {
+            setUpSprite(Direction::NORTH, tmpl.SpriteMap.at(Direction::NORTH));
+        }
+        if (tmpl.SpriteMap.count(Direction::SOUTH) > 0 && tmpl.SpriteMap.at(Direction::SOUTH) != NULL) {
+            setUpSprite(Direction::SOUTH, tmpl.SpriteMap.at(Direction::SOUTH));
+        }
+        if (tmpl.SpriteMap.count(Direction::EAST) > 0 && tmpl.SpriteMap.at(Direction::EAST) != NULL) {
+            setUpSprite(Direction::EAST, tmpl.SpriteMap.at(Direction::EAST));
+        }
+        if (tmpl.SpriteMap.count(Direction::WEST) > 0 && tmpl.SpriteMap.at(Direction::WEST) != NULL) {
+            setUpSprite(Direction::WEST, tmpl.SpriteMap.at(Direction::WEST));
+        }
+    }
 }
 
 /**
@@ -22,15 +48,6 @@ MapObject::MapObject(const Resources::MapObjectTemplate& tmpl) {
 const Handler<MapObject, PlayStateContainer> MapObject::onInspectFn(void) const { return _onInspect; }
 
 // PROPERTIES
-
-/**
- * Defines a single image within a spritesheet to represent this mob.
- */
-SpriteDefinition* MapObject::spriteDef(void) const { return _spriteDef; }
-SpriteDefinition* MapObject::spriteDef(SpriteDefinition* def) {
-    _spriteDef = def;
-    return _spriteDef;
-}
 
 /**
  * Sets and gets the path to this object's image.
@@ -42,6 +59,11 @@ std::string MapObject::imageFileName(const std::string& name) {
     _imageFileName = name;
     return _imageFileName;
 }
+
+/**
+ *  Gets the images that may be used to represent this object.
+ */
+const std::map<Direction, Resources::SpriteDefinition*> MapObject::spriteMap() const { return _sprites; }
 
 /**
  * Gets or sets the Mob's X position.
@@ -85,6 +107,8 @@ Direction MapObject::facing(Direction facing_) {
     return _facing;
 }
 
+// METHODS
+
 /**
  * Gets or sets the X/Y coordinates of the mob.
  * @param x
@@ -108,4 +132,36 @@ Location MapObject::location(const Location* loc) {
         y(loc->Y);
     }
     return Location(&_x, &_y);
+}
+
+/**
+ * The sprite used to represent this mob at the current point in time.
+ */
+const SpriteDefinition* MapObject::currentSprite() const {
+    if (_sprites.count(_facing) > 0) {
+        return _sprites.at(_facing); 
+    } else {
+        return NULL;
+    }
+}
+
+/**
+ * Set object up to be represented by a single image.
+ * @param def The image definition.
+ */
+void MapObject::setUpSprite(SpriteDefinition* def) {
+    _sprites[Direction::NONE] = def;
+    _sprites[Direction::NORTH] = def;
+    _sprites[Direction::SOUTH] = def;
+    _sprites[Direction::EAST] = def;
+    _sprites[Direction::WEST] = def;
+}
+
+/**
+ * Set object to be represented by different images depending on the facing direction.
+ * @param dir The facing direction this image will represent.
+ * @param def The image definition.
+ */
+void MapObject::setUpSprite(Direction dir, SpriteDefinition* def) {
+    _sprites[dir] = def;
 }

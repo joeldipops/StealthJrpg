@@ -593,7 +593,14 @@ const RuneTemplate Resources::Data::SKILL = GetSKILL();
 
 PCTemplate GetA() { // "Albert" archetype
     PCTemplate result;
-    result.SpriteDef = &Resources::SpriteIndex::KID_SOUTH_0;
+    result.SpriteMap = {
+        { NORTH, &Resources::SpriteIndex::KID_NORTH_0 },
+        { SOUTH, &Resources::SpriteIndex::KID_SOUTH_0 },
+        { EAST, &Resources::SpriteIndex::KID_EAST_0 },
+        { WEST, &Resources::SpriteIndex::KID_WEST_0 }
+    };
+
+
     result.Name = Strings::AName;
     result.ImagePath = RESOURCE_LOCATION + "a-image.png";
     result.PortraitPath = RESOURCE_LOCATION + "a-portrait.png";
@@ -604,6 +611,7 @@ PCTemplate GetA() { // "Albert" archetype
     result.Defence = 0.9;
     result.Skill = 1.5;
     result.MemberCode = PartyMemberCode::A;
+
     return result;
 };
 const PCTemplate Data::A = GetA();
