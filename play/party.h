@@ -33,18 +33,18 @@ namespace Play {
             int x(int); using MapObject::x;
             int y(int); using MapObject::y;
 
+            virtual Direction facing(void) const;
+            virtual Direction facing(Direction);
+
             const std::vector<Rune*> runeCollection(void) const;
             void addRunes(Rune*);
             void addRunes(std::vector<Rune*>);
             std::vector<Rune*> _runeCollection;
-        protected:
-            void image(const MapObject*);
 
         private:
             std::vector<PC*> _members;
             std::vector<PC*> _bench;
             static MapObjectTemplate ctrTmpl;
-
     };
 }
 #endif

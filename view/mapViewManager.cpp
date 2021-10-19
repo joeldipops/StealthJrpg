@@ -1,8 +1,10 @@
 #include "mapViewManager.h"
 #include "../play/gameMap.h"
 #include "../util/assetCache.h"
+#include "../graphics/sprite.h"
 
 using namespace View;
+using namespace Graphics;
 
 /**
  * Constructor passes through to base class.

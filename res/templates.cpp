@@ -2,6 +2,7 @@
 #include "battleCommands.h"
 #include "strings.h"
 #include "../play/playStateManager.h"
+#include "animations.h"
 #include "sprites.h"
 
 using namespace Resources;
@@ -593,13 +594,6 @@ const RuneTemplate Resources::Data::SKILL = GetSKILL();
 
 PCTemplate GetA() { // "Albert" archetype
     PCTemplate result;
-    result.SpriteMap = {
-        { NORTH, &Resources::SpriteIndex::KID_NORTH_0 },
-        { SOUTH, &Resources::SpriteIndex::KID_SOUTH_0 },
-        { EAST, &Resources::SpriteIndex::KID_EAST_0 },
-        { WEST, &Resources::SpriteIndex::KID_WEST_0 }
-    };
-
 
     result.Name = Strings::AName;
     result.ImagePath = RESOURCE_LOCATION + "a-image.png";
@@ -611,6 +605,14 @@ PCTemplate GetA() { // "Albert" archetype
     result.Defence = 0.9;
     result.Skill = 1.5;
     result.MemberCode = PartyMemberCode::A;
+
+    result.Animations = {
+        { AnimationTrigger::IDLE, { new Frame(&SpriteIndex::KID_SOUTH_0) }},
+        { AnimationTrigger::NORTH_MOVE, AnimationIndex::KID_NORTH },
+        { AnimationTrigger::SOUTH_MOVE, AnimationIndex::KID_SOUTH },
+        { AnimationTrigger::EAST_MOVE, AnimationIndex::KID_EAST },
+        { AnimationTrigger::WEST_MOVE, AnimationIndex::KID_WEST }
+    };
 
     return result;
 };
@@ -630,6 +632,14 @@ PCTemplate GetB() { // "Brienne" Archetype
     result.Skill = 0.6;
     result.MemberCode = PartyMemberCode::B;
 
+    result.Animations = {
+        { AnimationTrigger::IDLE, { new Frame(&SpriteIndex::KID_SOUTH_0) }},
+        { AnimationTrigger::NORTH_MOVE, AnimationIndex::KID_NORTH },
+        { AnimationTrigger::SOUTH_MOVE, AnimationIndex::KID_SOUTH },
+        { AnimationTrigger::EAST_MOVE, AnimationIndex::KID_EAST },
+        { AnimationTrigger::WEST_MOVE, AnimationIndex::KID_WEST }
+    };
+
 
     return result;
 };
@@ -648,6 +658,15 @@ const PCTemplate GetC() { //"All Rounder" archetype
     result.Defence = 1.0;
     result.Skill = 1.0;
     result.MemberCode = PartyMemberCode::C;
+
+    result.Animations = {
+        { AnimationTrigger::IDLE, { new Frame(&SpriteIndex::KID_SOUTH_0) }},
+        { AnimationTrigger::NORTH_MOVE, AnimationIndex::KID_NORTH },
+        { AnimationTrigger::SOUTH_MOVE, AnimationIndex::KID_SOUTH },
+        { AnimationTrigger::EAST_MOVE, AnimationIndex::KID_EAST },
+        { AnimationTrigger::WEST_MOVE, AnimationIndex::KID_WEST }
+    };
+
     return result;
 };
 const PCTemplate Data::C = GetC();

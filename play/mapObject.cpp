@@ -2,6 +2,7 @@
 #include "../res/sprites.h"
 
 using namespace Play;
+using namespace Graphics;
 using namespace Resources;
 
 // LIFECYCLE
@@ -59,11 +60,6 @@ std::string MapObject::imageFileName(const std::string& name) {
     _imageFileName = name;
     return _imageFileName;
 }
-
-/**
- *  Gets the images that may be used to represent this object.
- */
-const std::map<Direction, Resources::SpriteDefinition*> MapObject::spriteMap() const { return _sprites; }
 
 /**
  * Gets or sets the Mob's X position.

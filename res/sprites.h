@@ -4,30 +4,12 @@
 #include <utility>
 #include <string>
 #include <map>
-#include <SDL2/SDL.h>
+
+#include "../graphics/spriteDefinition.h"
+
+using namespace Graphics;
 
 namespace Resources {
-    struct Sprite {
-        public:
-            Sprite(SDL_Texture* texture, int x, int y, int width, int height);
-            Sprite(SDL_Texture* texture, SDL_Rect* stencil);
-            SDL_Texture* texture();
-            SDL_Rect stencil();
-        private:
-            SDL_Texture* _texture;
-            SDL_Rect _stencil;
-    };
-
-    struct SpriteDefinition {
-        public:
-            SpriteDefinition(std::string sheet, int index);
-            std::string sheet() const;
-            int index() const;
-        private:
-            std::string _sheet;
-            int _index;
-    };
-
     class SpriteIndex {
         public:
             static const std::map<std::string, std::pair<int, int>> SheetDimensions;

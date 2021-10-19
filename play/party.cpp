@@ -34,9 +34,6 @@ Party::Party(void)
 Party::Party(std::vector<PC*> members_)
 :MapObject(getPCDefaultTemplate()) {
     _members = members_;
-    if (_members.size() > 0) {
-        image(_members.at(0));
-    }
 }
 
 /**
@@ -60,6 +57,34 @@ Party::~Party(void) {
 
 const std::vector<PC*> Party::members(void) const { return _members; }
 const std::vector<Rune*> Party::runeCollection(void) const { return _runeCollection; }
+
+Direction Party::facing() const { 
+    if (_members.size() > 0) {
+        return leader()->facing();
+    }
+    return MapObject::facing();
+}
+
+Direction Party::facing(Direction dir) {
+    if (_members.size() > 0) {
+        leader()->facing(dir);
+    }
+    return MapObject::facing(dir);
+}
+
+int Party::x(int x_) {
+    if (_members.size() > 0) {
+        leader()->x(x_);
+    }
+    return MapObject::x(x_);
+}
+
+int Party::y(int y_) {
+    if (_members.size() > 0) {
+        leader()->y(y_);
+    }
+    return MapObject::y(y_);
+}
 
 // METHODS
 
@@ -128,7 +153,6 @@ PC* Party::addLeader(const PCTemplate& tmpl) {
     }
 
     pc->location(x(), y());
-    image(pc);
     return pc;
 }
 
@@ -163,7 +187,7 @@ void Party::reorder(int oldPosition, int newPosition) {
     PC* member = _members.at(oldPosition);
     _members.erase(_members.begin() + oldPosition);
     _members.insert(_members.begin() + newPosition, member);
-    image(leader());
+    leader()->facing(facing());
     leader()->location(x(), y());
 }
 
@@ -186,29 +210,11 @@ bool Party::isDefeated(void) const {
     return true;
 }
 
-void Party::image(const MapObject* src) {
-    imageFileName(src->imageFileName());
-}
-
 /**
  * The sprite used to represent this mob at the current point in time - follows the party leader.
  */
 const SpriteDefinition* Party::currentSprite() const {
-    return leader()->spriteMap().at(facing());
-}
-
-int Party::x(int x_) {
-    if (_members.size() > 0) {
-        leader()->x(x_);
-    }
-    return MapObject::x(x_);
-}
-
-int Party::y(int y_) {
-    if (_members.size() > 0) {
-        leader()->y(y_);
-    }
-    return MapObject::y(y_);
+    return leader()->currentSprite();
 }
 
 /**

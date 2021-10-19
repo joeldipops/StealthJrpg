@@ -8,12 +8,22 @@
 #include "../res/sprites.h"
 #include "../res/templates.h"
 #include "../util/events.h"
+#include "../graphics/frame.h"
+#include "../graphics/animation.h"
 
 using namespace Util;
 using namespace Resources;
+using namespace Graphics;
 
 namespace Play {
-    class Party;
+    enum AnimationTrigger {
+        IDLE,
+        NORTH_MOVE,
+        SOUTH_MOVE,
+        EAST_MOVE,
+        WEST_MOVE
+    };
+
     struct PlayStateContainer;
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject*, PlayStateContainer&);
     class MapObject {
@@ -21,10 +31,10 @@ namespace Play {
             MapObject(const MapObjectTemplate&);
             virtual ~MapObject(void) {};
             bool isDense(void);
-            void setUpSprite(SpriteDefinition*);
-            void setUpSprite(Direction, SpriteDefinition*);
+            void setUpSprite(Direction, SpriteDefinition* def);
+            void setUpSprite(SpriteDefinition* def);
+            void setUpAnimation(AnimationTrigger, Animation*);
             virtual const SpriteDefinition* currentSprite(void) const;
-            const std::map<Direction, SpriteDefinition*> spriteMap(void) const;
             std::string imageFileName(const std::string&);
             std::string imageFileName(void) const;
 
@@ -33,8 +43,8 @@ namespace Play {
             Location location(int, int);
             Location location(const Location*);
 
-            Direction facing(void) const;
-            Direction facing(Direction);
+            virtual Direction facing(void) const;
+            virtual Direction facing(Direction);
 
             virtual int x(int);
             virtual int x(void) const;

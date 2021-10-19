@@ -74,13 +74,7 @@ namespace Resources {
     struct MapObjectTemplate {
         std::string ImagePath;
         SpriteDefinition* SpriteDef = nullptr;
-        std::map<Direction, SpriteDefinition*> SpriteMap = {
-            { NONE, NULL },
-            { NORTH, NULL },
-            { SOUTH, NULL },
-            { EAST, NULL },
-            { WEST, NULL }
-        };
+        std::map<AnimationTrigger, std::vector<Frame*>> Animations = {};
         bool IsDense;
         Handler<MapObject, PlayStateContainer> OnInspect = nullptr;
     };

@@ -9,8 +9,10 @@
 #include <iostream>
 
 #include "../res/sprites.h"
+#include "../graphics/sprite.h"
 
 using namespace Resources;
+using namespace Graphics;
 
 namespace Util {
     class AssetCache {
