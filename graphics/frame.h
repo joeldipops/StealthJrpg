@@ -6,8 +6,6 @@
 
 #include "../res/sprites.h"
 
-using namespace Resources;
-
 namespace Graphics {
     class Frame : SpriteDefinition {
         public:

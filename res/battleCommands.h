@@ -11,16 +11,11 @@
 #include "../util/utils.h"
 
 namespace Play { class Enemy; }
-
-using namespace Play;
-namespace Resources
-{
-
-    struct Commands
-    {
+namespace Resources {
+    struct Commands {
         // Non spell commands
-        static int FLEE(Command*, Mob*, SpellContext& field);
-        static int ATTACK(Command* command, Mob* actor, SpellContext& field);
+        static int FLEE(Magic::Command*, Play::Mob*, Magic::SpellContext& field);
+        static int ATTACK(Magic::Command* command, Play::Mob* actor, Magic::SpellContext& field);
     };
 }
 #endif

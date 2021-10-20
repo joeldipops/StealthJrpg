@@ -7,8 +7,6 @@
 #include "../res/sprites.h"
 #include "frame.h"
 
-using namespace Resources;
-
 namespace Graphics {
     /**
      * 

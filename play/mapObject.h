@@ -16,14 +16,6 @@ using namespace Resources;
 using namespace Graphics;
 
 namespace Play {
-    enum AnimationTrigger {
-        IDLE,
-        NORTH_MOVE,
-        SOUTH_MOVE,
-        EAST_MOVE,
-        WEST_MOVE
-    };
-
     struct PlayStateContainer;
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject*, PlayStateContainer&);
     class MapObject {
