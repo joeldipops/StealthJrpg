@@ -4,6 +4,7 @@
 #include "../util/utils.h"
 
 namespace Graphics {
+    using namespace std;
 
     // Easing functions.
 
@@ -21,7 +22,7 @@ namespace Graphics {
      * Constructor
      * Allows you to pass in a custom easing function.
      */
-    Animation::Animation(std::vector<Frame*> frames, int durationMs, EasingFunction function) {
+    Animation::Animation(vector<Frame*> frames, int durationMs, EasingFunction function) {
         _isStarted = false;
 
         _frames = frames;
@@ -32,7 +33,7 @@ namespace Graphics {
     /**
      * Constructor
      */
-    Animation::Animation(std::vector<Frame*> frames, int durationMs, EasingType function) {
+    Animation::Animation(vector<Frame*> frames, int durationMs, EasingType function) {
         _isStarted = false;
 
         _frames = frames;

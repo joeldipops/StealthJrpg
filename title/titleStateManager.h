@@ -7,21 +7,18 @@
 #include "../util/utils.h"
 #include "../res/strings.h"
 
-using namespace Core;
-namespace Play
-{
-    class TitleStateManager final : Core::StateManager<Title::TitleState, Core::CoreState>
-    {
+namespace Play {
+    class TitleStateManager final : Core::StateManager<Title::TitleState, Core::CoreState> {
         public:
             TitleStateManager(SDL_Renderer*, Util::AssetCache*);
             ~TitleStateManager(void);
             Core::CoreState start(void);
 
         private:
-            static const MenuItem START;
-            static const MenuItem QUIT;
-            static const MenuItem CONTINUE;
-            std::vector<MenuItem> _menu;
+            static const Core::MenuItem START;
+            static const Core::MenuItem QUIT;
+            static const Core::MenuItem CONTINUE;
+            std::vector<Core::MenuItem> _menu;
 
             void render(void);
             bool moveCursor(const Core::InputPress);

@@ -9,8 +9,7 @@
 namespace Graphics {
     class Frame : SpriteDefinition {
         public:
-            Frame(SpriteDefinition* image);
-            Frame(SpriteDefinition* image, int x, int y);
+            Frame(SpriteDefinition* image, int x = 0, int y = 0);
         private:
             int _xOffset;
             int _yOffset;

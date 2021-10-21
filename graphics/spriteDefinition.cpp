@@ -1,10 +1,12 @@
 #include "spriteDefinition.h"
 
 namespace Graphics {
+    using namespace std;
+
     /**
      * Constructor
      */
-    SpriteDefinition::SpriteDefinition(std::string sheet, int index) {
+    SpriteDefinition::SpriteDefinition(string sheet, int index) {
         _sheet = sheet;
         _index = index;
     }
@@ -12,7 +14,7 @@ namespace Graphics {
     /**
      *
      */
-    const std::string SpriteDefinition::sheet() const {
+    const string SpriteDefinition::sheet() const {
         return _sheet;
     }
 
