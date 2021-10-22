@@ -9,7 +9,7 @@
 
 namespace Graphics {
     /**
-     * 
+     * Function to select the current animation frame based on time since animation began.
      * @param elapsedMs How long the animation has been playing so far.
      * @param durationMs Total time animation should play for.
      * @param frameCount Total number of frames in the animation.
