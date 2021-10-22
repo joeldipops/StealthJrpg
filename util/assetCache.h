@@ -9,8 +9,7 @@
 #include <iostream>
 
 #include "../res/sprites.h"
-
-using namespace Resources;
+#include "../graphics/sprite.h"
 
 namespace Util {
     class AssetCache {
@@ -19,7 +18,7 @@ namespace Util {
             AssetCache(SDL_Renderer*);
             ~AssetCache(void);
             SDL_Texture* get(std::string);
-            Sprite* getSprite(const SpriteDefinition*);
+            Graphics::Sprite* getSprite(const Graphics::SpriteDefinition*);
             TTF_Font* get(std::string, int);
             SDL_Texture* get(std::string, std::string, int, SDL_Colour);
 
@@ -28,7 +27,7 @@ namespace Util {
 
         private:
             std::map<std::string, SDL_Texture*> _imageAssets;
-            std::map<const SpriteDefinition*, Sprite*> _spriteAssets;
+            std::map<const Graphics::SpriteDefinition*, Graphics::Sprite*> _spriteAssets;
             std::map<std::string, TTF_Font*> _fontAssets;
             SDL_Renderer* _renderer;
     };

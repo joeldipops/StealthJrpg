@@ -7,13 +7,10 @@
 template<typename Context,  typename T>
 using Handler = T& (*) (Context*, T&);
 
-namespace Core
-{
+namespace Core {
     struct EventData {};
-    struct Event
-    {
-        ~Event(void)
-        {
+    struct Event {
+        ~Event(void) {
             if (InnerEvent != nullptr)
                 //delete InnerEvent;
             InnerEvent = nullptr;
@@ -22,8 +19,7 @@ namespace Core
         Handler<Event, EventData> Callback = nullptr;
     };
 
-    class EventManager final
-    {
+    class EventManager final {
         public:
             bool pollEvent(Event*, EventData* = nullptr);
             void addEvent(const Event&);

@@ -8,33 +8,29 @@
 #include "../res/sprites.h"
 #include "../res/templates.h"
 #include "../util/events.h"
-
-using namespace Util;
-using namespace Resources;
+#include "../graphics/frame.h"
+#include "../graphics/animation.h"
 
 namespace Play {
-    class Party;
     struct PlayStateContainer;
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject*, PlayStateContainer&);
     class MapObject {
         public:
-            MapObject(const MapObjectTemplate&);
-            virtual ~MapObject(void) {};
+            MapObject(const Resources::MapObjectTemplate&);
+            virtual ~MapObject(void);
             bool isDense(void);
-            void setUpSprite(SpriteDefinition*);
-            void setUpSprite(Direction, SpriteDefinition*);
-            virtual const SpriteDefinition* currentSprite(void) const;
-            const std::map<Direction, SpriteDefinition*> spriteMap(void) const;
+            void setUpAnimation(Resources::AnimationTrigger, Graphics::Animation*);
+            virtual const Graphics::SpriteDefinition* currentSprite(void) const;
             std::string imageFileName(const std::string&);
             std::string imageFileName(void) const;
 
             virtual PlayStateContainer& onInspect(PlayStateContainer&) = 0;
 
-            Location location(int, int);
-            Location location(const Location*);
+            Util::Location location(int, int);
+            Util::Location location(const Util::Location*);
 
-            Direction facing(void) const;
-            Direction facing(Direction);
+            virtual Direction facing(void) const;
+            virtual Direction facing(Direction);
 
             virtual int x(int);
             virtual int x(void) const;
@@ -45,15 +41,17 @@ namespace Play {
 
         protected:
             bool isDense(bool);
+            void triggerAnimation(Resources::AnimationTrigger event, int animationDurationMs);
 
             const Handler<MapObject, PlayStateContainer> onInspectFn(void) const;
         private:
             bool _isDense;
             std::string _imageFileName;
-            std::map<Direction, SpriteDefinition*> _sprites;
             int _x = 0;
             int _y = 0;
             Direction _facing = Direction::NONE;
+            Graphics::Animation* _activeAnimation;
+            std::map<Resources::AnimationTrigger, Graphics::Animation*> _animations;
             Handler<MapObject, PlayStateContainer> _onInspect;
     };
 }

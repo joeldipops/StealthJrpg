@@ -162,6 +162,7 @@ namespace Persistence
     };
 }
 
+const int WALK_TIME = 500;
 const int CELL_WIDTH = 50;
 const int CELL_HEIGHT = 50;
 const natural WIDTH = 1200;

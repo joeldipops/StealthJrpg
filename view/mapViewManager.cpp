@@ -1,8 +1,10 @@
 #include "mapViewManager.h"
 #include "../play/gameMap.h"
 #include "../util/assetCache.h"
+#include "../graphics/sprite.h"
 
 using namespace View;
+using namespace Graphics;
 
 /**
  * Constructor passes through to base class.
@@ -86,13 +88,13 @@ void MapViewManager::renderContents(const GameMap* gameMap, const SDL_Rect& visi
             CELL_WIDTH / 2, CELL_HEIGHT / 2
         };
 
-        if (mob->currentSprite()) {
+        if (mob->imageFileName().length() > 0) {
+            SDL_Texture* image = assets()->get(mob->imageFileName());
+            SDL_RenderCopy(renderer(), image, NULL, &rect);
+        } else {
             Sprite* sprite = assets()->getSprite(mob->currentSprite());
             SDL_Rect stencil = sprite->stencil();
             SDL_RenderCopy(renderer(), sprite->texture(), &stencil, &rect);
-        } else {
-            SDL_Texture* image = assets()->get(mob->imageFileName());
-            SDL_RenderCopy(renderer(), image, NULL, &rect);
         }
 
         if (mob->isMob()) {

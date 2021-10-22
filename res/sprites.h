@@ -4,71 +4,51 @@
 #include <utility>
 #include <string>
 #include <map>
-#include <SDL2/SDL.h>
+
+#include "../graphics/spriteDefinition.h"
 
 namespace Resources {
-    struct Sprite {
-        public:
-            Sprite(SDL_Texture* texture, int x, int y, int width, int height);
-            Sprite(SDL_Texture* texture, SDL_Rect* stencil);
-            SDL_Texture* texture();
-            SDL_Rect stencil();
-        private:
-            SDL_Texture* _texture;
-            SDL_Rect _stencil;
-    };
-
-    struct SpriteDefinition {
-        public:
-            SpriteDefinition(std::string sheet, int index);
-            std::string sheet() const;
-            int index() const;
-        private:
-            std::string _sheet;
-            int _index;
-    };
-
     class SpriteIndex {
         public:
             static const std::map<std::string, std::pair<int, int>> SheetDimensions;
-            static SpriteDefinition KID_NORTH_0;
-            static SpriteDefinition KID_NORTH_1;
-            static SpriteDefinition KID_NORTH_2;
-            static SpriteDefinition KID_SOUTH_0;
-            static SpriteDefinition KID_SOUTH_1;
-            static SpriteDefinition KID_SOUTH_2;
-            static SpriteDefinition KID_EAST_0;
-            static SpriteDefinition KID_EAST_1;
-            static SpriteDefinition KID_EAST_2;
-            static SpriteDefinition KID_WEST_0;
-            static SpriteDefinition KID_WEST_1;
-            static SpriteDefinition KID_WEST_2;
+            static Graphics::SpriteDefinition KID_NORTH_0;
+            static Graphics::SpriteDefinition KID_NORTH_1;
+            static Graphics::SpriteDefinition KID_NORTH_2;
+            static Graphics::SpriteDefinition KID_SOUTH_0;
+            static Graphics::SpriteDefinition KID_SOUTH_1;
+            static Graphics::SpriteDefinition KID_SOUTH_2;
+            static Graphics::SpriteDefinition KID_EAST_0;
+            static Graphics::SpriteDefinition KID_EAST_1;
+            static Graphics::SpriteDefinition KID_EAST_2;
+            static Graphics::SpriteDefinition KID_WEST_0;
+            static Graphics::SpriteDefinition KID_WEST_1;
+            static Graphics::SpriteDefinition KID_WEST_2;
 
-            static SpriteDefinition TEEN_NORTH_0;
-            static SpriteDefinition TEEN_NORTH_1;
-            static SpriteDefinition TEEN_NORTH_2;
-            static SpriteDefinition TEEN_SOUTH_0;
-            static SpriteDefinition TEEN_SOUTH_1;
-            static SpriteDefinition TEEN_SOUTH_2;
-            static SpriteDefinition TEEN_EAST_0;
-            static SpriteDefinition TEEN_EAST_1;
-            static SpriteDefinition TEEN_EAST_2;
-            static SpriteDefinition TEEN_WEST_0;
-            static SpriteDefinition TEEN_WEST_1;
-            static SpriteDefinition TEEN_WEST_2;
+            static Graphics::SpriteDefinition TEEN_NORTH_0;
+            static Graphics::SpriteDefinition TEEN_NORTH_1;
+            static Graphics::SpriteDefinition TEEN_NORTH_2;
+            static Graphics::SpriteDefinition TEEN_SOUTH_0;
+            static Graphics::SpriteDefinition TEEN_SOUTH_1;
+            static Graphics::SpriteDefinition TEEN_SOUTH_2;
+            static Graphics::SpriteDefinition TEEN_EAST_0;
+            static Graphics::SpriteDefinition TEEN_EAST_1;
+            static Graphics::SpriteDefinition TEEN_EAST_2;
+            static Graphics::SpriteDefinition TEEN_WEST_0;
+            static Graphics::SpriteDefinition TEEN_WEST_1;
+            static Graphics::SpriteDefinition TEEN_WEST_2;
 
-            static SpriteDefinition MUM_NORTH_0;
-            static SpriteDefinition MUM_NORTH_1;
-            static SpriteDefinition MUM_NORTH_2;
-            static SpriteDefinition MUM_SOUTH_0;
-            static SpriteDefinition MUM_SOUTH_1;
-            static SpriteDefinition MUM_SOUTH_2;
-            static SpriteDefinition MUM_EAST_0;
-            static SpriteDefinition MUM_EAST_1;
-            static SpriteDefinition MUM_EAST_2;
-            static SpriteDefinition MUM_WEST_0;
-            static SpriteDefinition MUM_WEST_1;
-            static SpriteDefinition MUM_WEST_2;
+            static Graphics::SpriteDefinition MUM_NORTH_0;
+            static Graphics::SpriteDefinition MUM_NORTH_1;
+            static Graphics::SpriteDefinition MUM_NORTH_2;
+            static Graphics::SpriteDefinition MUM_SOUTH_0;
+            static Graphics::SpriteDefinition MUM_SOUTH_1;
+            static Graphics::SpriteDefinition MUM_SOUTH_2;
+            static Graphics::SpriteDefinition MUM_EAST_0;
+            static Graphics::SpriteDefinition MUM_EAST_1;
+            static Graphics::SpriteDefinition MUM_EAST_2;
+            static Graphics::SpriteDefinition MUM_WEST_0;
+            static Graphics::SpriteDefinition MUM_WEST_1;
+            static Graphics::SpriteDefinition MUM_WEST_2;
     };
 }
 

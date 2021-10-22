@@ -10,9 +10,7 @@
 #include "../globalConstants.h"
 #include "../magic/magicTypedefs.h"
 #include "sprites.h"
-
-using namespace Persistence;
-using namespace Magic;
+#include "animations.h"
 
 namespace Play {
     class Mob;
@@ -20,7 +18,7 @@ namespace Play {
     class MapObject;
     struct PlayStateContainer;
 
-    typedef int (*AiAction)(Mob* context, SpellContext& field);
+    typedef int (*AiAction)(Mob* context, Magic::SpellContext& field);
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject* context, PlayStateContainer&);
 }
 
@@ -40,13 +38,13 @@ namespace Resources {
         float ModDuration = 1;
 
         Magic::MetaAction MetaAction = nullptr;
-        Modality Flag = Modality::NA;
+        Magic::Modality Flag = Magic::Modality::NA;
 
-        Targeter GetTarget = nullptr;
-        MultiTargeter GetTargetCandidates = nullptr;
-        Selecter SelectTargetFromCandidates = nullptr;
+        Magic::Targeter GetTarget = nullptr;
+        Magic::MultiTargeter GetTargetCandidates = nullptr;
+        Magic::Selecter SelectTargetFromCandidates = nullptr;
 
-        Action PerformAction = nullptr;
+        Magic::Action PerformAction = nullptr;
         float IsSameMultiplier = 1;
         float EnemyCostMultiplier = 1;
         float AllyEffectMultiplier = 1;
@@ -55,7 +53,7 @@ namespace Resources {
         int ActionDurationBonus = 0;
         bool IsBoon = false;
 
-        SavedObjectCode Code = SavedObjectCode::UNKNOWN;
+        Persistence::SavedObjectCode Code = Persistence::SavedObjectCode::UNKNOWN;
     };
 
     struct JobTemplate {
@@ -65,7 +63,7 @@ namespace Resources {
         float SpeedGrowth;
         float ResistanceGrowth;
         float DefenceGrowth;
-        SavedObjectCode Code;
+        Persistence::SavedObjectCode Code;
     };
 
     /**
@@ -73,14 +71,9 @@ namespace Resources {
      */
     struct MapObjectTemplate {
         std::string ImagePath;
-        SpriteDefinition* SpriteDef = nullptr;
-        std::map<Direction, SpriteDefinition*> SpriteMap = {
-            { NONE, NULL },
-            { NORTH, NULL },
-            { SOUTH, NULL },
-            { EAST, NULL },
-            { WEST, NULL }
-        };
+        Graphics::SpriteDefinition* SpriteDef = nullptr;
+        std::map<Direction, Graphics::SpriteDefinition*> SpriteMap = {};
+        std::map<AnimationTrigger, std::pair<std::vector<Graphics::Frame*>, Graphics::EasingType>> Animations = {};
         bool IsDense;
         Handler<MapObject, PlayStateContainer> OnInspect = nullptr;
     };
@@ -97,7 +90,7 @@ namespace Resources {
         float Skill;
         natural RangeOfSense;
         natural RangeOfSight;
-        std::vector<Command*> Commands;
+        std::vector<Magic::Command*> Commands;
     };
 
     enum PartyMemberCode {
