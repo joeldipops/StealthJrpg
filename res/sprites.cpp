@@ -16,17 +16,17 @@ namespace Resources {
     SpriteDefinition SpriteIndex::KID_SOUTH_1 = SpriteDefinition(PC_SPRITE_FILE, 51);
     SpriteDefinition SpriteIndex::KID_SOUTH_2 = SpriteDefinition(PC_SPRITE_FILE, 53);
 
-    SpriteDefinition SpriteIndex::KID_WEST_0 = SpriteDefinition(PC_SPRITE_FILE, 63);
-    SpriteDefinition SpriteIndex::KID_WEST_1 = SpriteDefinition(PC_SPRITE_FILE, 62);
-    SpriteDefinition SpriteIndex::KID_WEST_2 = SpriteDefinition(PC_SPRITE_FILE, 64);
+    SpriteDefinition SpriteIndex::KID_WEST_0 = SpriteDefinition(PC_SPRITE_FILE, 64);
+    SpriteDefinition SpriteIndex::KID_WEST_1 = SpriteDefinition(PC_SPRITE_FILE, 63);
+    SpriteDefinition SpriteIndex::KID_WEST_2 = SpriteDefinition(PC_SPRITE_FILE, 65);
 
-    SpriteDefinition SpriteIndex::KID_EAST_0 = SpriteDefinition(PC_SPRITE_FILE, 75);
-    SpriteDefinition SpriteIndex::KID_EAST_1 = SpriteDefinition(PC_SPRITE_FILE, 74);
-    SpriteDefinition SpriteIndex::KID_EAST_2 = SpriteDefinition(PC_SPRITE_FILE, 76);
+    SpriteDefinition SpriteIndex::KID_EAST_0 = SpriteDefinition(PC_SPRITE_FILE, 76);
+    SpriteDefinition SpriteIndex::KID_EAST_1 = SpriteDefinition(PC_SPRITE_FILE, 75);
+    SpriteDefinition SpriteIndex::KID_EAST_2 = SpriteDefinition(PC_SPRITE_FILE, 77);
 
-    SpriteDefinition SpriteIndex::KID_NORTH_0 = SpriteDefinition(PC_SPRITE_FILE, 87);
-    SpriteDefinition SpriteIndex::KID_NORTH_1 = SpriteDefinition(PC_SPRITE_FILE, 86);
-    SpriteDefinition SpriteIndex::KID_NORTH_2 = SpriteDefinition(PC_SPRITE_FILE, 88);
+    SpriteDefinition SpriteIndex::KID_NORTH_0 = SpriteDefinition(PC_SPRITE_FILE, 88);
+    SpriteDefinition SpriteIndex::KID_NORTH_1 = SpriteDefinition(PC_SPRITE_FILE, 87);
+    SpriteDefinition SpriteIndex::KID_NORTH_2 = SpriteDefinition(PC_SPRITE_FILE, 89);
 
     SpriteDefinition SpriteIndex::TEEN_NORTH_0 = SpriteDefinition(PC_SPRITE_FILE, 84);
     SpriteDefinition SpriteIndex::TEEN_NORTH_1 = SpriteDefinition(PC_SPRITE_FILE, 83);

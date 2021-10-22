@@ -1,8 +1,26 @@
 #include "mapObject.h"
 #include "../res/sprites.h"
+#include <iostream>
 
 namespace Play {
     using std::string;
+    using std::map;
+    using Graphics::Animation;
+    using Graphics::EasingType;
+    using Graphics::Frame;
+    using Graphics::SpriteDefinition;
+    using Resources::AnimationIndex;
+    using Resources::AnimationTrigger;
+    using Resources::MapObjectTemplate;
+    using Resources::SpriteIndex;
+    using Util::Location;
+
+    map<Direction, AnimationTrigger> _directionTriggers = {
+        { Direction::NORTH, AnimationTrigger::NORTH_MOVE },
+        { Direction::SOUTH, AnimationTrigger::SOUTH_MOVE },
+        { Direction::EAST, AnimationTrigger::EAST_MOVE },
+        { Direction::WEST, AnimationTrigger::WEST_MOVE }
+    };
 
     // LIFECYCLE
 
@@ -14,32 +32,31 @@ namespace Play {
         _imageFileName = tmpl.ImagePath;
         _onInspect = tmpl.OnInspect;
 
-        if (tmpl.SpriteDef != NULL) {
-            setUpSprite(tmpl.SpriteDef);
-        } else {
-            // Ensure each direction has an entry.
-            setUpSprite(NULL);
+        _animations = {};
 
-            // If nothing specified for NONE, have it match SOUTH.
-            if (tmpl.SpriteMap.count(Direction::NONE) > 0 && tmpl.SpriteMap.at(Direction::NONE) != NULL) {
-                setUpSprite(Direction::NONE, tmpl.SpriteMap.at(Direction::SOUTH));
-            } else if (tmpl.SpriteMap.count(Direction::SOUTH) > 0 && tmpl.SpriteMap.at(Direction::SOUTH) != NULL) {
-                setUpSprite(Direction::NONE, tmpl.SpriteMap.at(Direction::SOUTH));
-            }
-
-            if (tmpl.SpriteMap.count(Direction::NORTH) > 0 && tmpl.SpriteMap.at(Direction::NORTH) != NULL) {
-                setUpSprite(Direction::NORTH, tmpl.SpriteMap.at(Direction::NORTH));
-            }
-            if (tmpl.SpriteMap.count(Direction::SOUTH) > 0 && tmpl.SpriteMap.at(Direction::SOUTH) != NULL) {
-                setUpSprite(Direction::SOUTH, tmpl.SpriteMap.at(Direction::SOUTH));
-            }
-            if (tmpl.SpriteMap.count(Direction::EAST) > 0 && tmpl.SpriteMap.at(Direction::EAST) != NULL) {
-                setUpSprite(Direction::EAST, tmpl.SpriteMap.at(Direction::EAST));
-            }
-            if (tmpl.SpriteMap.count(Direction::WEST) > 0 && tmpl.SpriteMap.at(Direction::WEST) != NULL) {
-                setUpSprite(Direction::WEST, tmpl.SpriteMap.at(Direction::WEST));
-            }
+        for(auto& entry : tmpl.Animations) {
+            _animations.insert({ entry.first, new Animation(entry.second.first, entry.second.second) });
         }
+
+        // If there's nothing for IDLE, put in a place holder so we don't explode.
+        if (_animations.count(AnimationTrigger::IDLE) <= 0) {
+            _animations.insert({ AnimationTrigger::IDLE, new Animation(AnimationIndex::DEFAULT, EasingType::LINEAR) });
+        }
+
+        triggerAnimation(AnimationTrigger::IDLE, 0);
+    }
+
+    /**
+     * Destructor
+     */
+    MapObject::~MapObject() {
+        for(auto& entry : _animations) {
+            // hrmmmmmmmmm
+            // This throws when MapCells are instantiated :/  what...
+            // deletePtr(entry.second);
+        }
+
+        _animations.empty();
     }
 
     /**
@@ -98,7 +115,11 @@ namespace Play {
      */
     Direction MapObject::facing(void) const { return _facing; }
     Direction MapObject::facing(Direction facing_) {
-        _facing = facing_;
+        if (_facing != facing_) {
+            _facing = facing_;
+
+            triggerAnimation(_directionTriggers[_facing], WALK_TIME);
+        }
         return _facing;
     }
 
@@ -129,35 +150,23 @@ namespace Play {
         return Location(&_x, &_y);
     }
 
+    // METHODS
+
+    /**
+     * When an animation trigger is pulled, kick off any relevant animation.
+     */
+    void MapObject::triggerAnimation(AnimationTrigger event, int animationDuration) {
+        if (_animations.count(event) > 0) {
+            _activeAnimation = _animations.at(event);
+        }
+
+        _activeAnimation->start(animationDuration);
+    }
+
     /**
      * The sprite used to represent this mob at the current point in time.
      */
     const SpriteDefinition* MapObject::currentSprite() const {
-        if (_sprites.count(_facing) > 0) {
-            return _sprites.at(_facing); 
-        } else {
-            return NULL;
-        }
-    }
-
-    /**
-     * Set object up to be represented by a single image.
-     * @param def The image definition.
-     */
-    void MapObject::setUpSprite(SpriteDefinition* def) {
-        _sprites[Direction::NONE] = def;
-        _sprites[Direction::NORTH] = def;
-        _sprites[Direction::SOUTH] = def;
-        _sprites[Direction::EAST] = def;
-        _sprites[Direction::WEST] = def;
-    }
-
-    /**
-     * Set object to be represented by different images depending on the facing direction.
-     * @param dir The facing direction this image will represent.
-     * @param def The image definition.
-     */
-    void MapObject::setUpSprite(Direction dir, SpriteDefinition* def) {
-        _sprites[dir] = def;
+        return _activeAnimation->getFrame();
     }
 }

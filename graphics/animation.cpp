@@ -22,22 +22,20 @@ namespace Graphics {
      * Constructor
      * Allows you to pass in a custom easing function.
      */
-    Animation::Animation(vector<Frame*> frames, int durationMs, EasingFunction function) {
+    Animation::Animation(vector<Frame*> frames, EasingFunction function) {
         _isStarted = false;
 
         _frames = frames;
-        _durationMs = durationMs;
         _function =  function;
     }
 
     /**
      * Constructor
      */
-    Animation::Animation(vector<Frame*> frames, int durationMs, EasingType function) {
+    Animation::Animation(vector<Frame*> frames, EasingType function) {
         _isStarted = false;
 
         _frames = frames;
-        _durationMs = durationMs;
 
         switch(function) {
             case EasingType::LINEAR:
@@ -49,18 +47,18 @@ namespace Graphics {
     /**
      * Destructor
      */
-    Animation::~Animation(void) {
-    }
-
-
+    Animation::~Animation(void) {}
 
     // METHODS
 
     /**
      * Start the animation
+     * @param durationMs How long the animation has to complete.
      */
-    void Animation::start(void) {
+    void Animation::start(int durationMs) {
+        _durationMs = durationMs;
         _startTime = Util::now();
+        _isStarted = true;
     }
 
     /**
@@ -76,7 +74,7 @@ namespace Graphics {
         long elapsed = Util::now() - _startTime;
 
         // Always show the last frame after the animation has ended.
-        if (elapsed > _durationMs) {
+        if (elapsed >= _durationMs) {
             Frame* result = _frames.back();
             return result;
         } else {

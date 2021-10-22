@@ -73,7 +73,7 @@ namespace Resources {
         std::string ImagePath;
         Graphics::SpriteDefinition* SpriteDef = nullptr;
         std::map<Direction, Graphics::SpriteDefinition*> SpriteMap = {};
-        std::map<AnimationTrigger, std::vector<Graphics::Frame*>> Animations = {};
+        std::map<AnimationTrigger, std::pair<std::vector<Graphics::Frame*>, Graphics::EasingType>> Animations = {};
         bool IsDense;
         Handler<MapObject, PlayStateContainer> OnInspect = nullptr;
     };

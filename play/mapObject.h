@@ -17,10 +17,8 @@ namespace Play {
     class MapObject {
         public:
             MapObject(const Resources::MapObjectTemplate&);
-            virtual ~MapObject(void) {};
+            virtual ~MapObject(void);
             bool isDense(void);
-            void setUpSprite(Direction, Graphics::SpriteDefinition* def);
-            void setUpSprite(Graphics::SpriteDefinition* def);
             void setUpAnimation(Resources::AnimationTrigger, Graphics::Animation*);
             virtual const Graphics::SpriteDefinition* currentSprite(void) const;
             std::string imageFileName(const std::string&);
@@ -43,15 +41,17 @@ namespace Play {
 
         protected:
             bool isDense(bool);
+            void triggerAnimation(Resources::AnimationTrigger event, int animationDurationMs);
 
             const Handler<MapObject, PlayStateContainer> onInspectFn(void) const;
         private:
             bool _isDense;
             std::string _imageFileName;
-            std::map<Direction, Graphics::SpriteDefinition*> _sprites;
             int _x = 0;
             int _y = 0;
             Direction _facing = Direction::NONE;
+            Graphics::Animation* _activeAnimation;
+            std::map<Resources::AnimationTrigger, Graphics::Animation*> _animations;
             Handler<MapObject, PlayStateContainer> _onInspect;
     };
 }

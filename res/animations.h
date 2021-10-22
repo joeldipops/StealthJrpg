@@ -18,6 +18,7 @@ namespace Resources {
 
     class AnimationIndex {
         public:
+            static std::vector<Graphics::Frame*> DEFAULT;
             static std::vector<Graphics::Frame*> KID_NORTH;
             static std::vector<Graphics::Frame*> KID_SOUTH;
             static std::vector<Graphics::Frame*> KID_EAST;

@@ -3,7 +3,9 @@
 #include "../res/sprites.h"
 
 namespace Play {
+    using std::vector;
     using Graphics::SpriteDefinition;
+    using Resources::AnimationTrigger;
     using Resources::MapObjectTemplate;
     using Resources::PCTemplate;
 
@@ -23,8 +25,8 @@ namespace Play {
      */
     Party::Party(void)
      : MapObject(getPCDefaultTemplate()) {
-        _members = std::vector<PC*>(0);
-        _bench = std::vector<PC*>(0);
+        _members = vector<PC*>(0);
+        _bench = vector<PC*>(0);
         x(-1);
         y(-1);
         facing(Direction::SOUTH);
@@ -33,7 +35,7 @@ namespace Play {
     /**
      * Constructor takes list of members.
      */
-    Party::Party(std::vector<PC*> members_)
+    Party::Party(vector<PC*> members_)
      : MapObject(getPCDefaultTemplate()) {
         _members = members_;
     }
@@ -46,19 +48,19 @@ namespace Play {
             delete _members.at(i);
         }
 
-        _members = std::vector<PC*>(0);
+        _members = vector<PC*>(0);
 
         for(Rune* r : _runeCollection) {
             delete r;
         }
 
-        _runeCollection = std::vector<Rune*>(0);
+        _runeCollection = vector<Rune*>(0);
     }
 
     // PROPERTIES
 
-    const std::vector<PC*> Party::members(void) const { return _members; }
-    const std::vector<Rune*> Party::runeCollection(void) const { return _runeCollection; }
+    const vector<PC*> Party::members(void) const { return _members; }
+    const vector<Rune*> Party::runeCollection(void) const { return _runeCollection; }
 
     Direction Party::facing() const { 
         if (_members.size() > 0) {
@@ -229,7 +231,7 @@ namespace Play {
             _members.push_back(pc);
         }
 
-        _bench = std::vector<PC*>(0);
+        _bench = vector<PC*>(0);
     }
 
     void Party::addRunes(Rune* rune) {
@@ -244,7 +246,7 @@ namespace Play {
         _runeCollection.push_back(rune);
     }
 
-    void Party::addRunes(std::vector<Rune*> runes) {
+    void Party::addRunes(vector<Rune*> runes) {
         for (Rune* rune : runes) {
             bool found = false;
             for (Rune* r : _runeCollection) {
@@ -252,6 +254,7 @@ namespace Play {
                     found = true;
                 }
             }
+
             if (!found) {
                 _runeCollection.push_back(rune);
             }

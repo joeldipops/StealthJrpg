@@ -7,7 +7,7 @@
 #include "../res/sprites.h"
 
 namespace Graphics {
-    class Frame : SpriteDefinition {
+    class Frame : public SpriteDefinition {
         public:
             Frame(SpriteDefinition* image, int x = 0, int y = 0);
         private:

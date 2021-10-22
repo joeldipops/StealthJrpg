@@ -16,25 +16,21 @@
 #include "pc.h"
 #include "party.h"
 
-namespace View
-{
+namespace View {
     class ControlViewManager;
     class StatsViewManager;
     class MapViewManager;
     class MiniMapViewManager;
 }
 
-namespace Play
-{
-    struct PlayStateContainer
-    {
+namespace Play {
+    struct PlayStateContainer {
         PlayState State;
         std::string Message;
         GameMap* Map;
     };
 
-    class PlayStateManager : public Core::StateManager<PlayState, Core::CoreState>
-    {
+    class PlayStateManager : public Core::StateManager<PlayState, Core::CoreState> {
         public:
             PlayStateManager(SDL_Renderer*, AssetCache*);
             ~PlayStateManager(void);
@@ -69,6 +65,7 @@ namespace Play
             View::MapViewManager* _mapView = nullptr;
             GameMap* _map = nullptr;
             int _combatGraceTime = 0;
+            int _lastMoveTime = 0;
 
             std::vector<Persistence::MapFileBlock> tempMapFile();
     };

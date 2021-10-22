@@ -6,10 +6,14 @@
 #include "sprites.h"
 
 namespace Resources {
+    using std::map;
+    using std::pair;
     using std::vector;
     using Persistence::SavedObjectCode;
     using Resources::AnimationTrigger;
+    using Graphics::EasingType;
     using Graphics::Frame;
+    using Graphics::SpriteDefinition;
 
     // CLASSES ---------------------
 
@@ -94,7 +98,7 @@ namespace Resources {
 
     // RUNES -----------------
 
-    static Combatable* all(Mob* caster, SpellContext& field, const std::vector<Combatable*>& candidates, SpellData&) {
+    static Combatable* all(Mob* caster, SpellContext& field, const vector<Combatable*>& candidates, SpellData&) {
         TargetAll* result = new TargetAll(candidates);
 
         bool isPlayerAllied = field.areAllied(caster, field.pcs().at(0));
@@ -134,7 +138,7 @@ namespace Resources {
     };
     const RuneTemplate Resources::Data::ALL = GetALL();
 
-    static Combatable* any (Mob* caster, SpellContext& field, const std::vector<Combatable*>& candidates, SpellData&) {
+    static Combatable* any (Mob* caster, SpellContext& field, const vector<Combatable*>& candidates, SpellData&) {
         int index  = rand() % candidates.size();
         return candidates.at(index);
     }
@@ -179,9 +183,9 @@ namespace Resources {
     const RuneTemplate Resources::Data::CASTER = GetCASTER();
 
 
-    static std::vector<Combatable*> enemies(Mob* caster, SpellContext& battleField, SpellData&) {
-        std::vector<Combatable*> result;
-        std::vector<Mob*> candidates;
+    static vector<Combatable*> enemies(Mob* caster, SpellContext& battleField, SpellData&) {
+        vector<Combatable*> result;
+        vector<Mob*> candidates;
 
         if (caster->type() == MobType::PlayerCharacter) {
             candidates =  battleField.hostiles();
@@ -213,9 +217,9 @@ namespace Resources {
     };
     const RuneTemplate Resources::Data::ENEMY = GetENEMY();
 
-    static std::vector<Combatable*> allies(Mob* caster, SpellContext& battleField, SpellData&) {
-        std::vector<Combatable*> result;
-        std::vector<Mob*> candidates;
+    static vector<Combatable*> allies(Mob* caster, SpellContext& battleField, SpellData&) {
+        vector<Combatable*> result;
+        vector<Mob*> candidates;
 
         if (caster->type() == MobType::PlayerCharacter) {
             candidates = battleField.pcs();
@@ -249,9 +253,9 @@ namespace Resources {
     };
     const RuneTemplate Resources::Data::ALLY = GetALLY();
 
-    static std::vector<Combatable*> members(Mob* caster, SpellContext& battleField, SpellData& data) {
-        std::vector<Combatable*> result;
-        std::vector<Mob*> candidates;
+    static vector<Combatable*> members(Mob* caster, SpellContext& battleField, SpellData& data) {
+        vector<Combatable*> result;
+        vector<Mob*> candidates;
 
         if (caster->type() == MobType::PlayerCharacter) {
             candidates = battleField.pcs();
@@ -291,7 +295,7 @@ namespace Resources {
         return  data;
     }
 
-    Combatable* most(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
+    Combatable* most(Mob* caster, SpellContext& battleField, const vector<Combatable*>& candidates, SpellData& data) {
         Combatable* result = nullptr;
         for(natural i = 0; i < candidates.size(); i++) {
             Combatable* mob = candidates.at(i);
@@ -417,7 +421,7 @@ namespace Resources {
     const RuneTemplate Resources::Data::LOW = GetLOW();
 
 
-    Combatable* mostStamina(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
+    Combatable* mostStamina(Mob* caster, SpellContext& battleField, const vector<Combatable*>& candidates, SpellData& data) {
         data.stat = Stat::STAMINA;
         return most(caster, battleField, candidates, data);
     }
@@ -455,7 +459,7 @@ namespace Resources {
         return modifySpell(data, 0, 0, -.25);
     }
 
-    Combatable* mostSpeed(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
+    Combatable* mostSpeed(Mob* caster, SpellContext& battleField, const vector<Combatable*>& candidates, SpellData& data) {
         data.stat = Stat::SPEED;
         return most(caster, battleField, candidates, data);
     }
@@ -490,7 +494,7 @@ namespace Resources {
     };
     const RuneTemplate Resources::Data::SPEED = GetSPEED();
 
-    Combatable* mostDefence(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
+    Combatable* mostDefence(Mob* caster, SpellContext& battleField, const vector<Combatable*>& candidates, SpellData& data) {
         data.stat = Stat::DEFENSE;
         return most(caster, battleField, candidates, data);
     }
@@ -524,7 +528,7 @@ namespace Resources {
     };
     const RuneTemplate Resources::Data::DEFENCE = GetDEFENCE();
 
-    Combatable* mostResistance(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
+    Combatable* mostResistance(Mob* caster, SpellContext& battleField, const vector<Combatable*>& candidates, SpellData& data) {
         data.stat = Stat::RESISTANCE;
         return most(caster, battleField, candidates, data);
     }
@@ -558,7 +562,7 @@ namespace Resources {
     };
     const RuneTemplate Resources::Data::RESISTANCE = GetRESISTANCE();
 
-    Combatable* mostSkill(Mob* caster, SpellContext& battleField, const std::vector<Combatable*>& candidates, SpellData& data) {
+    Combatable* mostSkill(Mob* caster, SpellContext& battleField, const vector<Combatable*>& candidates, SpellData& data) {
         data.stat = Stat::SKILL;
         return most(caster, battleField, candidates, data);
     }
@@ -592,14 +596,15 @@ namespace Resources {
     };
     const RuneTemplate Resources::Data::SKILL = GetSKILL();
 
-
     // PARTY MEMBERS -----------------
+    map<AnimationTrigger, pair<vector<Frame*>, EasingType>> getBasicImage(SpriteDefinition* sprite) {
+        return { { AnimationTrigger::IDLE, {{ new Frame(sprite) }, EasingType::LINEAR } }};
+    };
 
     PCTemplate GetA() { // "Albert" archetype
         PCTemplate result;
 
         result.Name = Strings::AName;
-        result.ImagePath = RESOURCE_LOCATION + "a-image.png";
         result.PortraitPath = RESOURCE_LOCATION + "a-portrait.png";
         result.Class = Data::WASP;
         result.Stamina = 100;
@@ -610,11 +615,11 @@ namespace Resources {
         result.MemberCode = PartyMemberCode::A;
 
         result.Animations = {
-            { AnimationTrigger::IDLE, vector<Frame*> { new Frame(&SpriteIndex::KID_SOUTH_0) }},
-            { AnimationTrigger::NORTH_MOVE, AnimationIndex::KID_NORTH },
-            { AnimationTrigger::SOUTH_MOVE, AnimationIndex::KID_SOUTH },
-            { AnimationTrigger::EAST_MOVE, AnimationIndex::KID_EAST },
-            { AnimationTrigger::WEST_MOVE, AnimationIndex::KID_WEST }
+            { AnimationTrigger::IDLE, {{ new Frame(&SpriteIndex::KID_SOUTH_0)}, EasingType::LINEAR }},
+            { AnimationTrigger::NORTH_MOVE, { AnimationIndex::KID_NORTH, EasingType::LINEAR }},
+            { AnimationTrigger::SOUTH_MOVE, { AnimationIndex::KID_SOUTH, EasingType::LINEAR }},
+            { AnimationTrigger::EAST_MOVE, { AnimationIndex::KID_EAST, EasingType::LINEAR }},
+            { AnimationTrigger::WEST_MOVE, { AnimationIndex::KID_WEST, EasingType::LINEAR }}
         };
 
         return result;
@@ -625,7 +630,6 @@ namespace Resources {
         PCTemplate result;
         result.Name = Strings::BName;
         result.SpriteDef = &Resources::SpriteIndex::TEEN_SOUTH_0;
-        result.ImagePath = RESOURCE_LOCATION + "b-image.png";
         result.PortraitPath = RESOURCE_LOCATION + "b-portrait.png";
         result.Class = Data::WELLSPRING;
         result.Stamina = 200;
@@ -636,11 +640,11 @@ namespace Resources {
         result.MemberCode = PartyMemberCode::B;
 
         result.Animations = {
-            { AnimationTrigger::IDLE, { new Frame(&SpriteIndex::KID_SOUTH_0) }},
-            { AnimationTrigger::NORTH_MOVE, AnimationIndex::KID_NORTH },
-            { AnimationTrigger::SOUTH_MOVE, AnimationIndex::KID_SOUTH },
-            { AnimationTrigger::EAST_MOVE, AnimationIndex::KID_EAST },
-            { AnimationTrigger::WEST_MOVE, AnimationIndex::KID_WEST }
+            { AnimationTrigger::IDLE, {{ new Frame(&SpriteIndex::KID_SOUTH_0)}, EasingType::LINEAR }},
+            { AnimationTrigger::NORTH_MOVE, { AnimationIndex::KID_NORTH, EasingType::LINEAR }},
+            { AnimationTrigger::SOUTH_MOVE, { AnimationIndex::KID_SOUTH, EasingType::LINEAR }},
+            { AnimationTrigger::EAST_MOVE, { AnimationIndex::KID_EAST, EasingType::LINEAR }},
+            { AnimationTrigger::WEST_MOVE, { AnimationIndex::KID_WEST, EasingType::LINEAR }}
         };
 
 
@@ -652,7 +656,6 @@ namespace Resources {
         PCTemplate result;
         result.Name = Strings::CName;
         result.SpriteDef = &Resources::SpriteIndex::MUM_SOUTH_0;
-        result.ImagePath = RESOURCE_LOCATION + "c-image.png";
         result.PortraitPath = RESOURCE_LOCATION + "c-portrait.png";
         result.Class = Data::JACK;
         result.Stamina = 100;
@@ -663,11 +666,11 @@ namespace Resources {
         result.MemberCode = PartyMemberCode::C;
 
         result.Animations = {
-            { AnimationTrigger::IDLE, { new Frame(&SpriteIndex::KID_SOUTH_0) }},
-            { AnimationTrigger::NORTH_MOVE, AnimationIndex::KID_NORTH },
-            { AnimationTrigger::SOUTH_MOVE, AnimationIndex::KID_SOUTH },
-            { AnimationTrigger::EAST_MOVE, AnimationIndex::KID_EAST },
-            { AnimationTrigger::WEST_MOVE, AnimationIndex::KID_WEST }
+            { AnimationTrigger::IDLE, {{ new Frame(&SpriteIndex::KID_SOUTH_0)}, EasingType::LINEAR }},
+            { AnimationTrigger::NORTH_MOVE, { AnimationIndex::KID_NORTH, EasingType::LINEAR }},
+            { AnimationTrigger::SOUTH_MOVE, { AnimationIndex::KID_SOUTH, EasingType::LINEAR }},
+            { AnimationTrigger::EAST_MOVE, { AnimationIndex::KID_EAST, EasingType::LINEAR }},
+            { AnimationTrigger::WEST_MOVE, { AnimationIndex::KID_WEST, EasingType::LINEAR }}
         };
 
         return result;
@@ -770,7 +773,7 @@ namespace Resources {
     const TerrainTemplate Data::Grass = GetGrass();
 
     PlayStateContainer& getAllRunes(MapObject* context, PlayStateContainer& data) {
-        std::vector<Rune*> runes;
+        vector<Rune*> runes;
         runes.push_back(new Rune(Data::ALL));
         runes.push_back(new Rune(Data::ANY));
         runes.push_back(new Rune(Data::HIGH));

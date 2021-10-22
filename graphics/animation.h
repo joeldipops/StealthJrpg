@@ -27,18 +27,18 @@ namespace Graphics {
 
     class Animation {
         public:
-            Animation(std::vector<Frame*> frames, int durationMs, EasingType function);
-            Animation(std::vector<Frame*> frames, int durationMs, EasingFunction function);
-            void start(void);
-            const Frame* getFrame();
-        protected:
+            Animation(std::vector<Frame*> frames, EasingType function);
+            Animation(std::vector<Frame*> frames, EasingFunction function);
             ~Animation(void);
+            void start(int durationMs);
+            const Frame* getFrame();
+
         private:
             std::vector<Frame*> _frames;
             EasingFunction _function;
-            int _durationMs;
             long _startTime;
-            bool _isStarted;
+            bool _isStarted = false;
+            int _durationMs = 0;
     };
 
 }
