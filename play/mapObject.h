@@ -11,29 +11,25 @@
 #include "../graphics/frame.h"
 #include "../graphics/animation.h"
 
-using namespace Util;
-using namespace Resources;
-using namespace Graphics;
-
 namespace Play {
     struct PlayStateContainer;
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject*, PlayStateContainer&);
     class MapObject {
         public:
-            MapObject(const MapObjectTemplate&);
+            MapObject(const Resources::MapObjectTemplate&);
             virtual ~MapObject(void) {};
             bool isDense(void);
-            void setUpSprite(Direction, SpriteDefinition* def);
-            void setUpSprite(SpriteDefinition* def);
-            void setUpAnimation(AnimationTrigger, Animation*);
-            virtual const SpriteDefinition* currentSprite(void) const;
+            void setUpSprite(Direction, Graphics::SpriteDefinition* def);
+            void setUpSprite(Graphics::SpriteDefinition* def);
+            void setUpAnimation(Resources::AnimationTrigger, Graphics::Animation*);
+            virtual const Graphics::SpriteDefinition* currentSprite(void) const;
             std::string imageFileName(const std::string&);
             std::string imageFileName(void) const;
 
             virtual PlayStateContainer& onInspect(PlayStateContainer&) = 0;
 
-            Location location(int, int);
-            Location location(const Location*);
+            Util::Location location(int, int);
+            Util::Location location(const Util::Location*);
 
             virtual Direction facing(void) const;
             virtual Direction facing(Direction);
@@ -52,7 +48,7 @@ namespace Play {
         private:
             bool _isDense;
             std::string _imageFileName;
-            std::map<Direction, SpriteDefinition*> _sprites;
+            std::map<Direction, Graphics::SpriteDefinition*> _sprites;
             int _x = 0;
             int _y = 0;
             Direction _facing = Direction::NONE;

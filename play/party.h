@@ -5,8 +5,6 @@
 #include "../res/templates.h"
 #include "pc.h"
 
-using namespace Resources;
-
 namespace Play {
     class Party : public MapObject {
         public:
@@ -15,9 +13,9 @@ namespace Play {
             ~Party(void);
             PC* leader(void) const;
             const std::vector<PC*> members(void) const;
-            virtual const SpriteDefinition* currentSprite(void) const;
-            PC* addLeader(const PCTemplate&);
-            PC* addMember(const PCTemplate&);
+            virtual const Graphics::SpriteDefinition* currentSprite(void) const;
+            PC* addLeader(const Resources::PCTemplate&);
+            PC* addMember(const Resources::PCTemplate&);
             PC* removeMember(PC*);
             PlayStateContainer& onInspect(PlayStateContainer&);
             void buryTheDead(void);
@@ -44,7 +42,7 @@ namespace Play {
         private:
             std::vector<PC*> _members;
             std::vector<PC*> _bench;
-            static MapObjectTemplate ctrTmpl;
+            static Resources::MapObjectTemplate ctrTmpl;
     };
 }
 #endif

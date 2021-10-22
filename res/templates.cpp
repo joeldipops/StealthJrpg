@@ -6,7 +6,10 @@
 #include "sprites.h"
 
 namespace Resources {
-    using namespace Persistence;
+    using std::vector;
+    using Persistence::SavedObjectCode;
+    using Resources::AnimationTrigger;
+    using Graphics::Frame;
 
     // CLASSES ---------------------
 
@@ -607,7 +610,7 @@ namespace Resources {
         result.MemberCode = PartyMemberCode::A;
 
         result.Animations = {
-            { AnimationTrigger::IDLE, { new Frame(&SpriteIndex::KID_SOUTH_0) }},
+            { AnimationTrigger::IDLE, vector<Frame*> { new Frame(&SpriteIndex::KID_SOUTH_0) }},
             { AnimationTrigger::NORTH_MOVE, AnimationIndex::KID_NORTH },
             { AnimationTrigger::SOUTH_MOVE, AnimationIndex::KID_SOUTH },
             { AnimationTrigger::EAST_MOVE, AnimationIndex::KID_EAST },

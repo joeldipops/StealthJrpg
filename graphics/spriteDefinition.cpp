@@ -1,7 +1,7 @@
 #include "spriteDefinition.h"
 
 namespace Graphics {
-    using namespace std;
+    using std::string;
 
     /**
      * Constructor

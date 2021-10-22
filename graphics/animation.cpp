@@ -4,7 +4,7 @@
 #include "../util/utils.h"
 
 namespace Graphics {
-    using namespace std;
+    using std::vector;
 
     // Easing functions.
 
