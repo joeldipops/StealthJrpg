@@ -17,6 +17,9 @@ namespace Play {
     class MapObject {
         public:
             MapObject(const Resources::MapObjectTemplate&);
+
+            MapObject& operator=(const MapObject& that);
+
             virtual ~MapObject(void);
             bool isDense(void);
             void setUpAnimation(Resources::AnimationTrigger, Graphics::Animation*);
@@ -24,7 +27,7 @@ namespace Play {
             std::string imageFileName(const std::string&);
             std::string imageFileName(void) const;
 
-            virtual PlayStateContainer& onInspect(PlayStateContainer&) = 0;
+            virtual PlayStateContainer& onInspect(PlayStateContainer&);
 
             Util::Location location(int, int);
             Util::Location location(const Util::Location*);
@@ -45,6 +48,9 @@ namespace Play {
 
             const Handler<MapObject, PlayStateContainer> onInspectFn(void) const;
         private:
+            MapObject(const MapObject& that);
+            //MapObject& operator=(const MapObject& that);
+
             bool _isDense;
             std::string _imageFileName;
             int _x = 0;

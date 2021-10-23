@@ -47,16 +47,43 @@ namespace Play {
     }
 
     /**
+     * Overload copy to allow animations to be deleted in Destructor.
+     */
+    MapObject& MapObject::operator=(const MapObject& that) {
+        this->_facing = that._facing;
+        this->_imageFileName = that._imageFileName;
+        this->_isDense = that._isDense;
+        this->_onInspect = that._onInspect;
+        this->_x = that._x;
+        this->_y = that._y;
+
+        _animations = {};
+
+        for(auto& entry : that._animations) {
+            if (this->_activeAnimation == entry.second) {
+                this->_activeAnimation = new Animation(*entry.second);
+                _animations.insert({ entry.first, this->_activeAnimation });
+            } else {
+                _animations.insert({ entry.first, new Animation(*entry.second) });
+            }
+        }
+
+        return *this;
+    }
+
+    /**
      * Destructor
      */
     MapObject::~MapObject() {
         for(auto& entry : _animations) {
-            // hrmmmmmmmmm
-            // This throws when MapCells are instantiated :/  what...
-            //deletePtr(entry.second);
+            deletePtr(entry.second);
         }
 
         _animations.empty();
+    }
+
+    PlayStateContainer& MapObject::onInspect(PlayStateContainer& container) {
+        return container;
     }
 
     /**
