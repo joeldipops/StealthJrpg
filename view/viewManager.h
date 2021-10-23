@@ -13,10 +13,8 @@ namespace Util { class AssetCache; }
 namespace Core { class MenuItem; }
 namespace Play { class Party; }
 
-namespace View
-{
-    class ViewManager
-    {
+namespace View {
+    class ViewManager {
         public:
             static const SDL_Colour BG_COLOUR;
             static const SDL_Colour TEXT_COLOUR;

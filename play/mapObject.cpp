@@ -53,7 +53,7 @@ namespace Play {
         for(auto& entry : _animations) {
             // hrmmmmmmmmm
             // This throws when MapCells are instantiated :/  what...
-            // deletePtr(entry.second);
+            //deletePtr(entry.second);
         }
 
         _animations.empty();

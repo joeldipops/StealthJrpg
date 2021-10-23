@@ -34,9 +34,9 @@ namespace Graphics {
             const Frame* getFrame();
 
         private:
-            std::vector<Frame*> _frames;
+            std::vector<Frame*> _frames = {};
             EasingFunction _function;
-            long _startTime;
+            long _startTime = 0;
             bool _isStarted = false;
             int _durationMs = 0;
     };

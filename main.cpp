@@ -15,27 +15,18 @@
 #include "res/battleCommands.h"
 #include "res/templates.h"
 
-using namespace Resources;
-
 Core::EventManager eventManager;
 
-using namespace Magic;
-using namespace Play;
-using namespace Persistence;
+namespace Core {
+    using Persistence::SaveLoad;
 
-namespace Core
-{
-    class Grammar
-    {
+    class Grammar {
         public:
-            Grammar()
-            {};
+            Grammar() {};
 
-            ~Grammar()
-            {};
+            ~Grammar() {};
 
-            void start()
-            {
+            void start() {
                 // Initialise randomness.
                 srand(time(0));
 
@@ -54,20 +45,16 @@ namespace Core
 
                 SaveLoad io = SaveLoad(SAVE_FILE);
                 CoreState state = CoreState::Title;
-                while(state != CoreState::Exit)
-                {
+                while(state != CoreState::Exit) {
                     Party player = Party();
                     Event myEvent;
-                    while(eventManager.pollEvent(&myEvent))
-                    {
+                    while(eventManager.pollEvent(&myEvent)) {
                         SDL_Event event = *myEvent.InnerEvent;
-                        if (event.type == SDL_QUIT)
-                        {
+                        if (event.type == SDL_QUIT) {
                             state = CoreState::Exit;
                         }
                     }
-                    switch(state)
-                    {
+                    switch(state) {
                         case CoreState::Title: {
                             state = title.start();
                             break;
@@ -105,8 +92,7 @@ namespace Core
     };
 }
 
-int main ()
-{
+int main () {
     Core::Grammar program;
     program.start();
 

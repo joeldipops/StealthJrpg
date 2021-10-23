@@ -50,8 +50,8 @@ namespace Play {
             int _x = 0;
             int _y = 0;
             Direction _facing = Direction::NONE;
-            Graphics::Animation* _activeAnimation;
-            std::map<Resources::AnimationTrigger, Graphics::Animation*> _animations;
+            Graphics::Animation* _activeAnimation = nullptr;
+            std::map<Resources::AnimationTrigger, Graphics::Animation*> _animations = {};
             Handler<MapObject, PlayStateContainer> _onInspect;
     };
 }
