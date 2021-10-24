@@ -8,6 +8,13 @@ namespace Play {
     using std::vector;
     using std::string;
 
+    using View::RenderManager;
+    using View::MapViewManager;
+    using View::ControlViewManager;
+    using View::MiniMapViewManager;
+    using View::StatsViewManager;
+    using View::PlayViewManager;
+
     const bool REGEN_MAP = false;
     const SDL_Rect CONTROL_VIEW = {0, 0, 1000, 150};
     const SDL_Rect MINIMAP_VIEW = {1000, 0, 200, 150};
@@ -18,16 +25,18 @@ namespace Play {
     /**
      * Constructor
      */
-    PlayStateManager::PlayStateManager(SDL_Renderer* r, AssetCache* a)
-     : StateManager(r, a) {
-        using namespace View;
+    PlayStateManager::PlayStateManager(SDL_Renderer* r, RenderManager* m, AssetCache* a)
+     : StateManager(r, m, a) {
+        _mapView = new MapViewManager(renderer(), MAP_VIEW, assets());
         _controlView = new ControlViewManager(renderer(), CONTROL_VIEW, assets());
         _miniMapView = new MiniMapViewManager(renderer(), MINIMAP_VIEW, assets());
         _statsView = new StatsViewManager(renderer(), STATS_VIEW, assets());
-        _mapView = new MapViewManager(renderer(), MAP_VIEW, assets());
+
+        _playView = new PlayViewManager(_mapView, _controlView, _statsView, _miniMapView, renderer(), SDL_Rect {0, 0, 1200, 800}, assets());
     }
 
     PlayStateManager::~PlayStateManager() {
+        deletePtr(_playView);
         deletePtr(_map);
         deletePtr(_controlView);
         deletePtr(_miniMapView);
@@ -40,6 +49,7 @@ namespace Play {
      * @returns the state the core loop should be in when the PlayState ends.
      */
     Core::CoreState PlayStateManager::start(Party& party) {
+        renderManager()->setActiveManager(_playView);
         state(PlayState::Movement);
         result(Core::CoreState::Exit);
 
@@ -106,6 +116,7 @@ namespace Play {
             }
         }
 
+        renderManager()->clearActiveManager();
         return result();
     }
 
@@ -342,15 +353,9 @@ namespace Play {
      * Paints the visual elements on the screen with SDL
      */
     void PlayStateManager::render() {
-        SDL_SetRenderDrawColor(renderer(), 0x00, 0x00, 0x00, 0xFF);
-        SDL_RenderClear(renderer());
-
-        _mapView->render(_map, state());
-        _controlView->render(_map->party()->leader(), state(), _message);
-        _statsView->render(*_map, state());
-        _miniMapView->render();
-
-        SDL_RenderPresent(renderer());
+        _mapView->setMapState(_map, state());
+        _controlView->setDetails(_map->party()->leader(), state(), _message);
+        _statsView->setMapState(_map, state());
     }
 
     /**

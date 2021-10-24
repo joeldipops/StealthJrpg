@@ -16,6 +16,7 @@ namespace Play {
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject*, PlayStateContainer&);
     class MapObject {
         public:
+            MapObject(const MapObject& that);
             MapObject(const Resources::MapObjectTemplate&);
 
             MapObject& operator=(const MapObject& that);
@@ -48,9 +49,6 @@ namespace Play {
 
             const Handler<MapObject, PlayStateContainer> onInspectFn(void) const;
         private:
-            MapObject(const MapObject& that);
-            //MapObject& operator=(const MapObject& that);
-
             bool _isDense;
             std::string _imageFileName;
             int _x = 0;

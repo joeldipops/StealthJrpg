@@ -1,16 +1,30 @@
 #include "titleViewManager.h"
 #include "../util/assetCache.h"
-using namespace View;
+namespace View {
+    using std::vector;
 
-TitleViewManager::TitleViewManager() : ViewManager() {}
-TitleViewManager::TitleViewManager(SDL_Renderer* r, SDL_Rect v, Util::AssetCache* a) : ViewManager(r, v, a) {}
+    using Core::MenuItem;
+    using Util::AssetCache;
 
-void TitleViewManager::render(std::vector<Core::MenuItem*> commands, int selectedIndex)
-{
-    ViewManager::render();
-    SDL_SetRenderDrawColor(renderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderClear(renderer());
+    TitleViewManager::TitleViewManager() : ViewManager() {}
+    TitleViewManager::TitleViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) : ViewManager(r, v, a) {}
 
-    drawBorder(5, &TEXT_COLOUR);
-    drawControls(commands, selectedIndex);
+    void TitleViewManager::setControls(vector<MenuItem*> controls, int selectedIndex) {
+        _controls = controls;
+        _selectedIndex = selectedIndex;
+    }
+    
+    void TitleViewManager::render() {
+        ViewManager::render();
+        SDL_SetRenderDrawColor(renderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(renderer());
+
+        drawBorder(5, &TEXT_COLOUR);
+
+        if (_controls.size() > 0) {
+            drawControls(_controls, _selectedIndex);
+        }
+
+        SDL_RenderPresent(renderer());
+    }
 }

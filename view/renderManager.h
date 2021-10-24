@@ -14,6 +14,7 @@ namespace View {
             void start(void);
             void stop(void);
             void setActiveManager(ViewManager* viewManager);
+            void clearActiveManager(void);
 
         private:
             int _renderIntervalMs;

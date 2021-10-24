@@ -12,18 +12,31 @@ using namespace Graphics;
 MapViewManager::MapViewManager(SDL_Renderer* r, SDL_Rect v, Util::AssetCache* a) : ViewManager(r, v, a) {}
 
 /**
- * Renders the map.
- * @param gameMap Renders the contents of this map to the window.
+ * Sets up the next render
+ * @param gameMap The contents of this map to the window.
  * @param state Rendering may differ depending on the current state.
  */
-void MapViewManager::render(const GameMap* gameMap, const Play::PlayState state) {
+void MapViewManager::setMapState(const GameMap* gameMap, const Play::PlayState state) {
+    _map = gameMap;
+    _state = state;
+}
+
+
+/**
+ * Renders the map.
+ */
+void MapViewManager::render() {
     // Render Map
     ViewManager::render();
 
+    if (_map != NULL) {
+        SDL_Rect visible = _map->visible();
 
-    SDL_Rect visible = gameMap->visible();
-    renderTerrain(gameMap, visible);
-    renderContents(gameMap, visible);
+        renderTerrain(_map, visible);
+        renderContents(_map, visible);
+    }
+
+    SDL_RenderPresent(renderer());
 }
 
 /**

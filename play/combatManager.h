@@ -7,19 +7,17 @@
 #include "../view/screenViewContainer.h"
 #include "../play/enemy.h"
 
-namespace View
-{
+namespace View {
     class ControlViewManager;
     class StatsViewManager;
     class MapViewManager;
     class MiniMapViewManager;
     class VictoryViewManager;
+    class CombatViewManager;
 }
 
-namespace Magic
-{
-    class CombatManager : public Core::StateManager<Play::PlayState, Play::PlayState>
-    {
+namespace Magic {
+    class CombatManager : public Core::StateManager<Play::PlayState, Play::PlayState> {
         public:
             CombatManager(SDL_Renderer*, AssetCache*, View::ScreenViewContainer);
             ~CombatManager(void);
@@ -34,7 +32,6 @@ namespace Magic
             virtual Play::PlayState state(Play::PlayState);
 
         private:
-
             bool processCommand(Mob*, BattleField&);
             bool processPcTurn(Mob*, BattleField&, std::vector<SDL_Event>*);
             bool processHostileTurn(Enemy*, BattleField&);
@@ -44,6 +41,7 @@ namespace Magic
             void endCombat(void);
 
             // views
+            View::CombatViewManager* _combatView = nullptr;
             View::ControlViewManager* _controlView = nullptr;
             View::StatsViewManager* _statsView = nullptr;
             View::MapViewManager* _mapView = nullptr;

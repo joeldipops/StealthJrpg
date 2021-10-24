@@ -11,7 +11,7 @@
 
 namespace Util { class AssetCache; }
 namespace Core { class MenuItem; }
-namespace Play { class Party; }
+namespace Play { class Party; class GameMap; }
 
 namespace View {
     class ViewManager {

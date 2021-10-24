@@ -49,6 +49,29 @@ namespace Play {
     /**
      * Overload copy to allow animations to be deleted in Destructor.
      */
+    MapObject::MapObject(const MapObject& that) {
+        _facing = that._facing;
+        _imageFileName = that._imageFileName;
+        _isDense = that._isDense;
+        _onInspect = that._onInspect;
+        _x = that._x;
+        _y = that._y;
+
+        _animations = {};
+
+        for(auto& entry : that._animations) {
+            if (_activeAnimation == entry.second) {
+                _activeAnimation = new Animation(*entry.second);
+                _animations.insert({ entry.first, _activeAnimation });
+            } else {
+                _animations.insert({ entry.first, new Animation(*entry.second) });
+            }
+        }
+    }
+
+    /**
+     * Overload copy to allow animations to be deleted in Destructor.
+     */
     MapObject& MapObject::operator=(const MapObject& that) {
         this->_facing = that._facing;
         this->_imageFileName = that._imageFileName;

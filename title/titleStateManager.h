@@ -10,7 +10,7 @@
 namespace Play {
     class TitleStateManager final : Core::StateManager<Title::TitleState, Core::CoreState> {
         public:
-            TitleStateManager(SDL_Renderer*, Util::AssetCache*);
+            TitleStateManager(SDL_Renderer*, View::RenderManager*, Util::AssetCache*);
             ~TitleStateManager(void);
             Core::CoreState start(void);
 

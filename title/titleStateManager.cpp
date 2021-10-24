@@ -17,8 +17,8 @@ namespace Play {
     /**
      * Constructor
      */
-    TitleStateManager::TitleStateManager(SDL_Renderer* r, Util::AssetCache* a)
-     : StateManager(r, a) {
+    TitleStateManager::TitleStateManager(SDL_Renderer* r, RenderManager* rm, Util::AssetCache* a)
+     : StateManager(r, rm, a) {
         _view = TitleViewManager(renderer(), SDL_Rect {0, 0, 1200, 800}, assets());
         _menu = std::vector<MenuItem> {START, CONTINUE, QUIT};
         state(Title::TitleState::Normal);
@@ -33,6 +33,8 @@ namespace Play {
      * @returns the state the core loop should be in when the PlayState ends.
      */
     CoreState TitleStateManager::start(void) {
+        renderManager()->setActiveManager(&_view);
+
         state(TitleState::Normal);
         result(CoreState::Exit);
         bool rerender = true;
@@ -82,13 +84,14 @@ namespace Play {
             }
         }
 
+        renderManager()->clearActiveManager();
+
         return result();
     }
 
     void TitleStateManager::render(void) {
         vector<MenuItem*> pointers = toPointers<MenuItem>(_menu);
-        _view.render(pointers, _selectedItemIndex);
-        SDL_RenderPresent(renderer());
+        _view.setControls(pointers, _selectedItemIndex);
     }
 
     bool TitleStateManager::moveCursor(const InputPress input) {

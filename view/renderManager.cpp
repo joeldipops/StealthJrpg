@@ -19,10 +19,18 @@ namespace View {
         _renderThread = NULL;
     }
 
+    RenderManager::~RenderManager() {
+        stop();
+    }
+
     // Methods
 
     void RenderManager::setActiveManager(ViewManager* manager) {
         _activeManager = manager;
+    }
+
+    void RenderManager::clearActiveManager() {
+        _activeManager = NULL;
     }
 
     void RenderManager::start() {
@@ -31,7 +39,7 @@ namespace View {
         }
 
         _isRunning = true;
-        _renderThread = new thread(render);
+        _renderThread = new thread(&RenderManager::render, this);
     }
 
     void RenderManager::stop() {

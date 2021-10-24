@@ -4,15 +4,17 @@
 #include <SDL2/SDL.h>
 
 #include "globalConstants.h"
+#include "view/renderManager.h"
 
 namespace Util { class AssetCache; }
 
-namespace Core
-{
+namespace Core {
     template<typename State, typename ParentState>
-    class StateManager
-    {
+    class StateManager {
         public:
+            StateManager(SDL_Renderer* renderer, View::RenderManager* renderManager, Util::AssetCache* assets);
+
+            // TODO: Remove
             StateManager(SDL_Renderer* renderer, Util::AssetCache* assets);
 
         protected:
@@ -25,8 +27,10 @@ namespace Core
 
             SDL_Renderer* renderer(void);
             Util::AssetCache* assets(void);
+            View::RenderManager* renderManager(void) const;
 
         private:
+            View::RenderManager* _renderManager;
             SDL_Renderer* _renderer;
             Util::AssetCache* _assets;
             State _state;

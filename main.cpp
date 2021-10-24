@@ -14,11 +14,13 @@
 #include "persistence/saveLoad.h"
 #include "res/battleCommands.h"
 #include "res/templates.h"
+#include "view/renderManager.h"
 
 Core::EventManager eventManager;
 
 namespace Core {
     using Persistence::SaveLoad;
+    using View::RenderManager;
 
     class Grammar {
         public:
@@ -38,15 +40,18 @@ namespace Core {
                 SDL_Window* window = SDL_CreateWindow("Grammage", 0, 0, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
                 SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
                 AssetCache assets = AssetCache(renderer);
+                RenderManager renderManager = RenderManager(RENDER_INTERVAL_MS);
+                renderManager.start();
 
                 // Initialise State Managers.
-                TitleStateManager title = TitleStateManager(renderer, &assets);
-                PlayStateManager play(renderer, &assets);
+                TitleStateManager title = TitleStateManager(renderer, &renderManager, &assets);
+                PlayStateManager play(renderer, &renderManager, &assets);
 
                 SaveLoad io = SaveLoad(SAVE_FILE);
                 CoreState state = CoreState::Title;
                 while(state != CoreState::Exit) {
                     Party player = Party();
+
                     Event myEvent;
                     while(eventManager.pollEvent(&myEvent)) {
                         SDL_Event event = *myEvent.InnerEvent;

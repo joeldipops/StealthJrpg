@@ -15,6 +15,7 @@
 #include "combatManager.h"
 #include "pc.h"
 #include "party.h"
+#include "../view/playViewManager.h"
 
 namespace View {
     class ControlViewManager;
@@ -30,14 +31,14 @@ namespace Play {
         GameMap* Map;
     };
 
-    class PlayStateManager : public Core::StateManager<PlayState, Core::CoreState> {
+    class PlayStateManager : public Core::StateManager<Play::PlayState, Core::CoreState> {
         public:
-            PlayStateManager(SDL_Renderer*, AssetCache*);
+            PlayStateManager(SDL_Renderer*, View::RenderManager*, Util::AssetCache*);
             ~PlayStateManager(void);
             Core::CoreState start(Party&);
         private:
             // Set up
-            GameMap* loadMap(void);
+            Play::GameMap* loadMap(void);
             void render(void);
             void renderTerrain();
             void renderMobs();
@@ -59,11 +60,12 @@ namespace Play {
 
             // Properties
             std::string _message;
+            View::PlayViewManager* _playView = nullptr;
             View::ControlViewManager* _controlView = nullptr;
             View::StatsViewManager* _statsView = nullptr;
-            View::ViewManager* _miniMapView = nullptr;
+            View::MiniMapViewManager* _miniMapView = nullptr;
             View::MapViewManager* _mapView = nullptr;
-            GameMap* _map = nullptr;
+            Play::GameMap* _map = nullptr;
             int _combatGraceTime = 0;
             int _lastMoveTime = 0;
 
