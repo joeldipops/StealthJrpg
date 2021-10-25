@@ -106,6 +106,7 @@ namespace Play {
                     continue;
                 case PlayState::Combat:
                     state(combatManager.start(_map));
+                    renderManager()->setActiveManager(_playView);
                     // We shouldn't start another battle as soon as one ends.
                     _combatGraceTime = SDL_GetTicks() + COMBAT_GRACE_PERIOD;
                     continue;

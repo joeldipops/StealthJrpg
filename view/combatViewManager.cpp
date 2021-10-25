@@ -33,9 +33,9 @@ namespace View {
             _miniMapViewManager->render();
         }
         
-        if (_victoryViewManager != NULL) {
-            _victoryViewManager->render();
-        }
+        //if (_victoryViewManager != NULL) {
+          //  _victoryViewManager->render();
+        //}
 
         SDL_RenderPresent(renderer());
     }
