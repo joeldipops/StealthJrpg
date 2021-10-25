@@ -7,11 +7,15 @@ namespace View {
     using Util::AssetCache;
 
     TitleViewManager::TitleViewManager() : ViewManager() {}
-    TitleViewManager::TitleViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) : ViewManager(r, v, a) {}
+
+    TitleViewManager::TitleViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a) 
+     : ViewManager(r, v, a) {}
 
     void TitleViewManager::setControls(vector<MenuItem*> controls, int selectedIndex) {
+        lock();
         _controls = controls;
         _selectedIndex = selectedIndex;
+        unlock();
     }
     
     void TitleViewManager::render() {
@@ -21,9 +25,11 @@ namespace View {
 
         drawBorder(5, &TEXT_COLOUR);
 
+        lock();
         if (_controls.size() > 0) {
             drawControls(_controls, _selectedIndex);
         }
+        unlock();
 
         SDL_RenderPresent(renderer());
     }

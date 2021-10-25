@@ -40,12 +40,12 @@ namespace Core {
                 SDL_Window* window = SDL_CreateWindow("Grammage", 0, 0, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
                 SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
                 AssetCache assets = AssetCache(renderer);
-                RenderManager renderManager = RenderManager(RENDER_INTERVAL_MS);
-                renderManager.start();
+                RenderManager* renderManager = new RenderManager(RENDER_INTERVAL_MS);
+                renderManager->start();
 
                 // Initialise State Managers.
-                TitleStateManager title = TitleStateManager(renderer, &renderManager, &assets);
-                PlayStateManager play(renderer, &renderManager, &assets);
+                TitleStateManager title = TitleStateManager(renderer, renderManager, &assets);
+                PlayStateManager play(renderer, renderManager, &assets);
 
                 SaveLoad io = SaveLoad(SAVE_FILE);
                 CoreState state = CoreState::Title;

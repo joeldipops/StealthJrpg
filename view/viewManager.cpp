@@ -44,7 +44,14 @@ namespace View {
         _assets = nullptr;
     }
 
-    //}
+    void ViewManager::copyMe(const ViewManager& that) {
+        _renderer = that._renderer;
+        _assets = that._assets;
+        _viewPort = that._viewPort;
+    }
+
+    ViewManager::ViewManager(const ViewManager& that) { copyMe(that); }
+    ViewManager& ViewManager::operator=(const ViewManager& that) { copyMe(that); return *this; }
 
     // Properties
 
@@ -70,6 +77,14 @@ namespace View {
     int ViewManager::menuItemsPerColumn(void) const { return _menuItemsPerColumn; }
 
     // Methods
+
+    void ViewManager::lock() {
+        _lock.lock();
+    }
+
+    void ViewManager::unlock() {
+        _lock.unlock();
+    }
 
     /**
      * Renders visual elements within the given view port.  Must be overriden for specific visuals.

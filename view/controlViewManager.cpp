@@ -22,9 +22,13 @@ namespace View {
     natural ControlViewManager::lastDrawnCharCount(void) const { return _lastDrawnCharCount; }
 
     void ControlViewManager::setDetails(const Mob* pc, PlayState state, const string& message) {
+        lock();
+
         _pc = pc;
         _state = state;
         _message = message;
+
+        unlock();
     }
 
 
@@ -33,6 +37,9 @@ namespace View {
         _lastDrawnCharCount = 0;
         ViewManager::render();
         fillViewport(BG_COLOUR);
+
+        lock();
+
         switch(_state) {
             case PlayState::Movement:
             case PlayState::Message:
@@ -62,6 +69,7 @@ namespace View {
             default: break;
 
         }
+        unlock();
 
         drawBorder(DEFAULT_BORDER_WIDTH, &TEXT_COLOUR);
     }

@@ -22,6 +22,7 @@ namespace View {
             bool _isRunning;
             void render(void);
             std::thread* _renderThread;
+            std::mutex _lock;
     };
 }
 

@@ -17,8 +17,12 @@ MapViewManager::MapViewManager(SDL_Renderer* r, SDL_Rect v, Util::AssetCache* a)
  * @param state Rendering may differ depending on the current state.
  */
 void MapViewManager::setMapState(const GameMap* gameMap, const Play::PlayState state) {
+    lock();
+
     _map = gameMap;
     _state = state;
+
+    unlock();
 }
 
 
@@ -29,14 +33,14 @@ void MapViewManager::render() {
     // Render Map
     ViewManager::render();
 
+    lock();
     if (_map != NULL) {
         SDL_Rect visible = _map->visible();
 
         renderTerrain(_map, visible);
         renderContents(_map, visible);
     }
-
-    SDL_RenderPresent(renderer());
+    unlock();
 }
 
 /**

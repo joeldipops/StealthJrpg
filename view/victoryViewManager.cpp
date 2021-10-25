@@ -13,7 +13,9 @@ namespace View {
     // Methods
     
     void VictoryViewManager::setParty(const Party* party) {
+        lock();
         _party = party;
+        unlock();
     }
 
     void VictoryViewManager::render() {
@@ -25,6 +27,10 @@ namespace View {
         drawMessage(Strings::Victory, letterSize, controlView, false);
 
         SDL_Rect vp { viewPort().x, viewPort().y + 50, viewPort().w, viewPort().h - 50 };
+        lock();
+
         renderPCs(*_party, -1, vp, -1, true);
+
+        unlock();
     }
 }

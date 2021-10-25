@@ -26,7 +26,9 @@ namespace View {
     // Methods
 
     void RenderManager::setActiveManager(ViewManager* manager) {
+        _lock.lock();
         _activeManager = manager;
+        _lock.unlock();
     }
 
     void RenderManager::clearActiveManager() {
@@ -55,9 +57,11 @@ namespace View {
 
     void RenderManager::render() {
         while(_isRunning) {
+            _lock.lock();
             if (_activeManager != NULL) {
                 _activeManager->render();
             }
+            _lock.unlock();
 
             Util::sleep(_renderIntervalMs);
         }

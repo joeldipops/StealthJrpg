@@ -26,7 +26,7 @@ namespace View
     class MenuViewManager : public ViewManagerMenuToolsBase
     {
         public:
-            MenuViewManager(){};
+            MenuViewManager() {};
             MenuViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
             void render(const Party&, const MenuViewModel&, const std::string* = nullptr);
 

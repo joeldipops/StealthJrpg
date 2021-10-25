@@ -7,8 +7,10 @@
 #include "../view/combatViewManager.h"
 
 namespace Magic {
-    CombatManager::CombatManager(SDL_Renderer* r, AssetCache* a, View::ScreenViewContainer views)
-     : StateManager(r, a) {
+    using View::RenderManager;
+
+    CombatManager::CombatManager(SDL_Renderer* r, RenderManager* rm, AssetCache* a, View::ScreenViewContainer views)
+     : StateManager(r, rm, a) {
         using namespace View;
         static SDL_Rect wholeScreen = { 0, 0, WIDTH, HEIGHT};
         _controlView = (ControlViewManager*) views.Top;

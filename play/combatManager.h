@@ -19,7 +19,7 @@ namespace View {
 namespace Magic {
     class CombatManager : public Core::StateManager<Play::PlayState, Play::PlayState> {
         public:
-            CombatManager(SDL_Renderer*, AssetCache*, View::ScreenViewContainer);
+            CombatManager(SDL_Renderer*, View::RenderManager*, AssetCache*, View::ScreenViewContainer);
             ~CombatManager(void);
 
             Play::PlayState start(GameMap*);

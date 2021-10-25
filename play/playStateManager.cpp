@@ -53,7 +53,7 @@ namespace Play {
         state(PlayState::Movement);
         result(Core::CoreState::Exit);
 
-        CombatManager combatManager = CombatManager(renderer(), assets(), View::ScreenViewContainer{_controlView, _miniMapView, _statsView, _mapView});
+        CombatManager combatManager = CombatManager(renderer(), renderManager(), assets(), View::ScreenViewContainer{_controlView, _miniMapView, _statsView, _mapView});
         MenuManager menuManager = MenuManager(renderer(), assets());
 
         // Create a simple 5x5 map for testing.

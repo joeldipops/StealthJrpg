@@ -5,6 +5,7 @@
 #include <vector>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL.h>
+#include <mutex>
 
 #include "../util/utils.h"
 #include "../globalConstants.h"
@@ -16,6 +17,14 @@ namespace Play { class Party; class GameMap; }
 namespace View {
     class ViewManager {
         public:
+            ViewManager(void) {};
+            ViewManager(const ViewManager& that);
+            ViewManager(SDL_Renderer*, SDL_Rect&, Util::AssetCache*);
+            virtual ~ViewManager(void);
+
+            // Needed for locking.
+            virtual ViewManager& operator=(const ViewManager& that);
+
             static const SDL_Colour BG_COLOUR;
             static const SDL_Colour TEXT_COLOUR;
             static const SDL_Colour SELECTED_COLOUR;
@@ -29,9 +38,6 @@ namespace View {
             static const SDL_Rect _control;
             static const int controlBorderWidth;
 
-            ViewManager(void) {};
-            ViewManager(SDL_Renderer*, SDL_Rect&, Util::AssetCache*);
-            virtual ~ViewManager(void);
             virtual void render(void);
 
             virtual int menuItemsPerColumn(void) const;
@@ -69,12 +75,16 @@ namespace View {
             void drawSector(int cx, int cy, int r, int degStart, int degEnd);
             natural drawMessage(const std::string&, const SDL_Rect&, const SDL_Rect&, bool shrinkToFit = false);
 
+            void lock(void);
+            void unlock(void);
         private:
             void addToQuad(std::vector<std::vector<Util::Location>>&,int, int, int, int);
             SDL_Renderer* _renderer;
             SDL_Rect _viewPort;
             Util::AssetCache* _assets;
             int _menuItemsPerColumn;
+            std::mutex _lock;
+            void copyMe(const ViewManager& that);
     };
 }
 #endif
