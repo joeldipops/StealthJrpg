@@ -18,14 +18,12 @@ namespace Magic {
         _miniMapView = (MiniMapViewManager*) views.TopRight;
         _mapView = (MapViewManager*) views.Main;
 
-        _victoryView = new View::VictoryViewManager(r, wholeScreen, a);
+        _victoryView = VictoryViewManager(r, wholeScreen, a);
 
-        _combatView = new CombatViewManager(_mapView, _controlView, _statsView, _miniMapView, _victoryView, r, wholeScreen, a);
+        _combatView = CombatViewManager(_mapView, _controlView, _statsView, _miniMapView, &_victoryView, r, wholeScreen, a);
     }
 
     CombatManager::~CombatManager(void) {
-        deletePtr(_victoryView);
-        deletePtr(_combatView);
     };
 
     Play::PlayState CombatManager::start(void) {
@@ -33,7 +31,7 @@ namespace Magic {
     }
 
     Play::PlayState CombatManager::start(GameMap* map_) {
-        renderManager()->setActiveManager(_combatView);
+        renderManager()->setActiveManager(&_combatView);
         state(Play::PlayState::Combat);
 
         _map = map_;
@@ -176,7 +174,7 @@ namespace Magic {
                 _statsView->setMapState(_map, state(), _selectedMemberIndex);
                 break;
             case PlayState::Victory:
-                _victoryView->setParty(_map->party());
+                _victoryView.setParty(_map->party());
                 break;
             case PlayState::GameOver:
             default:

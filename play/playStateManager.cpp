@@ -27,21 +27,15 @@ namespace Play {
      */
     PlayStateManager::PlayStateManager(SDL_Renderer* r, RenderManager* m, AssetCache* a)
      : StateManager(r, m, a) {
-        _mapView = new MapViewManager(renderer(), MAP_VIEW, assets());
-        _controlView = new ControlViewManager(renderer(), CONTROL_VIEW, assets());
-        _miniMapView = new MiniMapViewManager(renderer(), MINIMAP_VIEW, assets());
-        _statsView = new StatsViewManager(renderer(), STATS_VIEW, assets());
+        _mapView = MapViewManager(renderer(), MAP_VIEW, assets());
+        _controlView = ControlViewManager(renderer(), CONTROL_VIEW, assets());
+        _miniMapView = MiniMapViewManager(renderer(), MINIMAP_VIEW, assets());
+        _statsView = StatsViewManager(renderer(), STATS_VIEW, assets());
 
-        _playView = new PlayViewManager(_mapView, _controlView, _statsView, _miniMapView, renderer(), SDL_Rect {0, 0, 1200, 800}, assets());
+        _playView = PlayViewManager(&_mapView, &_controlView, &_statsView, &_miniMapView, renderer(), SDL_Rect {0, 0, 1200, 800}, assets());
     }
 
     PlayStateManager::~PlayStateManager() {
-        deletePtr(_playView);
-        deletePtr(_map);
-        deletePtr(_controlView);
-        deletePtr(_miniMapView);
-        deletePtr(_statsView);
-        deletePtr(_mapView);
     }
 
     /**
@@ -49,11 +43,11 @@ namespace Play {
      * @returns the state the core loop should be in when the PlayState ends.
      */
     Core::CoreState PlayStateManager::start(Party& party) {
-        renderManager()->setActiveManager(_playView);
+        renderManager()->setActiveManager(&_playView);
         state(PlayState::Movement);
         result(Core::CoreState::Exit);
 
-        CombatManager combatManager = CombatManager(renderer(), renderManager(), assets(), View::ScreenViewContainer{_controlView, _miniMapView, _statsView, _mapView});
+        CombatManager combatManager = CombatManager(renderer(), renderManager(), assets(), View::ScreenViewContainer{&_controlView, &_miniMapView, &_statsView, &_mapView});
         MenuManager menuManager = MenuManager(renderer(), assets());
 
         // Create a simple 5x5 map for testing.
@@ -106,7 +100,7 @@ namespace Play {
                     continue;
                 case PlayState::Combat:
                     state(combatManager.start(_map));
-                    renderManager()->setActiveManager(_playView);
+                    renderManager()->setActiveManager(&_playView);
                     // We shouldn't start another battle as soon as one ends.
                     _combatGraceTime = SDL_GetTicks() + COMBAT_GRACE_PERIOD;
                     continue;
@@ -142,10 +136,10 @@ namespace Play {
                        case SDLK_LEFTBRACKET:
                        case SDLK_RIGHTBRACKET:
                             result = true;
-                            if (_message.length() < _controlView->lastDrawnCharCount()) {
+                            if (_message.length() < _controlView.lastDrawnCharCount()) {
                                 _message = "";
                             } else {
-                                _message = _message.substr(_controlView->lastDrawnCharCount());
+                                _message = _message.substr(_controlView.lastDrawnCharCount());
                             }
                             break;
                     }
@@ -354,9 +348,9 @@ namespace Play {
      * Paints the visual elements on the screen with SDL
      */
     void PlayStateManager::render() {
-        _mapView->setMapState(_map, state());
-        _controlView->setDetails(_map->party()->leader(), state(), _message);
-        _statsView->setMapState(_map, state());
+        _mapView.setMapState(_map, state());
+        _controlView.setDetails(_map->party()->leader(), state(), _message);
+        _statsView.setMapState(_map, state());
     }
 
     /**

@@ -8,6 +8,7 @@ namespace Play { class Mob; }
 namespace View {
     class ControlViewManager : public ViewManager {
         public:
+            ControlViewManager() {};
             ControlViewManager(SDL_Renderer*, SDL_Rect, Util::AssetCache*);
             void render(void);
             void setDetails(const Play::Mob*, Play::PlayState, const std::string& = "");

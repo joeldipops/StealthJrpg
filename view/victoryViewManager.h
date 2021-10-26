@@ -9,6 +9,7 @@ namespace Play { class Party; }
 namespace View {
     class VictoryViewManager : public ViewManagerMenuToolsBase {
         public:
+            VictoryViewManager() {};
             VictoryViewManager(SDL_Renderer*, SDL_Rect, Util::AssetCache*);
             void setParty(const Play::Party*);
             void render(void);

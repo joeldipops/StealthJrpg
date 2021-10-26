@@ -6,6 +6,8 @@
 #include "battleField.h"
 #include "../view/screenViewContainer.h"
 #include "../play/enemy.h"
+#include "../view/victoryViewManager.h"
+#include "../view/combatViewManager.h"
 
 namespace View {
     class ControlViewManager;
@@ -41,12 +43,12 @@ namespace Magic {
             void endCombat(void);
 
             // views
-            View::CombatViewManager* _combatView = nullptr;
+            View::CombatViewManager _combatView;
             View::ControlViewManager* _controlView = nullptr;
             View::StatsViewManager* _statsView = nullptr;
             View::MapViewManager* _mapView = nullptr;
             View::MiniMapViewManager* _miniMapView = nullptr;
-            View::VictoryViewManager* _victoryView = nullptr;
+            View::VictoryViewManager _victoryView;
 
             BattleField _field;
             GameMap* _map = nullptr;

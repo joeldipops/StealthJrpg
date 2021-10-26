@@ -8,6 +8,7 @@ namespace Play { class Mob; }
 namespace View {
     class MapViewManager : public ViewManager {
         public:
+            MapViewManager() {};
             MapViewManager(SDL_Renderer*, SDL_Rect, Util::AssetCache*);
 
             void setMapState(const Play::GameMap*, const Play::PlayState);

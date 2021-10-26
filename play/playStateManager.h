@@ -60,11 +60,11 @@ namespace Play {
 
             // Properties
             std::string _message;
-            View::PlayViewManager* _playView = nullptr;
-            View::ControlViewManager* _controlView = nullptr;
-            View::StatsViewManager* _statsView = nullptr;
-            View::MiniMapViewManager* _miniMapView = nullptr;
-            View::MapViewManager* _mapView = nullptr;
+            View::PlayViewManager _playView;
+            View::ControlViewManager _controlView;
+            View::StatsViewManager _statsView;
+            View::MiniMapViewManager _miniMapView;
+            View::MapViewManager _mapView;
             Play::GameMap* _map = nullptr;
             int _combatGraceTime = 0;
             int _lastMoveTime = 0;

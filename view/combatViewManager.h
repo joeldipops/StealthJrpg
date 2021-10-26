@@ -13,6 +13,7 @@
 namespace View {
     class CombatViewManager : public ViewManager {
         public:
+            CombatViewManager() {};
             CombatViewManager(
                 MapViewManager* mapView,
                 ControlViewManager* controlView,
