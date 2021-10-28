@@ -5,14 +5,12 @@ typedef unsigned char byte;
 typedef unsigned int natural;
 
 template<typename T>
-bool in(T value)
-{
+bool in(T value) {
     return false;
 }
 
 template<typename T, typename... t>
-bool in(T value, T candidate, t... rest)
-{
+bool in(T value, T candidate, t... rest) {
     if (value == candidate)
         return true;
 
@@ -20,8 +18,7 @@ bool in(T value, T candidate, t... rest)
 };
 
 template<typename T>
-void deletePtr(T*& pointer)
-{
+void deletePtr(T*& pointer) {
     delete pointer;
     pointer = nullptr;
 };

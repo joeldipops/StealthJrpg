@@ -4,11 +4,11 @@ AR = ar
 LD = g++
 
 INC = 
-CFLAGS = -Wall `sdl-config --cflags`
+CFLAGS = -Wall `sdl-config --cflags` -pthread
 RESINC = 
 LIBDIR = 
 LIB = 
-LDFLAGS = -lSDL2 -lSDL2_ttf -lSDL2_image
+LDFLAGS = -lSDL2 -lSDL2_ttf -lSDL2_image -pthread
 
 PROGRAM_NAME = stealthjrpg
 INC_DEBUG = $(INC)
@@ -22,7 +22,7 @@ OBJDIR_DEBUG = obj/debug
 OUTDIR_DEBUG = bin/debug
 OUT_DEBUG = $(OUTDIR_DEBUG)/$(PROGRAM_NAME)
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/res/strings.o $(OBJDIR_DEBUG)/res/templates.o $(OBJDIR_DEBUG)/res/battleCommands.o $(OBJDIR_DEBUG)/view/menuViewManager.o $(OBJDIR_DEBUG)/view/viewManagerMenuToolsBase.o $(OBJDIR_DEBUG)/view/viewManager.o $(OBJDIR_DEBUG)/view/victoryViewManager.o $(OBJDIR_DEBUG)/view/titleViewManager.o $(OBJDIR_DEBUG)/view/statsViewManager.o $(OBJDIR_DEBUG)/view/miniMapViewManager.o $(OBJDIR_DEBUG)/view/mapViewManager.o $(OBJDIR_DEBUG)/view/controlViewManager.o $(OBJDIR_DEBUG)/util/utils.o $(OBJDIR_DEBUG)/util/events.o $(OBJDIR_DEBUG)/util/assetCache.o $(OBJDIR_DEBUG)/title/titleStateManager.o $(OBJDIR_DEBUG)/stateManager.o $(OBJDIR_DEBUG)/magic/spell.o $(OBJDIR_DEBUG)/menuManager.o $(OBJDIR_DEBUG)/menuItem.o $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/magic/word.o $(OBJDIR_DEBUG)/magic/verb.o $(OBJDIR_DEBUG)/magic/targetAll.o $(OBJDIR_DEBUG)/magic/spellContext.o $(OBJDIR_DEBUG)/magic/rune.o $(OBJDIR_DEBUG)/magic/noun.o $(OBJDIR_DEBUG)/magic/modifier.o $(OBJDIR_DEBUG)/magic/command.o $(OBJDIR_DEBUG)/magic/auxilliary.o $(OBJDIR_DEBUG)/magic/adverb.o $(OBJDIR_DEBUG)/play/mapCell.o $(OBJDIR_DEBUG)/play/terrain.o $(OBJDIR_DEBUG)/play/playStateManager.o $(OBJDIR_DEBUG)/play/pc.o $(OBJDIR_DEBUG)/play/party.o $(OBJDIR_DEBUG)/play/npc.o $(OBJDIR_DEBUG)/play/mob.o $(OBJDIR_DEBUG)/play/mapObject.o $(OBJDIR_DEBUG)/play/jobClass.o $(OBJDIR_DEBUG)/play/gameMap.o $(OBJDIR_DEBUG)/play/enemy.o $(OBJDIR_DEBUG)/play/combatManager.o $(OBJDIR_DEBUG)/play/battleField.o $(OBJDIR_DEBUG)/persistence/saveLoad.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)/res/strings.o $(OBJDIR_DEBUG)/view/renderManager.o $(OBJDIR_DEBUG)/view/playViewManager.o $(OBJDIR_DEBUG)/view/combatViewManager.o $(OBJDIR_DEBUG)/graphics/frame.o $(OBJDIR_DEBUG)/graphics/spriteDefinition.o $(OBJDIR_DEBUG)/res/sprites.o $(OBJDIR_DEBUG)/res/animations.o  $(OBJDIR_DEBUG)/graphics/animation.o $(OBJDIR_DEBUG)/graphics/sprite.o $(OBJDIR_DEBUG)/res/templates.o $(OBJDIR_DEBUG)/res/battleCommands.o $(OBJDIR_DEBUG)/view/menuViewManager.o $(OBJDIR_DEBUG)/view/viewManagerMenuToolsBase.o $(OBJDIR_DEBUG)/view/viewManager.o $(OBJDIR_DEBUG)/view/victoryViewManager.o $(OBJDIR_DEBUG)/view/titleViewManager.o $(OBJDIR_DEBUG)/view/statsViewManager.o $(OBJDIR_DEBUG)/view/miniMapViewManager.o $(OBJDIR_DEBUG)/view/mapViewManager.o $(OBJDIR_DEBUG)/view/controlViewManager.o $(OBJDIR_DEBUG)/util/utils.o $(OBJDIR_DEBUG)/util/events.o $(OBJDIR_DEBUG)/util/assetCache.o $(OBJDIR_DEBUG)/title/titleStateManager.o $(OBJDIR_DEBUG)/stateManager.o $(OBJDIR_DEBUG)/magic/spell.o $(OBJDIR_DEBUG)/menuManager.o $(OBJDIR_DEBUG)/menuItem.o $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/magic/word.o $(OBJDIR_DEBUG)/magic/verb.o $(OBJDIR_DEBUG)/magic/targetAll.o $(OBJDIR_DEBUG)/magic/spellContext.o $(OBJDIR_DEBUG)/magic/rune.o $(OBJDIR_DEBUG)/magic/noun.o $(OBJDIR_DEBUG)/magic/modifier.o $(OBJDIR_DEBUG)/magic/command.o $(OBJDIR_DEBUG)/magic/auxilliary.o $(OBJDIR_DEBUG)/magic/adverb.o $(OBJDIR_DEBUG)/play/mapCell.o $(OBJDIR_DEBUG)/play/terrain.o $(OBJDIR_DEBUG)/play/playStateManager.o $(OBJDIR_DEBUG)/play/pc.o $(OBJDIR_DEBUG)/play/party.o $(OBJDIR_DEBUG)/play/npc.o $(OBJDIR_DEBUG)/play/mob.o $(OBJDIR_DEBUG)/play/mapObject.o $(OBJDIR_DEBUG)/play/jobClass.o $(OBJDIR_DEBUG)/play/gameMap.o $(OBJDIR_DEBUG)/play/enemy.o $(OBJDIR_DEBUG)/play/combatManager.o $(OBJDIR_DEBUG)/play/battleField.o $(OBJDIR_DEBUG)/persistence/saveLoad.o
 
 all: debug
 
@@ -35,6 +35,7 @@ ensure_folders:
 	test -d $(OUTDIR_DEBUG)/images || mkdir -p $(OUTDIR_DEBUG)/images
 	test -d $(OUTDIR_DEBUG)/fonts || mkdir -p $(OUTDIR_DEBUG)/fonts
 	test -d $(OBJDIR_DEBUG)/res || mkdir -p $(OBJDIR_DEBUG)/res
+	test -d $(OBJDIR_DEBUG)/graphics || mkdir -p $(OBJDIR_DEBUG)/graphics
 	test -d $(OBJDIR_DEBUG)/view || mkdir -p $(OBJDIR_DEBUG)/view
 	test -d $(OBJDIR_DEBUG)/util || mkdir -p $(OBJDIR_DEBUG)/util
 	test -d $(OBJDIR_DEBUG)/title || mkdir -p $(OBJDIR_DEBUG)/title

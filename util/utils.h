@@ -8,47 +8,46 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <chrono>
+
 #include "../core.h"
 
-namespace Util
-{
+namespace Util {
     /**
-    * Puts the executing thread to sleep so that other cpu work can be done.
-    * @param Amount of time thread should sleep for.
-    */
-    inline void sleep(int milliseconds)
-    {
+     * Puts the executing thread to sleep so that other cpu work can be done.
+     * @param Amount of time thread should sleep for.
+     */
+    inline void sleep(int milliseconds) {
         std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
+    };
+
+    inline long now(void) {
+        return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     };
 
     // TODO Learn to do operator overloading to make this prettier
     template<typename N>
-    struct Nullable
-    {
+    struct Nullable {
         public:
 
-            const N get(void) const
-            {
+            const N get(void) const {
                 if (!_isNull)
                     return _value;
 
                 throw;
             };
 
-            void set(void)
-            {
+            void set(void) {
                 _isNull = true;
             };
 
-            N set(N value_)
-            {
+            N set(N value_) {
                 _value = value_;
                 _isNull = false;
                 return _value;
             };
 
-            const bool isNull(void) const
-            {
+            const bool isNull(void) const {
                 return _isNull;
             };
 
@@ -57,16 +56,13 @@ namespace Util
             bool _isNull = true;
     };
 
-    struct Location
-    {
+    struct Location {
         public:
-            Location(int* x = nullptr, int* y = nullptr)
-            {
+            Location(int* x = nullptr, int* y = nullptr) {
                 X = (x != nullptr) ? *x : 0;
                 Y = (y != nullptr) ? *y : 0;
             };
-            Location(int x, int y)
-            {
+            Location(int x, int y) {
                 X = x;
                 Y = y;
             };
@@ -75,28 +71,24 @@ namespace Util
     };
 
     template <typename T>
-    std::vector<T*> toPointers(std::vector<T>& source)
-    {
+    std::vector<T*> toPointers(std::vector<T>& source) {
         std::vector<T*> result(source.size());
         std::transform(source.begin(), source.end(), result.begin(), [](T& t) { return &t; });
         return result;
     };
 
     template <typename T>
-    std::vector<const T> toConst(const std::vector<T> source)
-    {
+    std::vector<const T> toConst(const std::vector<T> source) {
         std::vector<const T> result(source.size());
         std::transform(source.begin(), source.end(), result.begin(), [](T& t) { const T r = t; return r; });
         return result;
     }
 
     template <typename T>
-    std::vector<const T*> toPointers(const std::vector<T>& source)
-    {
+    std::vector<const T*> toPointers(const std::vector<T>& source) {
         std::vector<const T*> result = std::vector<const T*>(0);
         result.reserve(source.size());
-        for (natural i = 0; i < source.size(); i++)
-        {
+        for (natural i = 0; i < source.size(); i++) {
             result.push_back(&source.at(i));
         }
 
@@ -104,8 +96,7 @@ namespace Util
     };
 
     template <typename I, typename O>
-    std::vector<O> castVector(std::vector<I>& source)
-    {
+    std::vector<O> castVector(std::vector<I>& source) {
         std::vector<O> result(source.size());
         std::transform(source.begin(), source.end(), result.begin(), [](I i) { return (O) i; });
 
@@ -113,8 +104,7 @@ namespace Util
     }
 
     template <typename I, typename O>
-    std::vector<O> castVector(const std::vector<I>& source)
-    {
+    std::vector<O> castVector(const std::vector<I>& source) {
         std::vector<O> result(source.size());
         std::transform(source.begin(), source.end(), result.begin(), [](I i) { return (O) i; });
 

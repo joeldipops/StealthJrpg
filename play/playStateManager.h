@@ -15,33 +15,30 @@
 #include "combatManager.h"
 #include "pc.h"
 #include "party.h"
+#include "../view/playViewManager.h"
 
-namespace View
-{
+namespace View {
     class ControlViewManager;
     class StatsViewManager;
     class MapViewManager;
     class MiniMapViewManager;
 }
 
-namespace Play
-{
-    struct PlayStateContainer
-    {
+namespace Play {
+    struct PlayStateContainer {
         PlayState State;
         std::string Message;
         GameMap* Map;
     };
 
-    class PlayStateManager : public Core::StateManager<PlayState, Core::CoreState>
-    {
+    class PlayStateManager : public Core::StateManager<Play::PlayState, Core::CoreState> {
         public:
-            PlayStateManager(SDL_Renderer*, AssetCache*);
+            PlayStateManager(SDL_Renderer*, View::RenderManager*, Util::AssetCache*);
             ~PlayStateManager(void);
             Core::CoreState start(Party&);
         private:
             // Set up
-            GameMap* loadMap(void);
+            Play::GameMap* loadMap(void);
             void render(void);
             void renderTerrain();
             void renderMobs();
@@ -63,12 +60,14 @@ namespace Play
 
             // Properties
             std::string _message;
-            View::ControlViewManager* _controlView = nullptr;
-            View::StatsViewManager* _statsView = nullptr;
-            View::ViewManager* _miniMapView = nullptr;
-            View::MapViewManager* _mapView = nullptr;
-            GameMap* _map = nullptr;
+            View::PlayViewManager _playView;
+            View::ControlViewManager _controlView;
+            View::StatsViewManager _statsView;
+            View::MiniMapViewManager _miniMapView;
+            View::MapViewManager _mapView;
+            Play::GameMap* _map = nullptr;
             int _combatGraceTime = 0;
+            long _lastMoveTime = 0;
 
             std::vector<Persistence::MapFileBlock> tempMapFile();
     };

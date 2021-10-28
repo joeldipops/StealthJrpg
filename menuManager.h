@@ -17,8 +17,8 @@ namespace Play
     class MenuManager : public Core::StateManager<Play::MenuState, Play::PlayState>
     {
         public:
-            MenuManager(SDL_Renderer*, AssetCache*);
-            Play::PlayState start(Party& party);
+            MenuManager(SDL_Renderer*, Util::AssetCache*);
+            Play::PlayState start(Play::Party& party);
             Play::PlayState start(void);
 
         private:
@@ -27,19 +27,19 @@ namespace Play
             static const Core::MenuItem PARTY;
 
             natural selectedSpellLength(PC*) const;
-            bool moveCursor(Party& party, Core::InputPress input);
-            bool moveCursorSideways(Party& party, Core::InputPress input);
+            bool moveCursor(Play::Party& party, Core::InputPress input);
+            bool moveCursorSideways(Play::Party& party, Core::InputPress input);
 
             // What happens when you hit ok when on various menu items.
-            bool processMenuCommand(const Party& party);
+            bool processMenuCommand(const Play::Party& party);
             bool processMemberCommand(void);
-            bool processRuneCommand(const Party& party);
-            bool processSpellCommand(Party& party);
+            bool processRuneCommand(const Play::Party& party);
+            bool processSpellCommand(Play::Party& party);
             bool processComponentCommand(void);
-            bool processReorderMemberCommand(Party& party);
+            bool processReorderMemberCommand(Play::Party& party);
 
-            bool processCommand(Party& party);
-            bool processCancel(Party& party);
+            bool processCommand(Play::Party& party);
+            bool processCancel(Play::Party& party);
 
             bool cast(Play::Party&, Play::Mob&, int);
 

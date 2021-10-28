@@ -4,6 +4,8 @@
 
 using namespace Persistence;
 using namespace Resources;
+using Play::Party;
+using Play::PC;
 
 SaveLoad::SaveLoad(const std::string& path_)
 {
@@ -140,11 +142,11 @@ void SaveLoad::load(Party& party) const
                     default: throw;
                 }
 
-                t.Stamina = fuseShort(data.at(++i), data.at(++i));
-                t.Skill = float(fuseShort(data.at(++i), data.at(++i)) / 100.0);
-                t.Speed = float(fuseShort(data.at(++i), data.at(++i)) / 100.0);
-                t.Resistance = float(fuseShort(data.at(++i), data.at(++i)) / 100.0);
-                t.Defence = float(fuseShort(data.at(++i), data.at(++i)) / 100.0);
+                t.Stamina = Util::fuseShort(data.at(++i), data.at(++i));
+                t.Skill = float(Util::fuseShort(data.at(++i), data.at(++i)) / 100.0);
+                t.Speed = float(Util::fuseShort(data.at(++i), data.at(++i)) / 100.0);
+                t.Resistance = float(Util::fuseShort(data.at(++i), data.at(++i)) / 100.0);
+                t.Defence = float(Util::fuseShort(data.at(++i), data.at(++i)) / 100.0);
                 pc = party.addMember(t);
                 break;
             }

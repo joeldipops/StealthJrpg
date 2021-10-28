@@ -12,12 +12,12 @@ namespace Persistence
     {
         public:
             SaveLoad(const std::string&);
-            void save(const Party& party);
-            void load(Party& party) const;
+            void save(const Play::Party& party);
+            void load(Play::Party& party) const;
 
         private:
             std::string _path;
-            std::vector<byte> getSpellBytes(const PC& pc) const;
+            std::vector<byte> getSpellBytes(const Play::PC& pc) const;
             void pushNumeric(std::vector<byte>&, unsigned short);
     };
 }

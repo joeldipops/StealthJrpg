@@ -4,10 +4,8 @@
 #include <string>
 // This will be a json file or something when I can be bothered, but for now it's a static class
 
-namespace Resources
-{
-    class Strings
-    {
+namespace Resources {
+    class Strings {
         public:
             static const std::string Heading;
             static const std::string Victory;

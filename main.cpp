@@ -14,28 +14,26 @@
 #include "persistence/saveLoad.h"
 #include "res/battleCommands.h"
 #include "res/templates.h"
-
-using namespace Resources;
+#include "view/renderManager.h"
 
 Core::EventManager eventManager;
 
-using namespace Magic;
-using namespace Play;
-using namespace Persistence;
+namespace Core {
+    using Persistence::SaveLoad;
+    using Play::Party;
+    using Play::PlayStateManager;
+    using Play::TitleStateManager;
+    using Util::AssetCache;
 
-namespace Core
-{
-    class Grammar
-    {
+    using View::RenderManager;
+
+    class Grammar {
         public:
-            Grammar()
-            {};
+            Grammar() {};
 
-            ~Grammar()
-            {};
+            ~Grammar() {};
 
-            void start()
-            {
+            void start() {
                 // Initialise randomness.
                 srand(time(0));
 
@@ -47,27 +45,26 @@ namespace Core
                 SDL_Window* window = SDL_CreateWindow("Grammage", 0, 0, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
                 SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
                 AssetCache assets = AssetCache(renderer);
+                RenderManager* renderManager = new RenderManager(RENDER_INTERVAL_MS);
+                renderManager->start();
 
                 // Initialise State Managers.
-                TitleStateManager title = TitleStateManager(renderer, &assets);
-                PlayStateManager play(renderer, &assets);
+                TitleStateManager title = TitleStateManager(renderer, renderManager, &assets);
+                PlayStateManager play(renderer, renderManager, &assets);
 
                 SaveLoad io = SaveLoad(SAVE_FILE);
                 CoreState state = CoreState::Title;
-                while(state != CoreState::Exit)
-                {
+                while(state != CoreState::Exit) {
                     Party player = Party();
+
                     Event myEvent;
-                    while(eventManager.pollEvent(&myEvent))
-                    {
+                    while(eventManager.pollEvent(&myEvent)) {
                         SDL_Event event = *myEvent.InnerEvent;
-                        if (event.type == SDL_QUIT)
-                        {
+                        if (event.type == SDL_QUIT) {
                             state = CoreState::Exit;
                         }
                     }
-                    switch(state)
-                    {
+                    switch(state) {
                         case CoreState::Title: {
                             state = title.start();
                             break;
@@ -105,8 +102,7 @@ namespace Core
     };
 }
 
-int main ()
-{
+int main () {
     Core::Grammar program;
     program.start();
 

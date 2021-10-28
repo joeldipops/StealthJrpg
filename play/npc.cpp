@@ -1,6 +1,7 @@
 #include "npc.h"
 #include "gameMap.h"
 
+using namespace Play;
 //{ Lifecycle
     /**
      * Constructor.

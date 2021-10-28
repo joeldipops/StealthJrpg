@@ -5,16 +5,15 @@
 #include "../res/templates.h"
 #include "pc.h"
 
-namespace Play
-{
-    class Party : public MapObject
-    {
+namespace Play {
+    class Party : public MapObject {
         public:
             Party(void);
             Party(std::vector<PC*>);
             ~Party(void);
             PC* leader(void) const;
             const std::vector<PC*> members(void) const;
+            virtual const Graphics::SpriteDefinition* currentSprite(void) const;
             PC* addLeader(const Resources::PCTemplate&);
             PC* addMember(const Resources::PCTemplate&);
             PC* removeMember(PC*);
@@ -32,17 +31,18 @@ namespace Play
             int x(int); using MapObject::x;
             int y(int); using MapObject::y;
 
+            virtual Direction facing(void) const;
+            virtual Direction facing(Direction);
+
             const std::vector<Rune*> runeCollection(void) const;
             void addRunes(Rune*);
             void addRunes(std::vector<Rune*>);
             std::vector<Rune*> _runeCollection;
 
-
         private:
             std::vector<PC*> _members;
             std::vector<PC*> _bench;
             static Resources::MapObjectTemplate ctrTmpl;
-
     };
 }
 #endif

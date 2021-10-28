@@ -8,15 +8,17 @@
 #include <string>
 #include <iostream>
 
-namespace Util
-{
-    class AssetCache
-    {
+#include "../res/sprites.h"
+#include "../graphics/sprite.h"
+
+namespace Util {
+    class AssetCache {
         public:
             AssetCache();
             AssetCache(SDL_Renderer*);
             ~AssetCache(void);
             SDL_Texture* get(std::string);
+            Graphics::Sprite* getSprite(const Graphics::SpriteDefinition*);
             TTF_Font* get(std::string, int);
             SDL_Texture* get(std::string, std::string, int, SDL_Colour);
 
@@ -24,7 +26,8 @@ namespace Util
             void emptyCache(void);
 
         private:
-            std::map<std::string, SDL_Texture*> _assets;
+            std::map<std::string, SDL_Texture*> _imageAssets;
+            std::map<const Graphics::SpriteDefinition*, Graphics::Sprite*> _spriteAssets;
             std::map<std::string, TTF_Font*> _fontAssets;
             SDL_Renderer* _renderer;
     };
