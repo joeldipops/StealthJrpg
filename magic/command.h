@@ -7,10 +7,8 @@
 
 namespace Play { class BattleField; class Mob; }
 
-namespace Magic
-{
-    class Command : public MenuItem
-    {
+namespace Magic {
+    class Command : public Core::MenuItem {
         public:
             Command(void){};
             Command(const std::string&, Effect);
@@ -18,7 +16,7 @@ namespace Magic
 
             virtual bool isValid(void) const { return true; };
             virtual const std::vector<Rune*> components(void) const;
-            virtual int execute(Mob*, SpellContext&);
+            virtual int execute(Play::Mob*, SpellContext&);
 
         private:
             Effect _effect;

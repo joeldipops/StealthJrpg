@@ -22,9 +22,9 @@ namespace Play
             Play::PlayState start(void);
 
         private:
-            static const MenuItem MAGIC;
-            static const MenuItem SAVE;
-            static const MenuItem PARTY;
+            static const Core::MenuItem MAGIC;
+            static const Core::MenuItem SAVE;
+            static const Core::MenuItem PARTY;
 
             natural selectedSpellLength(PC*) const;
             bool moveCursor(Party& party, Core::InputPress input);
@@ -50,7 +50,7 @@ namespace Play
             int _selectedRuneIndex;
             int _selectedComponentIndex;
             int _selectedPositionIndex;
-            std::vector<MenuItem> _menu;
+            std::vector<Core::MenuItem> _menu;
             std::string _message = "";
     };
 }

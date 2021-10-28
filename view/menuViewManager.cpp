@@ -4,6 +4,7 @@
 #include "../util/assetCache.h"
 
 using namespace View;
+using Core::MenuItem;
 
 const SDL_Rect MenuViewManager::_runeControl = SDL_Rect { 6, 6, 60, 60 };
 /**

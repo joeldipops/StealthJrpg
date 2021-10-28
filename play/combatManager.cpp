@@ -6,6 +6,7 @@
 #include "../view/victoryViewManager.h"
 
 using namespace Magic;
+using Core::Event;
 
 CombatManager::CombatManager(SDL_Renderer* r, AssetCache* a, View::ScreenViewContainer views) : StateManager(r, a)
 {

@@ -7,13 +7,10 @@
 #include "../play/mapObject.h"
 #include "../play/combatable.h"
 
-using namespace Play;
-namespace Magic
-{
-    class TargetAll : public Combatable
-    {
+namespace Magic {
+    class TargetAll : public Play::Combatable {
         public:
-            TargetAll(std::vector<Combatable*>);
+            TargetAll(std::vector<Play::Combatable*>);
             virtual int changeStamina(int);
             virtual float changeSpeed(float);
             virtual float changeDefence(float);
@@ -33,7 +30,7 @@ namespace Magic
             float getDistribution(float) const;
             float calculateMean(std::vector<float>) const;
             float calculateMean(std::vector<int>) const;
-            std::vector<Combatable*> _all;
+            std::vector<Play::Combatable*> _all;
     };
 }
 

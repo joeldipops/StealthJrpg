@@ -2,6 +2,8 @@
 #include "../res/strings.h"
 #include "../play/mob.h"
 using namespace View;
+using Core::MenuItem;
+using Play::Mob;
 
 const SDL_Rect ControlViewManager::_runeControl = SDL_Rect { 0, 0, 50, 50 };
 

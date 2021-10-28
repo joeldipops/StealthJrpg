@@ -13,7 +13,7 @@ namespace View
     struct MenuViewModel
     {
         public:
-            std::vector<MenuItem> MenuItems;
+            std::vector<Core::MenuItem> MenuItems;
             MainMenuItem SelectedMenuItem;
             MenuState state;
             int SelectedPCIndex;

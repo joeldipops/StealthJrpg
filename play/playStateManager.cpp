@@ -5,6 +5,7 @@
 #include "../view/statsViewManager.h"
 
 using namespace Play;
+using Core::Event;
 
 const bool REGEN_MAP = false;
 const SDL_Rect CONTROL_VIEW = {0, 0, 1000, 150};

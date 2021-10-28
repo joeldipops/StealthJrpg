@@ -75,7 +75,7 @@ namespace Resources
     {
         std::string ImagePath;
         bool IsDense;
-        Handler<MapObject, PlayStateContainer> OnInspect = nullptr;
+        Handler<Play::MapObject, Play::PlayStateContainer> OnInspect = nullptr;
     };
 
     /**

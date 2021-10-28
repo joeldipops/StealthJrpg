@@ -4,10 +4,8 @@
 #include "../globalConstants.h"
 #include "word.h"
 
-namespace Magic
-{
-    class Auxilliary : public Word
-    {
+namespace Magic {
+    class Auxilliary : public Word {
         WordType type(void) const;
         Modality modality(void) const;
     };
