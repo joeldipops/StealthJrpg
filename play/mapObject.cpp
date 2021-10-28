@@ -167,9 +167,8 @@ namespace Play {
     Direction MapObject::facing(Direction facing_) {
         if (_facing != facing_) {
             _facing = facing_;
-
-            triggerAnimation(_directionTriggers[_facing], WALK_TIME);
         }
+        triggerAnimation(_directionTriggers[_facing], WALK_TIME);        
         return _facing;
     }
 

@@ -4,6 +4,9 @@
 #include <SDL2/SDL.h>
 
 namespace Graphics {
+    /**
+     * An image from a sprite sheet.
+     */
     struct Sprite {
         public:
             Sprite(SDL_Texture* texture, int x, int y, int width, int height);

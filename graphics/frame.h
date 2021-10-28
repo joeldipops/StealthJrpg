@@ -7,6 +7,10 @@
 #include "../res/sprites.h"
 
 namespace Graphics {
+
+    /**
+     * A frame of animation.
+     */
     class Frame : public SpriteDefinition {
         public:
             Frame(SpriteDefinition* image, int x = 0, int y = 0);

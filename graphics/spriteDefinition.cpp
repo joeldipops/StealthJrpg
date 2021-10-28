@@ -12,14 +12,14 @@ namespace Graphics {
     }
 
     /**
-     *
+     * Filename/path of the spritesheet this sprite will be taken from.
      */
     const string SpriteDefinition::sheet() const {
         return _sheet;
     }
 
     /**
-     * 
+     * Ordinal position of the sprite from left -> right, top -> bottom.
      */
     const int SpriteDefinition::index() const {
         return _index;

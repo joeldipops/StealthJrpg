@@ -306,6 +306,10 @@ namespace Play {
      * @return true if move succeeded.
      */
     bool PlayStateManager::moveMob(MapObject* mob, Core::InputPress input) {
+        if ((_lastMoveTime + WALK_TIME) > Util::now() && _lastMoveTime != 0) {
+            return false;
+        }
+
         int x = mob->x();
         int y = mob->y();
         switch(input) {
@@ -326,7 +330,7 @@ namespace Play {
         PlayStateContainer data = buildEventData();
         bool result = _map->moveMob(mob, x, y, &data);
         writeBackEventData(data);
-
+        _lastMoveTime = Util::now();
         return result;
     }
 

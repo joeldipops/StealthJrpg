@@ -67,7 +67,7 @@ namespace Play {
             View::MapViewManager _mapView;
             Play::GameMap* _map = nullptr;
             int _combatGraceTime = 0;
-            int _lastMoveTime = 0;
+            long _lastMoveTime = 0;
 
             std::vector<Persistence::MapFileBlock> tempMapFile();
     };

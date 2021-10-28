@@ -163,7 +163,7 @@ namespace Persistence
 }
 
 const int RENDER_INTERVAL_MS = 30;
-const int WALK_TIME = 500;
+const int WALK_TIME = 100;
 const int CELL_WIDTH = 50;
 const int CELL_HEIGHT = 50;
 const natural WIDTH = 1200;
