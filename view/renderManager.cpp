@@ -19,22 +19,34 @@ namespace View {
         _renderThread = NULL;
     }
 
+    /**
+     * Destructor.
+     */
     RenderManager::~RenderManager() {
         stop();
     }
 
     // Methods
 
+    /**
+     * Set manager that will control what gets rendered each frame.
+     */
     void RenderManager::setActiveManager(ViewManager* manager) {
         _lock.lock();
         _activeManager = manager;
         _lock.unlock();
     }
 
+    /**
+     * Removes current render manager so nothing will get rendered.
+     */
     void RenderManager::clearActiveManager() {
         _activeManager = NULL;
     }
 
+    /**
+     * Start the rendering thread.
+     */
     void RenderManager::start() {
         if (_isRunning) {
             stop();
@@ -44,6 +56,9 @@ namespace View {
         _renderThread = new thread(&RenderManager::render, this);
     }
 
+    /**
+     * Stop the rendering thread.
+     */
     void RenderManager::stop() {
         _isRunning = false;
         if (_renderThread != NULL) {
@@ -54,7 +69,9 @@ namespace View {
 
     // Private Functions
 
-
+    /**
+     * Call manager's render function every frame.
+     */
     void RenderManager::render() {
         while(_isRunning) {
             _lock.lock();
