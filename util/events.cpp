@@ -7,8 +7,7 @@ namespace Core {
      * Populates the passed in event if an event is available.
      * Returns true if there was an event, otherwise false.
      */
-    bool EventManager::pollEvent(Event* event, EventData* data)
-    {
+    bool EventManager::pollEvent(Event* event, EventData* data) {
         // Ensure the queue is full of events.
         queueEvents();
         if (event == nullptr) {

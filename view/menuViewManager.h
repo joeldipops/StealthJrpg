@@ -8,10 +8,8 @@
 #include "../globalConstants.h"
 #include "../play/party.h"
 
-namespace View
-{
-    struct MenuViewModel
-    {
+namespace View {
+    struct MenuViewModel {
         public:
             std::vector<Core::MenuItem> MenuItems;
             Play::MainMenuItem SelectedMenuItem;
@@ -23,8 +21,7 @@ namespace View
             int SelectedPositionIndex;
     };
 
-    class MenuViewManager : public ViewManagerMenuToolsBase
-    {
+    class MenuViewManager : public ViewManagerMenuToolsBase {
         public:
             MenuViewManager() {};
             MenuViewManager(SDL_Renderer*, SDL_Rect, Util::AssetCache*);

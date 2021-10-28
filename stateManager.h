@@ -6,8 +6,6 @@
 #include "globalConstants.h"
 #include "view/renderManager.h"
 
-namespace Util { class AssetCache; }
-
 namespace Core {
     template<typename State, typename ParentState>
     class StateManager {

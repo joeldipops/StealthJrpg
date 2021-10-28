@@ -8,7 +8,7 @@
 #include "../res/strings.h"
 
 namespace Play {
-    class TitleStateManager final : Core::StateManager<Title::TitleState, Core::CoreState> {
+    class TitleStateManager final : Core::StateManager<TitleState, Core::CoreState> {
         public:
             TitleStateManager(SDL_Renderer*, View::RenderManager*, Util::AssetCache*);
             ~TitleStateManager(void);

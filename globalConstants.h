@@ -5,8 +5,7 @@
 #include <string>
 #include "core.h"
 
-enum MobType
-{
+enum MobType {
     // There is no mob here.
     None = '0',
     // This mob is directly controlled by the player
@@ -22,16 +21,14 @@ enum MobType
     NPC1 = '8'
 };
 
-enum TerrainType
-{
+enum TerrainType {
     WallTerrain = 'w',
     GrassTerrain = 'g',
     HutTerrain = 'h',
     CacheTerrain = 'c'
 };
 
-enum Stat
-{
+enum Stat {
     STAMINA,
     SKILL,
     DEFENSE,
@@ -40,27 +37,22 @@ enum Stat
     SPEED
 };
 
-namespace Title
-{
-    enum TitleState
-    {
+namespace Play {
+    enum TitleState {
         Normal,
-        Exit
+        TitleExit
     };
 }
 
-namespace Core
-{
-    enum CoreState
-    {
+namespace Core {
+    enum CoreState {
         Title,
         Play,
         Load,
         Exit
     };
 
-    enum InputPress
-    {
+    enum InputPress {
         UP = SDLK_w,
         DOWN = SDLK_s,
         LEFT = SDLK_a,
@@ -68,10 +60,8 @@ namespace Core
     };
 }
 
-namespace Play
-{
-    enum PlayState
-    {
+namespace Play {
+    enum PlayState {
         Menu,
         Combat,
         Movement,
@@ -82,8 +72,7 @@ namespace Play
     };
 
 
-    enum MenuState
-    {
+    enum MenuState {
         SelectMenu,
         SelectMember,
         ReorderMember,
@@ -92,16 +81,14 @@ namespace Play
         SelectRune,
     };
 
-    enum MainMenuItem
-    {
+    enum MainMenuItem {
         MagicSelected,
         SaveSelected,
         PartySelected,
         SaveComplete
     };
 
-    enum Direction
-    {
+    enum Direction {
         NONE,
         NORTH,
         SOUTH,
@@ -110,10 +97,8 @@ namespace Play
     };
 }
 
-namespace Magic
-{
-    enum WordType
-    {
+namespace Magic {
+    enum WordType {
         VERB,
         ADJECTIVE,
         NOUN,
@@ -122,18 +107,15 @@ namespace Magic
         AUXILLIARY
     };
 
-    enum Modality
-    {
+    enum Modality {
         NA,
         LOW,
         HIGH
     };
 }
 
-namespace Persistence
-{
-    enum SavedObjectCode
-    {
+namespace Persistence {
+    enum SavedObjectCode {
         UNKNOWN,
         NEW_SPELL,
         PC_POSITION,
@@ -172,6 +154,5 @@ const std::string RESOURCE_LOCATION = "images/";
 
 const natural BITS_PER_PIXEL = 32;
 const std::string SAVE_FILE = "stealthjrpg.save";
-
 
 #endif

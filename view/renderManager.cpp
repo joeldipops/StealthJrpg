@@ -23,7 +23,7 @@ namespace View {
         stop();
     }
 
-    // Methodsssww
+    // Methods
 
     void RenderManager::setActiveManager(ViewManager* manager) {
         _lock.lock();

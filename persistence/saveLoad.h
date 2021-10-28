@@ -6,10 +6,8 @@
 #include "../play/pc.h"
 #include "../play/party.h"
 
-namespace Persistence
-{
-    class SaveLoad
-    {
+namespace Persistence {
+    class SaveLoad {
         public:
             SaveLoad(const std::string&);
             void save(const Play::Party& party);
