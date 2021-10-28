@@ -14,10 +14,8 @@
 #include "command.h"
 
 namespace Play { class Mob; }
-namespace Magic
-{
-    class Spell : public Command
-    {
+namespace Magic {
+    class Spell : public Command {
         public:
             static bool verify(std::vector<Rune*>);
             bool isValid(void) const;
@@ -35,7 +33,7 @@ namespace Magic
             void addComponent(Rune*, bool = false);
 
             bool edit(std::vector<Rune*>);
-            int execute(Mob*, SpellContext&);
+            int execute(Play::Mob*, SpellContext&);
             bool resolve(void);
 
         private:

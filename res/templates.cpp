@@ -1,6 +1,7 @@
 #include "templates.h"
 #include "battleCommands.h"
 #include "strings.h"
+#include "../magic/spellContext.h"
 #include "../play/playStateManager.h"
 #include "animations.h"
 #include "sprites.h"
@@ -9,11 +10,23 @@ namespace Resources {
     using std::map;
     using std::pair;
     using std::vector;
-    using Persistence::SavedObjectCode;
-    using Resources::AnimationTrigger;
+
     using Graphics::EasingType;
     using Graphics::Frame;
     using Graphics::SpriteDefinition;
+    using Magic::SpellContext;
+    using Magic::SpellData;
+    using Persistence::SavedObjectCode;
+    using Play::Combatable;
+    using Play::MapCell;
+    using Play::MapObject;
+    using Play::Mob;
+    using Play::PlayState;
+    using Play::PlayStateContainer;
+    using Resources::AnimationTrigger;
+    using Resources::AnimationIndex;
+    using Resources::SpriteIndex;
+    using Resources::Strings;
 
     // CLASSES ---------------------
 

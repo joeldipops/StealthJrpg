@@ -1,31 +1,29 @@
 #include "adverb.h"
 
-using namespace Magic;
+namespace Magic {
 
-//{ Lifecycle
+    // Lifecycle
 
-/**
- * Constructor
- */
-Adverb::Adverb(Rune* adv)
-    :Word(std::vector<Rune*>{adv})
-{
-    if (!adv->isAdverb())
-        throw;
+    /**
+     * Constructor
+     */
+    Adverb::Adverb(Rune* adv)
+     :Word(std::vector<Rune*>{adv}) {
+        if (!adv->isAdverb()) {
+            throw;
+        }
 
-    _modify = adv->metaActionFn();
+        _modify = adv->metaActionFn();
+    }
+
+
+    // Methods
+
+    SpellData& Adverb::modifySpell(SpellData& data) {
+        return _modify(data);
+    }
+
+    WordType Adverb::type(void) const {
+        return WordType::ADVERB;
+    }
 }
-//}
-
-//{ Methods
-SpellData& Adverb::modifySpell(SpellData& data)
-{
-    return _modify(data);
-}
-
-WordType Adverb::type(void) const
-{
-    return WordType::ADVERB;
-}
-//}
-

@@ -6,12 +6,11 @@
 #include "word.h"
 #include "../globalConstants.h"
 
-namespace Magic
-{
+namespace Magic {
     class Verb;
-    typedef void (*VerbAction)(const Verb* context, Combatable*, Combatable*, int, int, SpellData&);
-    class Verb : public Word
-    {
+    typedef void (*VerbAction)(const Verb* context, Play::Combatable*, Play::Combatable*, int, int, SpellData&);
+
+    class Verb : public Word {
         public:
             Verb(){};
             Verb(Rune* action);
@@ -26,7 +25,7 @@ namespace Magic
             virtual int addDuration(void) const;
 
             bool isBoon(void) const;
-            void performAction(Combatable*, Combatable*, int, int, SpellData&) const;
+            void performAction(Play::Combatable*, Play::Combatable*, int, int, SpellData&) const;
 
         private:
             Action _action;
@@ -42,12 +41,12 @@ namespace Magic
             float _isSameMultiplier;
             bool _isBoon;
 
-            friend void verbAct(const Verb*, Combatable*, Combatable*, int, int, SpellData&);
-            friend void auxVerbAct(const Verb*, Combatable*, Combatable*, int, int, SpellData&);
+            friend void verbAct(const Verb*, Play::Combatable*, Play::Combatable*, int, int, SpellData&);
+            friend void auxVerbAct(const Verb*, Play::Combatable*, Play::Combatable*, int, int, SpellData&);
     };
 
-    void verbAct(const Verb*, Combatable*, Combatable*, int, int, SpellData&);
-    void auxVerbAct(const Verb*, Combatable*, Combatable*, int, int, SpellData&);
+    void verbAct(const Verb*, Play::Combatable*, Play::Combatable*, int, int, SpellData&);
+    void auxVerbAct(const Verb*, Play::Combatable*, Play::Combatable*, int, int, SpellData&);
 }
 
 #endif

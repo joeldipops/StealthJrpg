@@ -7,6 +7,13 @@
 #include "../view/combatViewManager.h"
 
 namespace Magic {
+    using Core::Event;
+    using Play::BattleField;
+    using Play::Enemy;
+    using Play::GameMap;
+    using Play::Mob;
+    using Play::PlayState;
+    using Util::AssetCache;
     using View::RenderManager;
 
     CombatManager::CombatManager(SDL_Renderer* r, RenderManager* rm, AssetCache* a, View::ScreenViewContainer views)

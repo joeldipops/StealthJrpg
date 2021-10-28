@@ -72,10 +72,10 @@ namespace Resources {
     struct MapObjectTemplate {
         std::string ImagePath;
         Graphics::SpriteDefinition* SpriteDef = nullptr;
-        std::map<Direction, Graphics::SpriteDefinition*> SpriteMap = {};
+        std::map<Play::Direction, Graphics::SpriteDefinition*> SpriteMap = {};
         std::map<AnimationTrigger, std::pair<std::vector<Graphics::Frame*>, Graphics::EasingType>> Animations = {};
         bool IsDense;
-        Handler<MapObject, PlayStateContainer> OnInspect = nullptr;
+        Handler<Play::MapObject, Play::PlayStateContainer> OnInspect = nullptr;
     };
 
     /**

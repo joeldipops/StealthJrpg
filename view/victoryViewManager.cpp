@@ -4,14 +4,16 @@
 #include "../play/party.h"
 
 namespace View {
+    using Util::AssetCache;
+    using Play::Party;
 
     // Lifecycle
-    
+
     VictoryViewManager::VictoryViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
      : ViewManagerMenuToolsBase(r, v, a) { }
 
     // Methods
-    
+
     void VictoryViewManager::setParty(const Party* party) {
         lock();
         _party = party;

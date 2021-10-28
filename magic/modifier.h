@@ -5,12 +5,8 @@
 
 #include "../util/utils.h"
 
-using namespace Util;
-
-namespace Magic
-{
-    class Modifier
-    {
+namespace Magic {
+    class Modifier {
         public:
             Modifier();
             Modifier(int, double, bool = false);
@@ -21,8 +17,8 @@ namespace Magic
             double multiply(double) const;
 
         private:
-            Nullable<int> _addition;
-            Nullable<double> _multiplier;
+            Util::Nullable<int> _addition;
+            Util::Nullable<double> _multiplier;
             bool _isOrderReversed;
     };
 }

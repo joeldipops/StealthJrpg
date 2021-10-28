@@ -20,6 +20,11 @@ Core::EventManager eventManager;
 
 namespace Core {
     using Persistence::SaveLoad;
+    using Play::Party;
+    using Play::PlayStateManager;
+    using Play::TitleStateManager;
+    using Util::AssetCache;
+
     using View::RenderManager;
 
     class Grammar {

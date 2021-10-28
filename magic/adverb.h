@@ -4,10 +4,8 @@
 #include "../globalConstants.h"
 #include "word.h"
 
-namespace Magic
-{
-    class Adverb : public Word
-    {
+namespace Magic {
+    class Adverb : public Word {
         public:
             Adverb() {};
             Adverb(Rune* adv);

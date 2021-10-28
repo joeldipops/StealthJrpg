@@ -137,7 +137,7 @@ Perform some environment specific action like flicking a switch.
 ### Vanish 
 - Gives Hidden status
 
-## Disable
+### Disable
 Lowers AWR of Electronic mobs when on same tile.
 
 ### Distract
@@ -161,6 +161,11 @@ Lowers AWR of Electronic mobs when on same tile.
 
 ### Meditate
 - Restores WIL and STM
+
+### Trip
+- Affects enemy on same tile
+- Lowers AWR
+- Raises SUS
 
 ### Tackle
 - Moves user and target to a given tile within ranghe
@@ -201,6 +206,9 @@ Exist
 
 # Conditions
 
+## Hidden
+Can only affect and be affected by mobs on same tile.
+
 ## Blinded
 Lowers max awareness
 
@@ -223,7 +231,7 @@ Also lowers max awareness, and stacks.
 ## Quick/Slow
 Can act more/less often
 
-## Distractea
+## Distracted
 ie having something unrelated on one's mind
 Sus cannot be raised and Awareness cannot be restored.
 

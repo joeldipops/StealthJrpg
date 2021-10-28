@@ -2,6 +2,10 @@
 #include "../play/enemy.h"
 
 namespace Resources {
+    using Play::Combatable;
+    using Play::Enemy;
+    using Play::Mob;
+
     // Non Spells
 
     int Commands::FLEE(Command*, Mob*, SpellContext& field)

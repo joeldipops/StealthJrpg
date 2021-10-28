@@ -8,10 +8,8 @@
 #include "modifier.h"
 #include "magicTypedefs.h"
 
-namespace Magic
-{
-    class Word
-    {
+namespace Magic {
+    class Word {
         public:
             Word(void){};
             Word(const std::vector<Rune*>);

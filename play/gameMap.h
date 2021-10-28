@@ -37,7 +37,7 @@ namespace Play
             bool loadChunk(int x, int y, const std::string& path);
 
             PlayStateContainer& onInspect(int x, int y, PlayStateContainer&);
-            bool moveMob(MapObject*, Location);
+            bool moveMob(MapObject*, Util::Location);
             bool moveMob(MapObject*, int, int, PlayStateContainer* = nullptr);
             MapCell* getCell(int x, int y);
             const MapCell* getCell(int x, int y) const;

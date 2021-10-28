@@ -3,6 +3,10 @@
 using namespace Play;
 
 using namespace Resources;
+using Core::Event;
+using Core::MenuItem;
+using Util::AssetCache;
+
 const MenuItem MenuManager::MAGIC = MenuItem(Strings::Magic);
 const MenuItem MenuManager::SAVE = MenuItem(Strings::Save);
 const MenuItem MenuManager::PARTY = MenuItem(Strings::Party);

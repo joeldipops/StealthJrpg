@@ -2,6 +2,8 @@
 #include "../play/party.h"
 #include "../util/assetCache.h"
 using namespace View;
+using Play::Party;
+using Play::PC;
 
 const SDL_Rect ViewManagerMenuToolsBase::_menuControl = SDL_Rect { 6, 6, 150, 50 };
 const int ViewManagerMenuToolsBase::cursorXOffset = borderWidth + _menuControl.x;

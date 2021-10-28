@@ -7,6 +7,11 @@
 namespace View {
     using std::string;
 
+    using Play::GameMap;
+    using Play::PlayState;
+    using Play::PC;
+    using Util::AssetCache;
+
     StatsViewManager::StatsViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
      : ViewManager(r, v, a) {}
 

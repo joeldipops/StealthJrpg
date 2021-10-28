@@ -1,6 +1,7 @@
 #include "gameMap.h"
 
 using namespace Play;
+using Util::Location;
 
 //{LIFE CYCLE
 /**

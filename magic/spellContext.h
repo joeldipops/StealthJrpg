@@ -5,44 +5,40 @@
 
 namespace Play { class Mob; class Combatable; class Enemy; class PC;}
 
-using namespace Play;
-
-namespace Magic
-{
-    class SpellContext
-    {
+namespace Magic {
+    class SpellContext {
         public:
             SpellContext(void) {};
-            SpellContext(const std::vector<Mob*>&, const std::vector<Mob*>&);
-            SpellContext(const std::vector<PC*>&, const std::vector<Enemy*>&);
+            SpellContext(const std::vector<Play::Mob*>&, const std::vector<Play::Mob*>&);
+            SpellContext(const std::vector<Play::PC*>&, const std::vector<Play::Enemy*>&);
             ~SpellContext(void);
 
-            std::vector<Mob*>& pcs(void);
-            std::vector<Mob*> pcs(void) const;
+            std::vector<Play::Mob*>& pcs(void);
+            std::vector<Play::Mob*> pcs(void) const;
 
-            std::vector<Mob*>& hostiles(void);
-            std::vector<Mob*> hostiles(void) const;
+            std::vector<Play::Mob*>& hostiles(void);
+            std::vector<Play::Mob*> hostiles(void) const;
 
-            virtual void addToField(Combatable*, bool isPlayerAllied);
+            virtual void addToField(Play::Combatable*, bool isPlayerAllied);
 
             bool isInCombat(bool);
             bool isInCombat(void) const;
 
-            std::vector<Combatable*> participants(void);
+            std::vector<Play::Combatable*> participants(void);
 
-            virtual bool areAllied(const Combatable* one, const Combatable* other) const;
+            virtual bool areAllied(const Play::Combatable* one, const Play::Combatable* other) const;
 
         protected:
-            std::vector<Mob*> addPC(Mob*);
-            std::vector<Mob*> addHostile(Mob*);
+            std::vector<Play::Mob*> addPC(Play::Mob*);
+            std::vector<Play::Mob*> addHostile(Play::Mob*);
 
         private:
-            std::vector<Mob*> _pcs;
-            std::vector<Mob*> _hostiles;
+            std::vector<Play::Mob*> _pcs;
+            std::vector<Play::Mob*> _hostiles;
 
-            std::vector<Combatable*> _playerAllied = std::vector<Combatable*>(0);
-            std::vector<Combatable*> _nonPlayerAllied = std::vector<Combatable*>(0);
-            std::vector<Combatable*> _rubbishBin = std::vector<Combatable*>(0);
+            std::vector<Play::Combatable*> _playerAllied = std::vector<Play::Combatable*>(0);
+            std::vector<Play::Combatable*> _nonPlayerAllied = std::vector<Play::Combatable*>(0);
+            std::vector<Play::Combatable*> _rubbishBin = std::vector<Play::Combatable*>(0);
             bool _isInCombat = false;
 
     };

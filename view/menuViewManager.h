@@ -13,9 +13,9 @@ namespace View
     struct MenuViewModel
     {
         public:
-            std::vector<MenuItem> MenuItems;
-            MainMenuItem SelectedMenuItem;
-            MenuState state;
+            std::vector<Core::MenuItem> MenuItems;
+            Play::MainMenuItem SelectedMenuItem;
+            Play::MenuState state;
             int SelectedPCIndex;
             int SelectedSpellIndex;
             int SelectedComponentIndex;
@@ -27,8 +27,8 @@ namespace View
     {
         public:
             MenuViewManager() {};
-            MenuViewManager(SDL_Renderer*, SDL_Rect, AssetCache*);
-            void render(const Party&, const MenuViewModel&, const std::string* = nullptr);
+            MenuViewManager(SDL_Renderer*, SDL_Rect, Util::AssetCache*);
+            void render(const Play::Party&, const MenuViewModel&, const std::string* = nullptr);
 
         private:
             SDL_Rect _spellsVp;
@@ -36,8 +36,8 @@ namespace View
             SDL_Rect _mainVp;
             SDL_Rect _partyVp;
 
-            void renderSpells(const PC&, int, int);
-            void renderRunes(const Party&, int);
+            void renderSpells(const Play::PC&, int, int);
+            void renderRunes(const Play::Party&, int);
 
             static const SDL_Rect _runeControl;
     };

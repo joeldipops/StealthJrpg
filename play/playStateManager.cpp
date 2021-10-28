@@ -8,6 +8,8 @@ namespace Play {
     using std::vector;
     using std::string;
 
+    using Core::Event;
+    using Util::AssetCache;
     using View::RenderManager;
     using View::MapViewManager;
     using View::ControlViewManager;

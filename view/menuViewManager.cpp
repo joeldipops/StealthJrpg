@@ -4,6 +4,12 @@
 #include "../util/assetCache.h"
 
 using namespace View;
+using Core::MenuItem;
+using Play::Party;
+using Play::PC;
+using Play::MenuState;
+using Util::AssetCache;
+using Play::MainMenuItem;
 
 const SDL_Rect MenuViewManager::_runeControl = SDL_Rect { 6, 6, 60, 60 };
 /**
@@ -114,7 +120,7 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, con
     fillViewport(BG_COLOUR);
     drawBorder(borderWidth, &TEXT_COLOUR);
 
-    auto pointers = toPointers(model.MenuItems);
+    auto pointers = Util::toPointers(model.MenuItems);
 
     // Highlight the drilled-into item.
     if (model.state != MenuState::SelectMenu)
@@ -128,8 +134,8 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, con
 
     switch(model.SelectedMenuItem)
     {
-        case MagicSelected:
-        case PartySelected:
+        case MainMenuItem::MagicSelected:
+        case MainMenuItem::PartySelected:
             switch (model.state)
             {
                 case MenuState::SelectMenu:
@@ -147,7 +153,7 @@ void MenuViewManager::render(const Party& party, const MenuViewModel& model, con
                 }
             }
             break;
-        case SaveSelected:
+        case MainMenuItem::SaveSelected:
         default:
              break;
     }

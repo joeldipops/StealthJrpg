@@ -4,19 +4,15 @@
 #include <vector>
 #include "../globalConstants.h"
 
-namespace Play
-{
+namespace Play {
     class Mob;
     class BattleField;
     class Combatable;
 }
 
-using namespace Play;
-namespace Magic
-{
+namespace Magic {
     class SpellContext;
-    struct SpellData
-    {
+    struct SpellData {
         Stat stat;
         Modality modality;
         float effect;
@@ -29,22 +25,22 @@ namespace Magic
     /**
      * Targets a specific Mob.
      */
-    typedef Combatable* (*Targeter)(Mob*, SpellContext&, SpellData&);
+    typedef Play::Combatable* (*Targeter)(Play::Mob*, SpellContext&, SpellData&);
 
     /**
      * Chooses a list of candidates to be the target of the spell.
      */
-    typedef std::vector<Combatable*> (*MultiTargeter) (Mob*, SpellContext&, SpellData&);
+    typedef std::vector<Play::Combatable*> (*MultiTargeter) (Play::Mob*, SpellContext&, SpellData&);
 
     /**
      * Selects a target from a list of candidates.
      */
-    typedef Combatable* (*Selecter) (Mob*, SpellContext&, const std::vector<Combatable*>&, SpellData&);
+    typedef Play::Combatable* (*Selecter) (Play::Mob*, SpellContext&, const std::vector<Play::Combatable*>&, SpellData&);
 
     /**
      * Performs an action as part of a spell.
      */
-    typedef void (*Action) (Combatable*, Combatable*, int, int, SpellData&);
+    typedef void (*Action) (Play::Combatable*, Play::Combatable*, int, int, SpellData&);
 
     /**
     * Casts a spell or carries out some other in-combat command.
@@ -52,7 +48,7 @@ namespace Magic
     * @param battlefield holds various data on combat currently in progress.
     * @return The time before the mob that made the command can act again.
     */
-    typedef int (*Effect)(Command* context, Mob*, SpellContext&);
+    typedef int (*Effect)(Command* context, Play::Mob*, SpellContext&);
 
     /**
      * Performs operations and transformations on the spell itself without changing the target, source or effect.

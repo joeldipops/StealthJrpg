@@ -1,12 +1,15 @@
 #include "controlViewManager.h"
 #include "../res/strings.h"
 #include "../play/mob.h"
+
 namespace View {
     using std::string;
     using std::vector;
 
+    using Core::MenuItem;
     using Play::Mob;
     using Play::PlayState;
+    using Util::AssetCache;
 
     const SDL_Rect ControlViewManager::_runeControl = SDL_Rect { 0, 0, 50, 50 };
 
