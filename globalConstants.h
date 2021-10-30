@@ -73,6 +73,7 @@ namespace Play {
 
 
     enum MenuState {
+        Unknown,
         SelectMenu,
         SelectMember,
         ReorderMember,

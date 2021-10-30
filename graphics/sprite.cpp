@@ -43,7 +43,7 @@ namespace Graphics {
     /**
      * Position and size of the sprite on the sheet.
      */
-    SDL_Rect Sprite::stencil() const {
-        return _stencil;
+    const SDL_Rect* Sprite::stencil() const {
+        return &_stencil;
     }
 }

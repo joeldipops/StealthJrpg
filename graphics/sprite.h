@@ -12,7 +12,7 @@ namespace Graphics {
             Sprite(SDL_Texture* texture, int x, int y, int width, int height);
             Sprite(SDL_Texture* texture, SDL_Rect* stencil);
             SDL_Texture* texture() const;
-            SDL_Rect stencil() const;
+            const SDL_Rect* stencil() const;
         private:
             SDL_Texture* _texture;
             SDL_Rect _stencil;

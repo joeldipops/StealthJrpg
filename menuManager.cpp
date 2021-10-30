@@ -15,14 +15,15 @@ namespace Play {
     using Util::AssetCache;
     using View::MenuViewManager;
     using View::MenuViewModel;
+    using View::RenderManager;
 
     const MenuItem MenuManager::MAGIC = MenuItem(Strings::Magic);
     const MenuItem MenuManager::SAVE = MenuItem(Strings::Save);
     const MenuItem MenuManager::PARTY = MenuItem(Strings::Party);
 
 
-    MenuManager::MenuManager(SDL_Renderer* r, AssetCache* a)
-     : StateManager(r, a) {
+    MenuManager::MenuManager(SDL_Renderer* r, RenderManager* rm, AssetCache* a)
+     : StateManager(r, rm, a) {
         _viewManager = MenuViewManager(r, SDL_Rect {0, 0, WIDTH, HEIGHT }, a);
         _selectedSpellIndex = -1;
         _selectedRuneIndex = -1;
@@ -30,9 +31,21 @@ namespace Play {
         _selectedMemberIndex = -1;
         _selectedPositionIndex = -1;
         _menu = vector<MenuItem> { MAGIC, SAVE, PARTY };
+
+        _viewManager.setData(NULL, {
+            _menu, // MenuItems
+            MainMenuItem(_selectedMenuIndex), // SelectedMenuItem
+            MenuState::Unknown,
+            _selectedMemberIndex,
+            _selectedSpellIndex, // SelectedSpellIndex
+            _selectedComponentIndex, // SelectedComponentIndex
+            _selectedRuneIndex, // SelectedRuneIndex
+            _selectedPositionIndex
+        });
     }
 
     Play::PlayState MenuManager::start(Party& party) {
+        renderManager()->setActiveManager(&_viewManager);
         bool rerender = true;
         _selectedMenuIndex = 0;
         state(MenuState::SelectMenu);
@@ -55,7 +68,7 @@ namespace Play {
                     _selectedPositionIndex
 
                 };
-                _viewManager.render(party, vm, _message.length() > 0 ? &_message : nullptr);
+                _viewManager.setData(&party, vm, _message.length() > 0 ? &_message : nullptr);
             } else {
                 Util::sleep(50);
             }
@@ -104,6 +117,7 @@ namespace Play {
             }
         }
 
+        renderManager()->clearActiveManager();
         return result();
     }
 

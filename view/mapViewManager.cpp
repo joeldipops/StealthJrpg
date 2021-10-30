@@ -74,8 +74,8 @@ namespace View {
                     fileName = blank;
                 }
 
-                SDL_Texture* image = assets()->get(fileName);
-                SDL_RenderCopy(renderer(), image, NULL, &rect);
+                Sprite* image = assets()->getSprite(fileName);
+                SDL_RenderCopy(renderer(), image->texture(), image->stencil(), &rect);
             }
         }
     }
@@ -109,14 +109,14 @@ namespace View {
                 CELL_WIDTH / 2, CELL_HEIGHT / 2
             };
 
+            Sprite* sprite;
             if (mob->imageFileName().length() > 0) {
-                SDL_Texture* image = assets()->get(mob->imageFileName());
-                SDL_RenderCopy(renderer(), image, NULL, &rect);
+                sprite = assets()->getSprite(mob->imageFileName());
             } else {
-                Sprite* sprite = assets()->getSprite(mob->currentSprite());
-                SDL_Rect stencil = sprite->stencil();
-                SDL_RenderCopy(renderer(), sprite->texture(), &stencil, &rect);
+                sprite = assets()->getSprite(mob->currentSprite());
             }
+
+            SDL_RenderCopy(renderer(), sprite->texture(), sprite->stencil(), &rect);
 
             if (mob->isMob()) {
                 renderHealthBar(*(Mob*)mob, x - visible.x, y - visible.y);

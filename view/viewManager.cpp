@@ -4,6 +4,7 @@
 
 namespace View {
     using Core::MenuItem;
+    using Graphics::Sprite;
     using Util::AssetCache;
     using Util::Location;
 
@@ -273,15 +274,15 @@ namespace View {
             }
 
             if (selectedIndex >= visiblePerPage) {
-                SDL_Texture* arrowLeft = _assets->get(RESOURCE_LOCATION + "arrow-left.png");
+                Sprite* arrowLeft = _assets->getSprite(RESOURCE_LOCATION + "arrow-left.png");
                 SDL_Rect arrowRect = SDL_Rect { view.x + borderWidth + 2, view.y + (view.h / 2), 15, 15 };
-                SDL_RenderCopy(_renderer, arrowLeft, NULL, &arrowRect);
+                SDL_RenderCopy(_renderer, arrowLeft->texture(), arrowLeft->stencil(), &arrowRect);
                 rect.x += arrowOffset;
             }
             if (int(items.size()) > visiblePerPage) {
-                SDL_Texture* arrowRight = _assets->get(RESOURCE_LOCATION + "arrow-right.png");
+                Sprite* arrowRight = _assets->getSprite(RESOURCE_LOCATION + "arrow-right.png");
                 SDL_Rect arrowRect = SDL_Rect { view.x + view.w - borderWidth - 2 - 15, view.y + (view.h / 2), 15, 15 };
-                SDL_RenderCopy(_renderer, arrowRight, NULL, &arrowRect);
+                SDL_RenderCopy(_renderer, arrowRight->texture(), arrowRight->stencil(), &arrowRect);
             }
         } else {
             visiblePerPage = ((view.w)/ (control->w + control->x)) * (view.h / (control->h + control->y));
@@ -329,7 +330,7 @@ namespace View {
      * @return The created texture.
      */
     SDL_Texture* ViewManager::formatFontTexture(std::string text, const SDL_Colour* colour) {
-        return _assets->get("fonts/font.ttf", text.c_str(), 30, *colour);
+        return _assets->getGlyph("fonts/font.ttf", text.c_str(), 30, *colour);
     }
 
     /**
@@ -342,12 +343,12 @@ namespace View {
 
 
     void ViewManager::drawOptionBox(const SDL_Rect& rect,  const MenuItem* item, int borderWidth, const SDL_Colour& bgColour, const SDL_Colour& fgColour, const SDL_Colour& textColour) {
-        SDL_Texture* texture = nullptr;
+        SDL_Texture* texture;
 
         if (item->imagePath().size() <= 0) {
             texture = formatFontTexture(item->name(), &fgColour);
         } else {
-            texture = assets()->get(item->imagePath());
+            texture = assets()->getSprite(item->imagePath())->texture();
         }
 
         return drawOptionBox(rect, texture, borderWidth, bgColour, fgColour, textColour);

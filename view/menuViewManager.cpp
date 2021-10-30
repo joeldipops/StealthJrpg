@@ -8,12 +8,14 @@ namespace View {
     using std::vector;
 
     using Core::MenuItem;
+    using Graphics::Sprite;
     using Magic::Rune;
     using Magic::Spell;
     using Play::MainMenuItem;
     using Play::Party;
     using Play::PC;
     using Play::MenuState;
+    using Resources::Strings;
     using Util::AssetCache;
 
 
@@ -34,8 +36,8 @@ namespace View {
      * @param pc
      * @param runeIndex The rune that the cursor is on.
      */
-    void MenuViewManager::renderRunes(const Party& party, int runeIndex) {
-        vector<Rune*> runes = party.runeCollection();
+    void MenuViewManager::renderRunes(int runeIndex) {
+        vector<Rune*> runes = _party->runeCollection();
         vector<MenuItem*> items = vector<MenuItem*> (0);
         MenuItem item = MenuItem("");
         items.push_back(&item);
@@ -50,9 +52,8 @@ namespace View {
      * @param componnentPosition Position of the component that can be changed.
      */
     void MenuViewManager::renderSpells(const PC& pc, int spellIndex, int componentPosition) {
-        using namespace Resources;
-        SDL_Texture* valid = assets()->get(RESOURCE_LOCATION + "valid.png");
-        SDL_Texture* invalid = assets()->get(RESOURCE_LOCATION + "invalid.png");
+        Sprite* valid = assets()->getSprite(RESOURCE_LOCATION + "valid.png");
+        Sprite* invalid = assets()->getSprite(RESOURCE_LOCATION + "invalid.png");
 
         SDL_Rect rect = SDL_Rect { _spellsVp.x + marginLeft, _spellsVp.y, WIDTH, _control.y + _control.h };
 
@@ -77,9 +78,9 @@ namespace View {
 
                 SDL_Rect validRect = SDL_Rect { rect.x - 30, rect.y + cursorYOffset, 30, 30 };
                 if (command->isValid(true)) {
-                    SDL_RenderCopy(renderer(), valid, 0, &validRect);
+                    SDL_RenderCopy(renderer(), valid->texture(), valid->stencil(), &validRect);
                 } else {
-                    SDL_RenderCopy(renderer(), invalid, 0, &validRect);
+                    SDL_RenderCopy(renderer(), invalid->texture(), invalid->stencil(), &validRect);
                 }
 
                 // if position is less than -1 a different button (eg. "Cast") is selected.
@@ -112,53 +113,66 @@ namespace View {
         }
     }
 
+    void MenuViewManager::setData(const Party* party, MenuViewModel model, const string* message) {
+        lock();
+        _party = party;
+        _model = model;
+        _message = message;
+        unlock();
+    }
+
 
     /**
      * Renders menu related  elements to the screen.
      */
-    void MenuViewManager::render(const Party& party, const MenuViewModel& model, const string* message) {
+    void MenuViewManager::render() {
         ViewManager::render();
         fillViewport(BG_COLOUR);
         drawBorder(borderWidth, &TEXT_COLOUR);
 
-        auto pointers = Util::toPointers(model.MenuItems);
+        lock();
 
-        // Highlight the drilled-into item.
-        if (model.state != MenuState::SelectMenu) {
-            auto copy = *pointers.at(model.SelectedMenuItem);
-            copy.colour(HIGHLIGHTED_COLOUR);
-            pointers.at(model.SelectedMenuItem) = &copy;
-        }
+            auto pointers = Util::toPointers(_model.MenuItems);
 
-        drawControls(pointers, int(model.SelectedMenuItem), &_mainVp, &_menuControl, false);
+            // Highlight the drilled-into item.
+            if (_model.state != MenuState::SelectMenu) {
+                auto copy = *pointers.at(_model.SelectedMenuItem);
+                copy.colour(HIGHLIGHTED_COLOUR);
+                pointers.at(_model.SelectedMenuItem) = &copy;
+            }
 
-        switch(model.SelectedMenuItem) {
-            case MainMenuItem::MagicSelected:
-            case MainMenuItem::PartySelected:
-                switch (model.state) {
-                    case MenuState::SelectMenu:
-                    case MenuState::SelectMember:
-                        renderPCs(party, model.SelectedPCIndex, _partyVp);
+            drawControls(pointers, int(_model.SelectedMenuItem), &_mainVp, &_menuControl, false);
+
+            if (_party != NULL) {
+                switch(_model.SelectedMenuItem) {
+                    case MainMenuItem::MagicSelected:
+                    case MainMenuItem::PartySelected:
+                        switch (_model.state) {
+                            case MenuState::SelectMenu:
+                            case MenuState::SelectMember:
+                                renderPCs(*_party, _model.SelectedPCIndex, _partyVp);
+                                break;
+                            case MenuState::ReorderMember:
+                                renderPCs(*_party, _model.SelectedPCIndex, _partyVp, _model.SelectedPositionIndex);
+                                break;
+                            default: {
+                                drawBorder(_spellsVp, borderWidth, &TEXT_COLOUR, true);
+                                drawBorder(_runesVp, borderWidth, &TEXT_COLOUR, true);
+                                renderSpells(*_party->memberAt(_model.SelectedPCIndex), _model.SelectedSpellIndex, _model.SelectedComponentIndex);
+                                renderRunes(_model.SelectedRuneIndex);
+                            }
+                        }
                         break;
-                    case MenuState::ReorderMember:
-                        renderPCs(party, model.SelectedPCIndex, _partyVp, model.SelectedPositionIndex);
+                    case MainMenuItem::SaveSelected:
+                    default:
                         break;
-                    default: {
-                        drawBorder(_spellsVp, borderWidth, &TEXT_COLOUR, true);
-                        drawBorder(_runesVp, borderWidth, &TEXT_COLOUR, true);
-                        renderSpells(*party.memberAt(model.SelectedPCIndex), model.SelectedSpellIndex, model.SelectedComponentIndex);
-                        renderRunes(party, model.SelectedRuneIndex);
-                    }
                 }
-                break;
-            case MainMenuItem::SaveSelected:
-            default:
-                 break;
-        }
+            }
 
-        if (message != nullptr) {
-            drawMessage(*message, letterSize, messageBoxOuter, true);
+        if (_message != nullptr) {
+            drawMessage(*_message, letterSize, messageBoxOuter, true);
         }
+        unlock();
 
         SDL_RenderPresent(renderer());
     }

@@ -23,8 +23,11 @@ namespace Util {
         _renderer = renderer;
         _imageAssets = map<string, SDL_Texture*>();
         _fontAssets = map<string, TTF_Font*>();
-        _spriteAssets = map<const SpriteDefinition*, Sprite*>();
+        _spriteAssets = map<string, Sprite*>();
+    }
 
+    string getCacheKey(const SpriteDefinition* def) {
+        return def->sheet() + "::" + std::to_string(def->index());
     }
 
     /**
@@ -34,28 +37,40 @@ namespace Util {
         emptyCache();
     }
 
+    Sprite* AssetCache::getSprite(string fileName, int index) {
+        SpriteDefinition def = SpriteDefinition(fileName, 0);
+        return getSprite(&def);
+    }
+
     Sprite* AssetCache::getSprite(const SpriteDefinition* def) {
         // If asset is already in the cache, just return it.
-        if (_spriteAssets.count(def)) {
-            return _spriteAssets.at(def);
+        string key = getCacheKey(def);
+        if (_spriteAssets.count(key)) {
+            return _spriteAssets[key];
         }
 
-        SDL_Texture* texture = get(def->sheet());
+        SDL_Texture* texture = getTexture(def->sheet());
 
         // Get the width and height of the whole image.
         SDL_Rect dimensions;
+        dimensions.x = 0;
+        dimensions.y = 0;
+
         SDL_QueryTexture(texture, NULL, NULL, &dimensions.w, &dimensions.h);
 
-        // Determine the width and height of each sprite.
-        pair<int, int> sheetSize = SpriteIndex::SheetDimensions.at(def->sheet());
-        dimensions.w /= sheetSize.first;
-        dimensions.h /= sheetSize.second;
+        // If part of a sprite sheet, determine the width and height of each sprite.
+        // Otherwise, just set the entire image.
+        if (SpriteIndex::SheetDimensions.count(def->sheet()) > 0) {
+            pair<int, int> sheetSize = SpriteIndex::SheetDimensions.at(def->sheet());
+            dimensions.w /= sheetSize.first;
+            dimensions.h /= sheetSize.second;
 
-        dimensions.x = dimensions.w * (def->index() % sheetSize.first);
-        dimensions.y = dimensions.h * (def->index() / sheetSize.first);
+            dimensions.x = dimensions.w * (def->index() % sheetSize.first);
+            dimensions.y = dimensions.h * (def->index() / sheetSize.first);
+        }
 
         Sprite* sprite = new Sprite(texture, &dimensions);
-        _spriteAssets[def] = sprite;
+        _spriteAssets[key] = sprite;
 
         return sprite;
     }
@@ -65,7 +80,7 @@ namespace Util {
      * @param fileName The filename of the asset.
      * @return The asset in memory.
      */
-    SDL_Texture* AssetCache::get(string fileName) {
+    SDL_Texture* AssetCache::getTexture(string fileName) {
         // If asset is already in the cache, just return it.
         if (_imageAssets.count(fileName) > 0) {
             return _imageAssets.at(fileName);
@@ -91,7 +106,7 @@ namespace Util {
      * @param the font pixel size to generate at.
      * @return The text as an SDL_Texture
      */
-    SDL_Texture* AssetCache::get(string fileName, string text, int fontSize, SDL_Colour colour) {
+    SDL_Texture* AssetCache::getGlyph(string fileName, string text, int fontSize, SDL_Colour colour) {
         TTF_Font* font = get(fileName, fontSize);
         string key = fileName + ":" + text + ":" + std::to_string(fontSize) + std::to_string(colour.r) + std::to_string(colour.g) + std::to_string(colour.b);
 
@@ -161,6 +176,6 @@ namespace Util {
 
         _imageAssets = map<string, SDL_Texture*>();
         _fontAssets = map<string, TTF_Font*>();
-        _spriteAssets = map<const SpriteDefinition*, Sprite*>();
+        _spriteAssets = map<string, Sprite*>();
     }
 }

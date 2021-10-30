@@ -55,7 +55,7 @@ namespace Play {
         result(CoreState::Exit);
 
         CombatManager combatManager = CombatManager(renderer(), renderManager(), assets(), ScreenViewContainer{&_controlView, &_miniMapView, &_statsView, &_mapView});
-        MenuManager menuManager = MenuManager(renderer(), assets());
+        MenuManager menuManager = MenuManager(renderer(), renderManager(), assets());
 
         // Create a simple 5x5 map for testing.
         if (REGEN_MAP) {
@@ -99,6 +99,7 @@ namespace Play {
                     continue;
                 case PlayState::Menu:
                     state(menuManager.start(party));
+                    renderManager()->setActiveManager(&_playView);
                     continue;
                 case PlayState::Victory:
                     state(PlayState::Movement);

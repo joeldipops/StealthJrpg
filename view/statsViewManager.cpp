@@ -7,9 +7,11 @@
 namespace View {
     using std::string;
 
+    using Graphics::Sprite;
     using Play::GameMap;
     using Play::PlayState;
     using Play::PC;
+    using Resources::Strings;
     using Util::AssetCache;
 
     StatsViewManager::StatsViewManager(SDL_Renderer* r, SDL_Rect v, AssetCache* a)
@@ -26,7 +28,6 @@ namespace View {
     }
 
     void StatsViewManager::render() {
-        using namespace Resources;
         ViewManager::render();
         fillViewport(BG_COLOUR);
         drawBorder(DEFAULT_BORDER_WIDTH, &TEXT_COLOUR);
@@ -44,7 +45,8 @@ namespace View {
                 ;
 
                 // Render the character potrait
-                SDL_RenderCopy(renderer(), assets()->get(pc->portraitFileName()), NULL, &port);
+                Sprite* portrait = assets()->getSprite(pc->portraitFileName());
+                SDL_RenderCopy(renderer(), portrait->texture(), portrait->stencil(), &port);
                 int radius = port.h / 2;
                 int x = port.x + port.w + radius;
                 int y = port.y + radius;

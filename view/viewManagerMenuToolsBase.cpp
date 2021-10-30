@@ -5,6 +5,7 @@
 namespace View {
     using std::string;
 
+    using Graphics::Sprite;
     using Play::Party;
     using Play::PC;
 
@@ -62,51 +63,59 @@ namespace View {
             // Draw name;
             string name = pc->name();
             SDL_Rect nameRect {rect.x + 2, rect.y + 3, TEXT_WIDTH * int(name.length()), TEXT_HEIGHT };
-            SDL_Texture* textTure = formatFontTexture(name, colour);
-            SDL_RenderCopy(renderer(), textTure, NULL, &nameRect);
+            SDL_Texture* texture = formatFontTexture(name, colour);
+            SDL_RenderCopy(renderer(), texture, NULL, &nameRect);
+
+            Sprite* sprite;
 
             // Draw Portrait
             SDL_Rect portRect { rect.x, nameRect.y + nameRect.h, 100,100 };
-            SDL_RenderCopy(renderer(), assets()->get(pc->portraitFileName()), NULL, &portRect);
+            sprite = assets()->getSprite(pc->portraitFileName());
+            SDL_RenderCopy(renderer(), sprite->texture(), sprite->stencil(), &portRect);
 
             // Draw class name
             string className = pc->className();
             SDL_Rect classRect { rect.x + 2, portRect.y + portRect.h + TEXT_HEIGHT - 10, TEXT_WIDTH * int(className.length()), TEXT_HEIGHT};
-            textTure = formatFontTexture(className, colour);
-            SDL_RenderCopy(renderer(), textTure, NULL, &classRect);
+            texture = formatFontTexture(className, colour);
+            SDL_RenderCopy(renderer(), texture, NULL, &classRect);
 
             // Draw stamina.
             SDL_Rect stmLabelRect { rect.x + TEXT_WIDTH * 12, rect.y + 3, ICON_SIZE, ICON_SIZE};
 
-            SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "stamina.png"), NULL, &stmLabelRect);
+            sprite = assets()->getSprite(RESOURCE_LOCATION + "stamina.png");
+            SDL_RenderCopy(renderer(), sprite->texture(), sprite->stencil(), &stmLabelRect);
 
             // Draw skill.
             string value = displayMultiplier(pc->defaultSkill());
             SDL_Rect sklLabelRect { stmLabelRect.x, stmLabelRect.y + stmLabelRect.h + MARGIN_Y, ICON_SIZE, ICON_SIZE};
             SDL_Rect sklValueRect { sklLabelRect.x + sklLabelRect.w + LABEL_GAP, sklLabelRect.y + REL_TEXT_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
 
-            SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "skill.png"), NULL, &sklLabelRect);
+            sprite = assets()->getSprite(RESOURCE_LOCATION + "skill.png");
+            SDL_RenderCopy(renderer(), sprite->texture(), sprite->stencil(), &sklLabelRect);
             SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &sklValueRect);
 
             // Draw resistance
             value = displayMultiplier(pc->defaultResistance());
             SDL_Rect resLabelRect { sklLabelRect.x, sklLabelRect.y + sklLabelRect.h + MARGIN_Y, ICON_SIZE, ICON_SIZE};
             SDL_Rect resValueRect { sklValueRect.x, resLabelRect.y + REL_TEXT_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
-            SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "resistance.png"), NULL, &resLabelRect);
+            sprite = assets()->getSprite(RESOURCE_LOCATION + "resistance.png");
+            SDL_RenderCopy(renderer(), sprite->texture(), sprite->stencil(), &resLabelRect);
             SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &resValueRect);
 
             // Draw Speed
             value = displayMultiplier(pc->defaultSpeed());
             SDL_Rect spdLabelRect { sklValueRect.x + sklValueRect.w + 4 * LABEL_GAP, sklLabelRect.y, ICON_SIZE, ICON_SIZE};
             SDL_Rect spdValueRect { spdLabelRect.x + spdLabelRect.w + LABEL_GAP, spdLabelRect.y + REL_TEXT_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
-            SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "speed.png"), NULL, &spdLabelRect);
+            sprite = assets()->getSprite(RESOURCE_LOCATION + "speed.png");
+            SDL_RenderCopy(renderer(), sprite->texture(), sprite->stencil(), &spdLabelRect);
             SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &spdValueRect);
 
             // Draw Defense
             value = displayMultiplier(pc->defaultDefence());
             SDL_Rect defLabelRect { spdLabelRect.x, spdLabelRect.y + spdLabelRect.h + MARGIN_Y, ICON_SIZE, ICON_SIZE};
             SDL_Rect defValueRect { spdValueRect.x, defLabelRect.y + REL_TEXT_Y, TEXT_WIDTH * int(value.length()), TEXT_HEIGHT };
-            SDL_RenderCopy(renderer(), assets()->get(RESOURCE_LOCATION + "defence.png"), NULL, &defLabelRect);
+            sprite = assets()->getSprite(RESOURCE_LOCATION + "defence.png");
+            SDL_RenderCopy(renderer(), sprite->texture(), sprite->stencil(), &defLabelRect);
             SDL_RenderCopy(renderer(), formatFontTexture(value, colour), NULL, &defValueRect);
 
             value = std::to_string(pc->stamina()) + "/" + std::to_string(pc->maxStamina());
