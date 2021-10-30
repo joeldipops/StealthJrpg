@@ -5,10 +5,8 @@
 #include "../res/templates.h"
 #include "../persistence/saveable.h"
 
-namespace Play
-{
-    class JobClass : public Persistence::Saveable
-    {
+namespace Play {
+    class JobClass : public Persistence::Saveable {
         public:
             JobClass(){};
             JobClass(const Resources::JobTemplate&);

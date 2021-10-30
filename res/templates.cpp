@@ -14,8 +14,12 @@ namespace Resources {
     using Graphics::EasingType;
     using Graphics::Frame;
     using Graphics::SpriteDefinition;
+    using Magic::Command;
+    using Magic::Modality;
+    using Magic::Rune;
     using Magic::SpellContext;
     using Magic::SpellData;
+    using Magic::TargetAll;
     using Persistence::SavedObjectCode;
     using Play::Combatable;
     using Play::MapCell;

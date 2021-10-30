@@ -13,12 +13,10 @@
 #include "../mapFileBlock.h"
 #include "enemy.h"
 
-namespace Play
-{
+namespace Play {
     class MapCell;
 
-    class GameMap
-    {
+    class GameMap {
         public:
             GameMap();
             GameMap(int, int);

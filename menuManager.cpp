@@ -7,6 +7,9 @@ namespace Play {
     using Core::Event;
     using Core::InputPress;
     using Core::MenuItem;
+    using Magic::Command;
+    using Magic::Rune;
+    using Magic::Spell;
     using Persistence::SaveLoad;
     using Resources::Strings;
     using Util::AssetCache;

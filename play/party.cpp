@@ -4,7 +4,10 @@
 
 namespace Play {
     using std::vector;
+
     using Graphics::SpriteDefinition;
+    using Magic::Rune;
+    using Magic::Spell;
     using Resources::AnimationTrigger;
     using Resources::MapObjectTemplate;
     using Resources::PCTemplate;

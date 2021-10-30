@@ -8,8 +8,13 @@ namespace Play {
     using std::vector;
     using std::string;
 
+    using Core::CoreState;
     using Core::Event;
+    using Core::InputPress;
+    using Magic::CombatManager;
+    using Persistence::MapFileBlock;
     using Util::AssetCache;
+    using View::ScreenViewContainer;
     using View::RenderManager;
     using View::MapViewManager;
     using View::ControlViewManager;
@@ -44,17 +49,17 @@ namespace Play {
      * Sets up graphics then Starts the main loop for this state.
      * @returns the state the core loop should be in when the PlayState ends.
      */
-    Core::CoreState PlayStateManager::start(Party& party) {
+    CoreState PlayStateManager::start(Party& party) {
         renderManager()->setActiveManager(&_playView);
         state(PlayState::Movement);
-        result(Core::CoreState::Exit);
+        result(CoreState::Exit);
 
-        CombatManager combatManager = CombatManager(renderer(), renderManager(), assets(), View::ScreenViewContainer{&_controlView, &_miniMapView, &_statsView, &_mapView});
+        CombatManager combatManager = CombatManager(renderer(), renderManager(), assets(), ScreenViewContainer{&_controlView, &_miniMapView, &_statsView, &_mapView});
         MenuManager menuManager = MenuManager(renderer(), assets());
 
         // Create a simple 5x5 map for testing.
         if (REGEN_MAP) {
-            vector<Persistence::MapFileBlock> file = tempMapFile();
+            vector<MapFileBlock> file = tempMapFile();
             writeMapFile("maps/map1_1", 20, 13, &file);
         }
 
@@ -63,7 +68,7 @@ namespace Play {
 
         // No PC, what's the point - Ollies Outie
         if (_map->contents().at(0) == nullptr)
-            return Core::CoreState::Exit;
+            return CoreState::Exit;
 
         _map->party(party);
 
@@ -107,9 +112,9 @@ namespace Play {
                     _combatGraceTime = SDL_GetTicks() + COMBAT_GRACE_PERIOD;
                     continue;
                 case PlayState::GameOver:
-                    exit(Core::CoreState::Title);
+                    exit(CoreState::Title);
                 default:
-                    exit(Core::CoreState::Exit);
+                    exit(CoreState::Exit);
             }
         }
 
@@ -192,19 +197,19 @@ namespace Play {
                     switch(event.key.keysym.sym) {
                         case SDLK_q:
                         case SDLK_ESCAPE:
-                            exit(Core::CoreState::Title);
+                            exit(CoreState::Title);
                             return false;
                         case SDLK_w:
-                            hasUpdate = moveMob(pc, Core::InputPress::UP);
+                            hasUpdate = moveMob(pc, InputPress::UP);
                             break;
                         case SDLK_a:
-                            hasUpdate = moveMob(pc, Core::InputPress::LEFT);
+                            hasUpdate = moveMob(pc, InputPress::LEFT);
                             break;
                         case SDLK_s:
-                            hasUpdate = moveMob(pc, Core::InputPress::DOWN);
+                            hasUpdate = moveMob(pc, InputPress::DOWN);
                             break;
                         case SDLK_d:
-                            hasUpdate = moveMob(pc, Core::InputPress::RIGHT);
+                            hasUpdate = moveMob(pc, InputPress::RIGHT);
                             break;
                         case SDLK_LEFTBRACKET:
                             hasUpdate = processCancel();
@@ -305,7 +310,7 @@ namespace Play {
      * @param input The direction that was input.
      * @return true if move succeeded.
      */
-    bool PlayStateManager::moveMob(MapObject* mob, Core::InputPress input) {
+    bool PlayStateManager::moveMob(MapObject* mob, InputPress input) {
         if ((_lastMoveTime + WALK_TIME) > Util::now() && _lastMoveTime != 0) {
             return false;
         }
@@ -313,16 +318,16 @@ namespace Play {
         int x = mob->x();
         int y = mob->y();
         switch(input) {
-            case Core::InputPress::UP:
+            case InputPress::UP:
                 mob->facing(Direction::NORTH);
                 y--; break;
-            case Core::InputPress::LEFT:
+            case InputPress::LEFT:
                 mob->facing(Direction::WEST);
                 x--; break;
-            case Core::InputPress::DOWN:
+            case InputPress::DOWN:
                 mob->facing(Direction::SOUTH);
                 y++; break;
-            case Core::InputPress::RIGHT:
+            case InputPress::RIGHT:
                 mob->facing(Direction::EAST);
                 x++; break;
         }
@@ -334,7 +339,7 @@ namespace Play {
         return result;
     }
 
-    void PlayStateManager::exit(const Core::CoreState nextState) {
+    void PlayStateManager::exit(const CoreState nextState) {
         state(PlayState::Exit);
         result(nextState);
     }

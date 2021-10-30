@@ -8,11 +8,14 @@ namespace View {
     using std::vector;
 
     using Core::MenuItem;
+    using Magic::Rune;
+    using Magic::Spell;
+    using Play::MainMenuItem;
     using Play::Party;
     using Play::PC;
     using Play::MenuState;
     using Util::AssetCache;
-    using Play::MainMenuItem;
+
 
     const SDL_Rect MenuViewManager::_runeControl = SDL_Rect { 6, 6, 60, 60 };
     /**

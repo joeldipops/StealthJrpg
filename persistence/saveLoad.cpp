@@ -6,6 +6,8 @@ namespace Persistence {
     using std::string;
     using std::vector;
 
+    using Magic::Rune;
+    using Magic::Spell;
     using Play::Party;
     using Play::PC;
     using Resources::PartyMemberCode;

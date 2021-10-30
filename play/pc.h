@@ -6,10 +6,8 @@
 #include "../res/templates.h"
 #include "jobClass.h"
 
-namespace Play
-{
-    class PC : public Mob
-    {
+namespace Play {
+    class PC : public Mob {
         public:
             PC(const Resources::PCTemplate&);
             ~PC(void);

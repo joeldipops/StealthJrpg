@@ -7,6 +7,8 @@ namespace View {
     using std::vector;
 
     using Core::MenuItem;
+    using Magic::Command;
+    using Magic::Rune;
     using Play::Mob;
     using Play::PlayState;
     using Util::AssetCache;

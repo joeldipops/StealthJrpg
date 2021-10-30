@@ -9,13 +9,11 @@
 #include "../globalConstants.h"
 #include "combatable.h"
 
-namespace Play
-{
+namespace Play {
     class Mob;
     class GameMap;
 
-    class BattleField : public Magic::SpellContext
-    {
+    class BattleField : public Magic::SpellContext {
         public:
             BattleField(void) {};
 

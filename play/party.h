@@ -34,10 +34,10 @@ namespace Play {
             virtual Direction facing(void) const;
             virtual Direction facing(Direction);
 
-            const std::vector<Rune*> runeCollection(void) const;
-            void addRunes(Rune*);
-            void addRunes(std::vector<Rune*>);
-            std::vector<Rune*> _runeCollection;
+            const std::vector<Magic::Rune*> runeCollection(void) const;
+            void addRunes(Magic::Rune*);
+            void addRunes(std::vector<Magic::Rune*>);
+            std::vector<Magic::Rune*> _runeCollection;
 
         private:
             std::vector<PC*> _members;
