@@ -4,10 +4,8 @@
 #include <string>
 #include <SDL2/SDL.h>
 
-namespace Core
-{
-    class MenuItem
-    {
+namespace Core {
+    class MenuItem {
         public:
             MenuItem(const std::string& name = "", const std::string& imagePath = "");
             virtual ~MenuItem(void) {};

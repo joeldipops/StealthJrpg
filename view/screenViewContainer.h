@@ -3,10 +3,8 @@
 
 #include "viewManager.h"
 
-namespace View
-{
-    struct ScreenViewContainer
-    {
+namespace View {
+    struct ScreenViewContainer {
         public:
             ViewManager* Top;
             ViewManager* TopRight;

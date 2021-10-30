@@ -2,13 +2,15 @@
 #include "playStateManager.h"
 
 namespace Play {
+    using Resources::TerrainTemplate;
+
     //  Lifecycle
 
     /**
      * Constructor
      * @param terrain The terrain in this cell of the map.
      */
-    MapCell::MapCell(const Resources::TerrainTemplate& tmpl) {
+    MapCell::MapCell(const TerrainTemplate& tmpl) {
         _terrain = Terrain(tmpl);
         _contents = nullptr;
     }

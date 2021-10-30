@@ -4,10 +4,8 @@
 #include "play/mob.h"
 #include "play/terrain.h"
 
-namespace Persistence
-{
-    struct MapFileBlock
-    {
+namespace Persistence {
+    struct MapFileBlock {
         public:
             static const int BYTES_PER_CELL = 2;
             static MapFileBlock generateTestCell(TerrainType terrain, MobType mob = MobType::None) {

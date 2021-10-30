@@ -23,6 +23,7 @@ namespace Core {
     using Play::Party;
     using Play::PlayStateManager;
     using Play::TitleStateManager;
+    using Resources::Data;
     using Util::AssetCache;
 
     using View::RenderManager;
@@ -80,9 +81,9 @@ namespace Core {
                             break;
                         }
                         case CoreState::Play: {
-                            player.addMember(Resources::Data::A);
-                            player.addMember(Resources::Data::B);
-                            player.addMember(Resources::Data::C);
+                            player.addMember(Data::A);
+                            player.addMember(Data::B);
+                            player.addMember(Data::C);
                             state = play.start(player);
                             break;
                         }

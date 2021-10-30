@@ -2,10 +2,8 @@
 #define VIEWMANAGERMENUTOOLSBASE_H_INCLUDED
 
 #include "viewManager.h"
-namespace View
-{
-    class ViewManagerMenuToolsBase : public ViewManager
-    {
+namespace View {
+    class ViewManagerMenuToolsBase : public ViewManager {
         public:
             using ViewManager::ViewManager;
         protected:

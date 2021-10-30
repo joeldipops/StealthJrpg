@@ -13,7 +13,6 @@ namespace View {
         private:
             std::vector<Core::MenuItem*> _controls = {};
             int _selectedIndex = 0;
-
     };
 }
 

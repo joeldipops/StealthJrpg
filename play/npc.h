@@ -5,12 +5,10 @@
 
 namespace Resources { struct EnemyTemplate; }
 
-namespace Play
-{
+namespace Play {
     class GameMap;
 
-    class NPC : public Mob
-    {
+    class NPC : public Mob {
         public:
             NPC(const Resources::EnemyTemplate&, MobType);
             NPC(const Resources::EnemyTemplate&);

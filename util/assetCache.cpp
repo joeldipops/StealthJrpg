@@ -1,21 +1,28 @@
+#include <SDL2/SDL.h>
 #include <utility>
+#include <iostream>
 
 #include "assetCache.h"
 #include "../res/sprites.h"
 
 
 namespace Util {
-    using namespace std;
-    using namespace Resources;
-    using namespace Graphics;
+    using std::cout;
+    using std::endl;
+    using std::map;
+    using std::pair;
+    using std::string;
+    using Resources::SpriteIndex;
+    using Graphics::Sprite;
+    using Graphics::SpriteDefinition;
 
     /**
      * Constructor
      */
     AssetCache::AssetCache(SDL_Renderer* renderer) {
         _renderer = renderer;
-        _imageAssets = map<std::string, SDL_Texture*>();
-        _fontAssets = map<std::string, TTF_Font*>();
+        _imageAssets = map<string, SDL_Texture*>();
+        _fontAssets = map<string, TTF_Font*>();
         _spriteAssets = map<const SpriteDefinition*, Sprite*>();
 
     }
@@ -67,7 +74,7 @@ namespace Util {
         // Otherwise, load the image from disc.
         SDL_Surface* temp = IMG_Load(fileName.c_str());
         if( temp == NULL ) {
-            std::cout << "Unable to load image " << IMG_GetError() << std::endl;
+            cout << "Unable to load image " << IMG_GetError() << endl;
         }
 
         SDL_Texture* result = SDL_CreateTextureFromSurface( _renderer, temp);
@@ -114,7 +121,7 @@ namespace Util {
 
         TTF_Font* font = TTF_OpenFont(fileName.c_str(), fontSize);
         if (font == NULL) {
-            std::cout << "Unable to load font " << TTF_GetError() << std::endl;
+            cout << "Unable to load font " << TTF_GetError() << std::endl;
         }
 
         _fontAssets[key] = font;

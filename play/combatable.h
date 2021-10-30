@@ -1,10 +1,8 @@
 #ifndef COMBATABLE_H_INLCUDED
 #define COMBATABLE_H_INLCUDED
 
-namespace Play
-{
-    class Combatable
-    {
+namespace Play {
+    class Combatable {
         public:
             virtual ~Combatable(void) {};
             virtual float changeSkill(float) = 0;

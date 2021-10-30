@@ -4,10 +4,8 @@
 #include "terrain.h"
 #include "mob.h"
 
-namespace Play
-{
-    class MapCell
-    {
+namespace Play {
+    class MapCell {
         public:
             MapCell(void) {};
             MapCell(const Resources::TerrainTemplate&);

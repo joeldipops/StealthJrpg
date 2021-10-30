@@ -3,20 +3,19 @@
 
 #include <vector>
 
-namespace Play
-{
+namespace Play {
+    class Combatable;
     class Mob;
     class BattleField;
-    class Combatable;
 }
 
+namespace Magic { class Command; }
 
-namespace Magic
-{
-    typedef Combatable* (*Targeter)(Mob*, BattleField*);
-    typedef std::vector<Combatable*> (*MultiTargeter) (Mob*, BattleField*);
-    typedef Combatable* (*Selecter) (Mob*, BattleField*, std::vector<Combatable*>);
-    typedef void (*Action) (Combatable*, Combatable*, int, int);
+namespace Magic {
+    typedef Play::Combatable* (*Targeter)(Play::Mob*, Play::BattleField*);
+    typedef std::vector<Play::Combatable*> (*MultiTargeter) (Play::Mob*, Play::BattleField*);
+    typedef Play::Combatable* (*Selecter) (Play::Mob*, Play::BattleField*, std::vector<Play::Combatable*>);
+    typedef void (*Action) (Play::Combatable*, Play::Combatable*, int, int);
 
     /**
     * Casts a spell or carries out some other in-combat command.
@@ -24,7 +23,7 @@ namespace Magic
     * @param battlefield holds various data on combat currently in progress.
     * @return The time before the mob that made the command can act again.
     */
-    typedef int (*Effect)(Command* context, Mob*, BattleField*);
+    typedef int (*Effect)(Magic::Command* context, Play::Mob*, Play::BattleField*);
 }
 
 #endif

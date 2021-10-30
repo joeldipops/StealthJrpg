@@ -12,10 +12,8 @@
 #include "util/utils.h"
 #include "magic/spell.h"
 
-namespace Play
-{
-    class MenuManager : public Core::StateManager<Play::MenuState, Play::PlayState>
-    {
+namespace Play {
+    class MenuManager : public Core::StateManager<Play::MenuState, Play::PlayState> {
         public:
             MenuManager(SDL_Renderer*, Util::AssetCache*);
             Play::PlayState start(Play::Party& party);

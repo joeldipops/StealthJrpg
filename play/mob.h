@@ -10,14 +10,10 @@
 #include "combatable.h"
 #include "../res/templates.h"
 
-using namespace Magic;
-
 namespace Magic { class Spell; }
 
-namespace Play
-{
-    class Mob : public MapObject, public Combatable
-    {
+namespace Play {
+    class Mob : public MapObject, public Combatable {
         public:
             Mob(const Resources::MobTemplate&, MobType);
             virtual ~Mob();
@@ -59,11 +55,11 @@ namespace Play
 
             int selectedCommandIndex(natural);
             int selectedCommandIndex(void) const;
-            Command* selectedCommand(void) const;
+            Magic::Command* selectedCommand(void) const;
             const std::string& portraitFileName(void) const;
-            std::vector<Command*> commands(void) const;
-            const std::vector<Command*>& spells(void) const;
-            void addSpell(Spell*);
+            std::vector<Magic::Command*> commands(void) const;
+            const std::vector<Magic::Command*>& spells(void) const;
+            void addSpell(Magic::Spell*);
             void cleanUpSpellList(void);
             int unblockTime(void) const;
             bool isBlocked(void) const;
@@ -76,7 +72,7 @@ namespace Play
 
         protected:
             const std::string& portraitFileName(const std::string&);
-            std::vector<Command*>& otherCommands(void);
+            std::vector<Magic::Command*>& otherCommands(void);
 
             unsigned short maxStamina(unsigned short );
             float defaultSpeed(float);
@@ -98,8 +94,8 @@ namespace Play
             int _blockedTime = 0;
             bool _isBlocked = false;
 
-            std::vector<Command*> _spellCommands;
-            std::vector<Command*> _otherCommands;
+            std::vector<Magic::Command*> _spellCommands;
+            std::vector<Magic::Command*> _otherCommands;
             std::string _portraitFileName;
 
             // Base stats.

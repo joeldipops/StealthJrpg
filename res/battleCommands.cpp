@@ -2,6 +2,8 @@
 #include "../play/enemy.h"
 
 namespace Resources {
+    using Magic::Command;
+    using Magic::SpellContext;
     using Play::Combatable;
     using Play::Enemy;
     using Play::Mob;

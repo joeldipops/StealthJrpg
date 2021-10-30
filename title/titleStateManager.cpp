@@ -2,13 +2,15 @@
 #include "../util/events.h"
 
 namespace Play {
-    using namespace std;
-    using namespace Resources;
-    using namespace Title;
-    using namespace Util;
-    using namespace Core;
-    using namespace View;
+    using std::vector;
 
+    using Core::CoreState;
+    using Core::Event;
+    using Core::InputPress;
+    using Core::MenuItem;
+    using Resources::Strings;
+    using View::RenderManager;
+    using View::TitleViewManager;
 
     const MenuItem TitleStateManager::START = MenuItem(Strings::Start);
     const MenuItem TitleStateManager::QUIT = MenuItem(Strings::Quit);
@@ -21,7 +23,7 @@ namespace Play {
      : StateManager(r, rm, a) {
         _view = TitleViewManager(renderer(), SDL_Rect {0, 0, 1200, 800}, assets());
         _menu = std::vector<MenuItem> {START, CONTINUE, QUIT};
-        state(Title::TitleState::Normal);
+        state(TitleState::Normal);
     }
 
     TitleStateManager::~TitleStateManager() {
@@ -40,11 +42,11 @@ namespace Play {
         bool rerender = true;
         _selectedItemIndex = 0;
         TitleState oldState;
-        while(state() != TitleState::Exit) {
+        while(state() != TitleState::TitleExit) {
             if(rerender) {
                 render();
             } else {
-                sleep(50);
+                Util::sleep(50);
             }
             oldState = state();
 
@@ -53,14 +55,14 @@ namespace Play {
                 SDL_Event event = *myEvent.InnerEvent;
                 switch(event.type) {
                     case SDL_QUIT:
-                        state(TitleState::Exit);
+                        state(TitleState::TitleExit);
                         result(CoreState::Exit);
                         continue;
                     case SDL_KEYDOWN:
                         switch(event.key.keysym.sym) {
                             case SDLK_q:
                             case SDLK_ESCAPE:
-                                state(TitleState::Exit);
+                                state(TitleState::TitleExit);
                                 continue;
                             case SDLK_w:
                                 rerender = moveCursor(InputPress::UP);
@@ -90,7 +92,7 @@ namespace Play {
     }
 
     void TitleStateManager::render(void) {
-        vector<MenuItem*> pointers = toPointers<MenuItem>(_menu);
+        vector<MenuItem*> pointers = Util::toPointers<MenuItem>(_menu);
         _view.setControls(pointers, _selectedItemIndex);
     }
 
@@ -108,13 +110,13 @@ namespace Play {
         MenuItem command = _menu.at(_selectedItemIndex);
 
         if (command.equals(START)) {
-            state(TitleState::Exit);
+            state(TitleState::TitleExit);
             result(CoreState::Play);
         } else if (command.equals(QUIT)) {
-            state(TitleState::Exit);
+            state(TitleState::TitleExit);
             result(CoreState::Exit);
         } else if (command.equals(CONTINUE)) {
-            state(TitleState::Exit);
+            state(TitleState::TitleExit);
             result(CoreState::Load);
         }
         return false;

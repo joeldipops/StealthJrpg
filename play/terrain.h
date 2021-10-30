@@ -6,10 +6,8 @@
 #include "../res/templates.h"
 #include "party.h"
 
-namespace Play
-{
-    class Terrain : public MapObject
-    {
+namespace Play {
+    class Terrain : public MapObject {
         public:
             Terrain(void);
             Terrain(const Resources::TerrainTemplate&);

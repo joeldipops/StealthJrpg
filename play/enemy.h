@@ -7,13 +7,10 @@
 #include "../res/templates.h"
 #include "npc.h"
 
-using namespace Magic;
-namespace Play
-{
-    typedef int (*AiAction)(Mob* context, SpellContext& field);
+namespace Play {
+    typedef int (*AiAction)(Mob* context, Magic::SpellContext& field);
 
-    class Enemy : public NPC
-    {
+    class Enemy : public NPC {
         public:
             Enemy(const Resources::EnemyTemplate&);
             bool aiMove(GameMap&);
