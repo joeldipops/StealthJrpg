@@ -7,8 +7,8 @@ namespace Graphics {
     /**
      * Constructor
      */
-    Frame::Frame(SpriteDefinition* image, int x, int y)
-    : SpriteDefinition(image->sheet(), image->index()) {
+    Frame::Frame(Sprite* image, int x, int y)
+     : Sprite(image->texture(), image->stencil()) {
         _xOffset = x;
         _yOffset = y;
     }

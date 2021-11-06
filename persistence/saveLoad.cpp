@@ -12,6 +12,7 @@ namespace Persistence {
     using Play::PC;
     using Resources::PartyMemberCode;
     using Resources::Strings;
+    using Util::AssetCache;
 
     SaveLoad::SaveLoad(const string& path_) {
         _path = path_;
@@ -65,7 +66,7 @@ namespace Persistence {
      * Loads information about a pc from a save file.
      * @param pc The character that will have properties assigned from the save file.
      */
-    void SaveLoad::load(Party& party) const {
+    void SaveLoad::load(Party& party, AssetCache* cache) const {
         vector<byte> data = Util::readFile(_path.c_str());
 
         if (data.size() <= 0) {
@@ -145,7 +146,7 @@ namespace Persistence {
                         t.Speed = float(Util::fuseShort(data.at(++i), data.at(++i)) / 100.0);
                         t.Resistance = float(Util::fuseShort(data.at(++i), data.at(++i)) / 100.0);
                         t.Defence = float(Util::fuseShort(data.at(++i), data.at(++i)) / 100.0);
-                        pc = party.addMember(t);
+                        pc = party.addMember(t, cache);
                         break;
                     }
                     case SavedObjectCode::NEW_SPELL:

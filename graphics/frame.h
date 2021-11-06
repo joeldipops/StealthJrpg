@@ -4,16 +4,16 @@
 #include <vector>
 #include <ctime>
 
-#include "../res/sprites.h"
+#include "../graphics/sprite.h"
 
 namespace Graphics {
 
     /**
      * A frame of animation.
      */
-    class Frame : public SpriteDefinition {
+    class Frame : public Sprite {
         public:
-            Frame(SpriteDefinition* image, int x = 0, int y = 0);
+            Frame(Sprite* image, int x = 0, int y = 0);
         private:
             int _xOffset;
             int _yOffset;

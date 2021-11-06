@@ -3,22 +3,23 @@
 
 namespace Play {
     using Resources::EnemyTemplate;
+    using Util::AssetCache;
 
     // Lifecycle
 
     /**
      * Constructor.
      */
-    NPC::NPC(const EnemyTemplate& tmpl, MobType type_)
-     : Mob(tmpl, type_) {
+    NPC::NPC(const EnemyTemplate& tmpl, MobType type_, AssetCache* cache)
+     : Mob(tmpl, type_, cache) {
         _movementDelay = tmpl.MovementDelay;
     }
 
     /**
      * Constructor
      */
-    NPC::NPC(const EnemyTemplate& tmpl)
-     : NPC(tmpl, MobType::NPC) {}
+    NPC::NPC(const EnemyTemplate& tmpl, AssetCache* cache)
+     : NPC(tmpl, MobType::NPC, cache) {}
 
     /**
      * Destructor

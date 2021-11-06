@@ -5,11 +5,13 @@
 
 
 namespace Resources {
-    using Graphics::Frame;
+    using std::vector;
 
-    std::vector<Frame*> AnimationIndex::DEFAULT = { new Frame(&SpriteIndex::KID_SOUTH_0) };
-    std::vector<Frame*> AnimationIndex::KID_NORTH = { new Frame(&SpriteIndex::KID_NORTH_0), new Frame(&SpriteIndex::KID_NORTH_1), new Frame(&SpriteIndex::KID_NORTH_2), new Frame(&SpriteIndex::KID_NORTH_0) }; 
-    std::vector<Frame*> AnimationIndex::KID_SOUTH = { new Frame(&SpriteIndex::KID_SOUTH_0), new Frame(&SpriteIndex::KID_SOUTH_1), new Frame(&SpriteIndex::KID_SOUTH_2), new Frame(&SpriteIndex::KID_SOUTH_0) }; 
-    std::vector<Frame*> AnimationIndex::KID_EAST = { new Frame(&SpriteIndex::KID_EAST_0), new Frame(&SpriteIndex::KID_EAST_1), new Frame(&SpriteIndex::KID_EAST_2), new Frame(&SpriteIndex::KID_EAST_0) }; 
-    std::vector<Frame*> AnimationIndex::KID_WEST = { new Frame(&SpriteIndex::KID_WEST_0), new Frame(&SpriteIndex::KID_WEST_1), new Frame(&SpriteIndex::KID_WEST_2), new Frame(&SpriteIndex::KID_WEST_0) }; 
+    using Graphics::SpriteDefinition;
+
+    vector<SpriteDefinition*> AnimationIndex::DEFAULT = { &SpriteIndex::KID_SOUTH_0 };
+    vector<SpriteDefinition*> AnimationIndex::KID_NORTH = { &SpriteIndex::KID_NORTH_0, &SpriteIndex::KID_NORTH_1, &SpriteIndex::KID_NORTH_2, &SpriteIndex::KID_NORTH_0 }; 
+    vector<SpriteDefinition*> AnimationIndex::KID_SOUTH = { &SpriteIndex::KID_SOUTH_0, &SpriteIndex::KID_SOUTH_1, &SpriteIndex::KID_SOUTH_2, &SpriteIndex::KID_SOUTH_0 }; 
+    vector<SpriteDefinition*> AnimationIndex::KID_EAST = { &SpriteIndex::KID_EAST_0, &SpriteIndex::KID_EAST_1, &SpriteIndex::KID_EAST_2, &SpriteIndex::KID_EAST_0 }; 
+    vector<SpriteDefinition*> AnimationIndex::KID_WEST = { &SpriteIndex::KID_WEST_0, &SpriteIndex::KID_WEST_1, &SpriteIndex::KID_WEST_2, &SpriteIndex::KID_WEST_0 }; 
 }

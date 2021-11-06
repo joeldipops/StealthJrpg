@@ -9,8 +9,9 @@
 namespace Play {
     class Terrain : public MapObject {
         public:
-            Terrain(void);
-            Terrain(const Resources::TerrainTemplate&);
+            Terrain(void) {};
+            Terrain(Util::AssetCache*);
+            Terrain(const Resources::TerrainTemplate&, Util::AssetCache*);
             PlayStateContainer& onInspect(PlayStateContainer&);
             PlayStateContainer& onEnter(PlayStateContainer&);
         private:

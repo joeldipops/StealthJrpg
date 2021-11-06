@@ -10,23 +10,23 @@
 #include "../util/events.h"
 #include "../graphics/frame.h"
 #include "../graphics/animation.h"
+#include "../util/assetCache.h"
 
 namespace Play {
     struct PlayStateContainer;
     typedef PlayStateContainer& (*PlayEventHandler)(MapObject*, PlayStateContainer&);
     class MapObject {
         public:
+            MapObject(void) {};
             MapObject(const MapObject& that);
-            MapObject(const Resources::MapObjectTemplate&);
+            MapObject(const Resources::MapObjectTemplate&, Util::AssetCache*);
 
             MapObject& operator=(const MapObject& that);
 
             virtual ~MapObject(void);
             bool isDense(void);
             void setUpAnimation(Resources::AnimationTrigger, Graphics::Animation*);
-            virtual const Graphics::SpriteDefinition* currentSprite(void) const;
-            std::string imageFileName(const std::string&);
-            std::string imageFileName(void) const;
+            virtual const Graphics::Frame* currentSprite(void) const;
 
             virtual PlayStateContainer& onInspect(PlayStateContainer&);
 
@@ -50,11 +50,11 @@ namespace Play {
             const Handler<MapObject, PlayStateContainer> onInspectFn(void) const;
         private:
             bool _isDense;
-            std::string _imageFileName;
+
             int _x = 0;
             int _y = 0;
             Direction _facing = Direction::NONE;
-            Graphics::Animation* _activeAnimation = nullptr;
+            Graphics::Animation* _activeAnimation = NULL;
             std::map<Resources::AnimationTrigger, Graphics::Animation*> _animations = {};
             Handler<MapObject, PlayStateContainer> _onInspect;
     };

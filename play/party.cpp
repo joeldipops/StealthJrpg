@@ -6,11 +6,13 @@ namespace Play {
     using std::vector;
 
     using Graphics::SpriteDefinition;
+    using Graphics::Frame;
     using Magic::Rune;
     using Magic::Spell;
     using Resources::AnimationTrigger;
     using Resources::MapObjectTemplate;
     using Resources::PCTemplate;
+    using Util::AssetCache;
 
     // STATIC HELPERS
 
@@ -26,8 +28,8 @@ namespace Play {
     /**
      * Constructor
      */
-    Party::Party(void)
-     : MapObject(getPCDefaultTemplate()) {
+    Party::Party(AssetCache* cache)
+     : MapObject(getPCDefaultTemplate(), cache) {
         _members = vector<PC*>(0);
         _bench = vector<PC*>(0);
         x(-1);
@@ -38,8 +40,8 @@ namespace Play {
     /**
      * Constructor takes list of members.
      */
-    Party::Party(vector<PC*> members_)
-     : MapObject(getPCDefaultTemplate()) {
+    Party::Party(vector<PC*> members_, AssetCache* cache)
+     : MapObject(getPCDefaultTemplate(), cache) {
         _members = members_;
     }
 
@@ -150,8 +152,7 @@ namespace Play {
         return _members.at(index);
     }
 
-    PC* Party::addLeader(const PCTemplate& tmpl) {
-        PC* pc = new PC(tmpl);
+    PC* Party::addLeader(PC* pc) {
         if (_members.size() >= 1) {
             delete _members.at(0);
             _members[0] = pc;
@@ -163,15 +164,15 @@ namespace Play {
         return pc;
     }
 
-    PC* Party::addMember(const PCTemplate& tmpl) {
+    PC* Party::addMember(const PCTemplate& tmpl, AssetCache* cache) {
+        PC* pc = new PC(tmpl, cache);
 
         if (_members.size() <= 0) {
-            return addLeader(tmpl);
+            return addLeader(pc);
+        } else {
+            _members.push_back(pc);
+            return pc;
         }
-
-        PC* pc = new PC(tmpl);
-        _members.push_back(pc);
-        return pc;
     }
 
     /**
@@ -220,7 +221,7 @@ namespace Play {
     /**
      * The sprite used to represent this mob at the current point in time - follows the party leader.
      */
-    const SpriteDefinition* Party::currentSprite() const {
+    const Frame* Party::currentSprite() const {
         return leader()->currentSprite();
     }
 

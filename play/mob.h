@@ -15,7 +15,7 @@ namespace Magic { class Spell; }
 namespace Play {
     class Mob : public MapObject, public Combatable {
         public:
-            Mob(const Resources::MobTemplate&, MobType);
+            Mob(const Resources::MobTemplate&, MobType, Util::AssetCache*);
             virtual ~Mob();
 
             virtual MobType type(void) const;

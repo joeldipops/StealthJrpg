@@ -3,6 +3,7 @@
 
 namespace Play {
     using Resources::TerrainTemplate;
+    using Util::AssetCache;
 
     //  Lifecycle
 
@@ -10,8 +11,8 @@ namespace Play {
      * Constructor
      * @param terrain The terrain in this cell of the map.
      */
-    MapCell::MapCell(const TerrainTemplate& tmpl) {
-        _terrain = Terrain(tmpl);
+    MapCell::MapCell(const TerrainTemplate& tmpl, AssetCache* cache) {
+        _terrain = Terrain(tmpl, cache);
         _contents = nullptr;
     }
 

@@ -10,8 +10,8 @@ namespace Play {
 
     class NPC : public Mob {
         public:
-            NPC(const Resources::EnemyTemplate&, MobType);
-            NPC(const Resources::EnemyTemplate&);
+            NPC(const Resources::EnemyTemplate&, MobType, Util::AssetCache*);
+            NPC(const Resources::EnemyTemplate&, Util::AssetCache*);
             ~NPC(void);
             virtual bool aiMove(GameMap&);
         protected:

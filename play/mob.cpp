@@ -8,14 +8,15 @@ namespace Play {
     using Magic::Command;
     using Magic::Spell;
     using Resources::MobTemplate;
+    using Util::AssetCache;
 
     //  Lifecycle
 
     /**
      * Constructor
      */
-    Mob::Mob(const MobTemplate& tmpl, MobType type_)
-     : MapObject(tmpl) {
+    Mob::Mob(const MobTemplate& tmpl, MobType type_, AssetCache* cache)
+     : MapObject(tmpl, cache) {
         _type = type_;
         _maxStamina = tmpl.Stamina;
         _stamina = _maxStamina;
@@ -26,7 +27,6 @@ namespace Play {
         defaultResistance(tmpl.Resistance);
         defaultDefence(tmpl.Defence);
         portraitFileName(tmpl.PortraitPath);
-        imageFileName(tmpl.ImagePath);
 
         if (type_ != MobType::None) {
             isDense(true);

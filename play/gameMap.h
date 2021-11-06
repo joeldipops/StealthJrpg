@@ -12,19 +12,22 @@
 #include "party.h"
 #include "../mapFileBlock.h"
 #include "enemy.h"
+#include "../util/assetCache.h"
 
 namespace Play {
     class MapCell;
 
     class GameMap {
         public:
-            GameMap();
+            GameMap(Util::AssetCache*);
             GameMap(int, int);
             ~GameMap();
 
             Party* party(Party&);
             Party* party(void) const;
             const SDL_Rect visible(void) const;
+
+            Util::AssetCache* assets(void) const;
 
             bool place(MapObject*, int, int, bool = false);
             void remove(MapObject* mob);
@@ -59,6 +62,8 @@ namespace Play {
             std::vector<MapObject*> _contents;
             std::map<unsigned long, MapCell> _cells;
             std::deque<SDL_Rect> _chunks;
+
+            Util::AssetCache* _assets;
 
             int _maxX = 0;
             int _maxY = 0;

@@ -4,18 +4,18 @@
 #include "mapObject.h"
 #include "../res/templates.h"
 #include "pc.h"
+#include "../util/assetCache.h"
 
 namespace Play {
     class Party : public MapObject {
         public:
-            Party(void);
-            Party(std::vector<PC*>);
+            Party(Util::AssetCache*);
+            Party(std::vector<PC*>, Util::AssetCache*);
             ~Party(void);
             PC* leader(void) const;
             const std::vector<PC*> members(void) const;
-            virtual const Graphics::SpriteDefinition* currentSprite(void) const;
-            PC* addLeader(const Resources::PCTemplate&);
-            PC* addMember(const Resources::PCTemplate&);
+            virtual const Graphics::Frame* currentSprite(void) const;
+            PC* addMember(const Resources::PCTemplate&, Util::AssetCache*);
             PC* removeMember(PC*);
             PlayStateContainer& onInspect(PlayStateContainer&);
             void buryTheDead(void);
@@ -38,6 +38,9 @@ namespace Play {
             void addRunes(Magic::Rune*);
             void addRunes(std::vector<Magic::Rune*>);
             std::vector<Magic::Rune*> _runeCollection;
+
+        protected:
+            PC* addLeader(PC*);
 
         private:
             std::vector<PC*> _members;

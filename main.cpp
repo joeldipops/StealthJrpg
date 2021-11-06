@@ -56,7 +56,7 @@ namespace Core {
                 SaveLoad io = SaveLoad(SAVE_FILE);
                 CoreState state = CoreState::Title;
                 while(state != CoreState::Exit) {
-                    Party player = Party();
+                    Party player = Party(&assets);
 
                     Event myEvent;
                     while(eventManager.pollEvent(&myEvent)) {
@@ -71,7 +71,7 @@ namespace Core {
                             break;
                         }
                         case CoreState::Load: {
-                            io.load(player);
+                            io.load(player, &assets);
 
                             // Load was not successful.
                             if (player.members().size() <= 0)
@@ -81,9 +81,9 @@ namespace Core {
                             break;
                         }
                         case CoreState::Play: {
-                            player.addMember(Data::A);
-                            player.addMember(Data::B);
-                            player.addMember(Data::C);
+                            player.addMember(Data::A, &assets);
+                            player.addMember(Data::B, &assets);
+                            player.addMember(Data::C, &assets);
                             state = play.start(player);
                             break;
                         }

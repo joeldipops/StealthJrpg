@@ -25,7 +25,7 @@ namespace Graphics {
      * @param texture The spritesheet this sprite is taken from.
      * @param stencil position and size of the sprite on the sheet.
      */
-    Sprite::Sprite(SDL_Texture* texture, SDL_Rect* stencil) {
+    Sprite::Sprite(SDL_Texture* texture, const SDL_Rect* stencil) {
         _texture = texture;
         _stencil.x = stencil->x;
         _stencil.y = stencil->y;

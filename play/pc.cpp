@@ -8,11 +8,12 @@ namespace Play {
     using Resources::PartyMemberCode;
     using Resources::PCTemplate;
     using Persistence::SavedObjectCode;
+    using Util::AssetCache;
 
     // Lifecycle
 
-    PC::PC(const PCTemplate& tmpl)
-     : Mob(tmpl, MobType::PlayerCharacter) {
+    PC::PC(const PCTemplate& tmpl, AssetCache* cache)
+     : Mob(tmpl, MobType::PlayerCharacter, cache) {
         _name = tmpl.Name;
         _memberCode = tmpl.MemberCode;
         otherCommands().push_back(new Command("Flee", Commands::FLEE));

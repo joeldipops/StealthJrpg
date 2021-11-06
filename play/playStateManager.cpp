@@ -350,7 +350,7 @@ namespace Play {
      * @return The parsed Map.
      */
     GameMap* PlayStateManager::loadMap(void) {
-        GameMap* gameMap = new GameMap();
+        GameMap* gameMap = new GameMap(assets());
         gameMap->loadChunk(1, 1, "maps/map1_1");
         gameMap->requestNextChunk();
         return gameMap;

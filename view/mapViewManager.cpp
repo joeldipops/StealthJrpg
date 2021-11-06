@@ -8,6 +8,7 @@ namespace View {
     using Play::MapCell;
     using Play::MapObject;
     using Play::Mob;
+    using Graphics::Frame;
     using Graphics::Sprite;
 
     /**
@@ -61,21 +62,22 @@ namespace View {
                 }
 
                 SDL_Rect rect = { (x - visible.x) * CELL_WIDTH, (y - visible.y) * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT };
-                std::string fileName;
+                const Sprite* frame = NULL;
 
                 if (x >= 0 && y >= 0) {
                     const MapCell* cell = gameMap->getCell(x, y);
                     if (cell != nullptr) {
-                        fileName = cell->terrain()->imageFileName();
+                        frame = cell->terrain()->currentSprite();
                     } else {
-                        fileName = blank;
+                        frame = assets()->getSprite(blank);
                     }
                 } else {
-                    fileName = blank;
+                    frame = assets()->getSprite(blank);
                 }
 
-                Sprite* image = assets()->getSprite(fileName);
-                SDL_RenderCopy(renderer(), image->texture(), image->stencil(), &rect);
+                if (frame != NULL) {
+                    SDL_RenderCopy(renderer(), frame->texture(), frame->stencil(), &rect);
+                }
             }
         }
     }
@@ -109,14 +111,10 @@ namespace View {
                 CELL_WIDTH / 2, CELL_HEIGHT / 2
             };
 
-            Sprite* sprite;
-            if (mob->imageFileName().length() > 0) {
-                sprite = assets()->getSprite(mob->imageFileName());
-            } else {
-                sprite = assets()->getSprite(mob->currentSprite());
+            Sprite* sprite = (Sprite*) mob->currentSprite();
+            if (sprite != NULL) {
+                SDL_RenderCopy(renderer(), sprite->texture(), sprite->stencil(), &rect);
             }
-
-            SDL_RenderCopy(renderer(), sprite->texture(), sprite->stencil(), &rect);
 
             if (mob->isMob()) {
                 renderHealthBar(*(Mob*)mob, x - visible.x, y - visible.y);

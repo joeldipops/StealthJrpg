@@ -7,8 +7,8 @@
 namespace Play {
     class MapCell {
         public:
-            MapCell(void) {};
-            MapCell(const Resources::TerrainTemplate&);
+            MapCell() {};
+            MapCell(const Resources::TerrainTemplate&, Util::AssetCache*);
             ~MapCell(void);
             Terrain* terrain(Terrain* = nullptr);
             const Terrain* terrain(void) const;

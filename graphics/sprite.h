@@ -10,7 +10,7 @@ namespace Graphics {
     struct Sprite {
         public:
             Sprite(SDL_Texture* texture, int x, int y, int width, int height);
-            Sprite(SDL_Texture* texture, SDL_Rect* stencil);
+            Sprite(SDL_Texture* texture, const SDL_Rect* stencil);
             SDL_Texture* texture() const;
             const SDL_Rect* stencil() const;
         private:

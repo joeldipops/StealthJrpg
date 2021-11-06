@@ -1,10 +1,14 @@
+#include <iostream>
+
 #include "mapObject.h"
 #include "../res/sprites.h"
-#include <iostream>
+#include "../util/assetCache.h"
 
 namespace Play {
     using std::string;
     using std::map;
+    using std::vector;
+
     using Graphics::Animation;
     using Graphics::EasingType;
     using Graphics::Frame;
@@ -13,6 +17,7 @@ namespace Play {
     using Resources::AnimationTrigger;
     using Resources::MapObjectTemplate;
     using Resources::SpriteIndex;
+    using Util::AssetCache;
     using Util::Location;
 
     map<Direction, AnimationTrigger> _directionTriggers = {
@@ -27,20 +32,35 @@ namespace Play {
     /**
      * Constructor
      */
-    MapObject::MapObject(const MapObjectTemplate& tmpl) {
+    MapObject::MapObject(const MapObjectTemplate& tmpl, AssetCache* cache) {
         _isDense = tmpl.IsDense;
-        _imageFileName = tmpl.ImagePath;
         _onInspect = tmpl.OnInspect;
 
         _animations = {};
 
-        for(auto& entry : tmpl.Animations) {
-            _animations.insert({ entry.first, new Animation(entry.second.first, entry.second.second) });
-        }
+        if (cache != NULL) {
+            for(auto& entry : tmpl.Animations) {
+                vector<Frame> frames;
+                for(auto& def : entry.second.first) {
+                    frames.push_back(Frame(cache->getSprite(def)));
+                }
 
-        // If there's nothing for IDLE, put in a place holder so we don't explode.
-        if (_animations.count(AnimationTrigger::IDLE) <= 0) {
-            _animations.insert({ AnimationTrigger::IDLE, new Animation(AnimationIndex::DEFAULT, EasingType::LINEAR) });
+                _animations.insert({ entry.first, new Animation(frames, entry.second.second) });
+            }
+
+            // If there's nothing for IDLE, put in a placeholder so we don't explode.
+            if (_animations.count(AnimationTrigger::IDLE) <= 0) {
+                if (tmpl.ImagePath.length() > 0) {
+                    _animations.insert({ AnimationTrigger::IDLE, new Animation({ Frame(cache->getSprite(tmpl.ImagePath)) }, EasingType::LINEAR) });
+
+                } else {
+                    vector<Frame> frames;
+                    for(auto& entry : AnimationIndex::DEFAULT) {
+                        frames.push_back(Frame(cache->getSprite(entry)));
+                    }
+                    _animations.insert({ AnimationTrigger::IDLE, new Animation(frames, EasingType::LINEAR) });
+                }
+            }
         }
 
         triggerAnimation(AnimationTrigger::IDLE, 0);
@@ -51,7 +71,6 @@ namespace Play {
      */
     MapObject::MapObject(const MapObject& that) {
         _facing = that._facing;
-        _imageFileName = that._imageFileName;
         _isDense = that._isDense;
         _onInspect = that._onInspect;
         _x = that._x;
@@ -74,7 +93,6 @@ namespace Play {
      */
     MapObject& MapObject::operator=(const MapObject& that) {
         this->_facing = that._facing;
-        this->_imageFileName = that._imageFileName;
         this->_isDense = that._isDense;
         this->_onInspect = that._onInspect;
         this->_x = that._x;
@@ -115,17 +133,6 @@ namespace Play {
     const Handler<MapObject, PlayStateContainer> MapObject::onInspectFn(void) const { return _onInspect; }
 
     // PROPERTIES
-
-    /**
-     * Sets and gets the path to this object's image.
-     * @param name The filename.
-     * @return the filename
-     */
-    string MapObject::imageFileName(void) const { return _imageFileName; }
-    string MapObject::imageFileName(const string& name) {
-        _imageFileName = name;
-        return _imageFileName;
-    }
 
     /**
      * Gets or sets the Mob's X position.
@@ -209,13 +216,20 @@ namespace Play {
             _activeAnimation = _animations.at(event);
         }
 
-        _activeAnimation->start(animationDuration);
+        if (_activeAnimation != NULL) {
+            _activeAnimation->start(animationDuration);
+        }
     }
 
     /**
      * The sprite used to represent this mob at the current point in time.
      */
-    const SpriteDefinition* MapObject::currentSprite() const {
-        return _activeAnimation->getFrame();
+    const Frame* MapObject::currentSprite() const {
+        if (_activeAnimation != NULL) {
+            return _activeAnimation->getFrame();
+        } else {
+            return _animations.at(AnimationTrigger::IDLE)->getFrame();
+        }
+
     }
 }

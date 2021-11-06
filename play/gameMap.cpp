@@ -7,6 +7,7 @@ namespace Play {
 
     using Persistence::MapFileBlock;
     using Resources::Data;
+    using Util::AssetCache;
     using Util::Location;
 
     // Lifecycle
@@ -14,7 +15,8 @@ namespace Play {
     /**
      * Contructs a rectangular map with the given dimensions.
      */
-    GameMap::GameMap() {
+    GameMap::GameMap(AssetCache* cache) {
+        _assets = cache;
         _contents = vector<MapObject*>(0);
         // Reserve the first spot for the PC mob.
         _cells = map<unsigned long, MapCell>();
@@ -40,6 +42,8 @@ namespace Play {
      */
     vector<MapObject*> GameMap::contents(vector<MapObject*> contents_) { return _contents = contents_; }
     vector<MapObject*> GameMap::contents(void) const { return _contents; }
+
+    AssetCache* GameMap::assets(void) const { return _assets; }
 
     // Methods
 
@@ -191,16 +195,16 @@ namespace Play {
             MapCell cell;
             switch (TerrainType(mapData[i])) {
                 case TerrainType::GrassTerrain:
-                    cell = MapCell(Resources::Data::Grass);
+                    cell = MapCell(Resources::Data::Grass, _assets);
                     break;
                 case TerrainType::WallTerrain:
-                    cell = MapCell(Resources::Data::Wall);
+                    cell = MapCell(Resources::Data::Wall, _assets);
                     break;
                 case TerrainType::HutTerrain:
-                    cell = MapCell(Resources::Data::Hut);
+                    cell = MapCell(Resources::Data::Hut, _assets);
                     break;
                 case TerrainType::CacheTerrain:
-                    cell = MapCell(Resources::Data::Cache);
+                    cell = MapCell(Resources::Data::Cache, _assets);
                 default:
                     break;
             }
@@ -216,22 +220,22 @@ namespace Play {
             switch(contents)
             {
                 case MobType::NPC1:
-                    mob = new NPC(Data::NPC1);
+                    mob = new NPC(Data::NPC1, _assets);
                     break;
                 case MobType::E2:
-                    mob = new Enemy(Data::E2);
+                    mob = new Enemy(Data::E2, _assets);
                     break;
                 case MobType::B1:
-                    mob = new Enemy(Data::B1);
+                    mob = new Enemy(Data::B1, _assets);
                     break;
                 case MobType::E1:
                 case MobType::Hostile:
-                    mob = new Enemy(Data::E1);
+                    mob = new Enemy(Data::E1, _assets);
                     break;
                 case MobType::PartyOfMobs:
                 case MobType::PlayerCharacter: {
                     if (party() == nullptr)
-                        mob = new Party();
+                        mob = new Party(_assets);
                     break;
                 }
                 default:

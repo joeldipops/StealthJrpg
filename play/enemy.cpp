@@ -3,11 +3,12 @@
 
 namespace Play {
     using Resources::EnemyTemplate;
+    using Util::AssetCache;
 
     // Lifecycle
 
-    Enemy::Enemy(const EnemyTemplate& tmpl)
-     : NPC(tmpl, MobType::Hostile) {
+    Enemy::Enemy(const EnemyTemplate& tmpl, AssetCache* cache)
+     : NPC(tmpl, MobType::Hostile, cache) {
         _physicalStrength = tmpl.Attack;
         _combatDelay = tmpl.AttackDelay;
         _combatAction = tmpl.CombatAction;

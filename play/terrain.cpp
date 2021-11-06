@@ -4,10 +4,11 @@
 namespace Play {
     using Resources::MapObjectTemplate;
     using Resources::TerrainTemplate;
+    using Util::AssetCache;
 
     // Lifecycle
 
-    MapObjectTemplate getTerrainDefaultTemplate(void) {
+    MapObjectTemplate getTerrainDefaultTemplate() {
         MapObjectTemplate result;
         result.ImagePath = "";
         result.IsDense = true;
@@ -17,15 +18,15 @@ namespace Play {
     /**
      * Empty Constructor
      */
-    Terrain::Terrain()
-     : MapObject(getTerrainDefaultTemplate()) {}
+    Terrain::Terrain(AssetCache* cache)
+     : MapObject(getTerrainDefaultTemplate(), cache) {}
 
     /**
      * Constructor
      * @param type
      */
-    Terrain::Terrain(const TerrainTemplate& tmpl) 
-     :MapObject(tmpl) {
+    Terrain::Terrain(const TerrainTemplate& tmpl, AssetCache* cache)
+     : MapObject(tmpl, cache) {
         _onEnter = tmpl.OnEnter;
     }
 

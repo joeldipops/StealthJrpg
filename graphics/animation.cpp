@@ -22,7 +22,7 @@ namespace Graphics {
      * Constructor
      * Allows you to pass in a custom easing function.
      */
-    Animation::Animation(vector<Frame*> frames, EasingFunction function) {
+    Animation::Animation(vector<Frame> frames, EasingFunction function) {
         _isStarted = false;
 
         _frames = frames;
@@ -32,7 +32,7 @@ namespace Graphics {
     /**
      * Constructor
      */
-    Animation::Animation(vector<Frame*> frames, EasingType function) {
+    Animation::Animation(vector<Frame> frames, EasingType function) {
         _isStarted = false;
 
         _frames = frames;
@@ -68,17 +68,16 @@ namespace Graphics {
     const Frame* Animation::getFrame() {
         // Always return the first frame if we haven't started yet.
         if (!_isStarted) {
-            return _frames.at(0);
+            return &_frames.at(0);
         }
 
         long elapsed = Util::now() - _startTime;
 
         // Always show the last frame after the animation has ended.
         if (elapsed >= _durationMs) {
-            Frame* result = _frames.back();
-            return result;
+            return  &_frames.back();
         } else {
-            return _frames.at(_function(elapsed, _durationMs, _frames.size()));
+            return &_frames.at(_function(elapsed, _durationMs, _frames.size()));
         }
     }
 }

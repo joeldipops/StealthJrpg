@@ -31,6 +31,7 @@ namespace Resources {
     using Resources::AnimationIndex;
     using Resources::SpriteIndex;
     using Resources::Strings;
+    using Util::AssetCache;
 
     // CLASSES ---------------------
 
@@ -614,8 +615,8 @@ namespace Resources {
     const RuneTemplate Resources::Data::SKILL = GetSKILL();
 
     // PARTY MEMBERS -----------------
-    map<AnimationTrigger, pair<vector<Frame*>, EasingType>> getBasicImage(SpriteDefinition* sprite) {
-        return { { AnimationTrigger::IDLE, {{ new Frame(sprite) }, EasingType::LINEAR } }};
+    map<AnimationTrigger, pair<vector<SpriteDefinition*>, EasingType>> getBasicImage(SpriteDefinition* sprite) {
+        return { { AnimationTrigger::IDLE, {{ sprite }, EasingType::LINEAR } }};
     };
 
     PCTemplate GetA() { // "Albert" archetype
@@ -632,7 +633,7 @@ namespace Resources {
         result.MemberCode = PartyMemberCode::A;
 
         result.Animations = {
-            { AnimationTrigger::IDLE, {{ new Frame(&SpriteIndex::KID_SOUTH_0)}, EasingType::LINEAR }},
+            { AnimationTrigger::IDLE, {{ &SpriteIndex::KID_SOUTH_0 }, EasingType::LINEAR }},
             { AnimationTrigger::NORTH_MOVE, { AnimationIndex::KID_NORTH, EasingType::LINEAR }},
             { AnimationTrigger::SOUTH_MOVE, { AnimationIndex::KID_SOUTH, EasingType::LINEAR }},
             { AnimationTrigger::EAST_MOVE, { AnimationIndex::KID_EAST, EasingType::LINEAR }},
@@ -657,7 +658,7 @@ namespace Resources {
         result.MemberCode = PartyMemberCode::B;
 
         result.Animations = {
-            { AnimationTrigger::IDLE, {{ new Frame(&SpriteIndex::KID_SOUTH_0)}, EasingType::LINEAR }},
+            { AnimationTrigger::IDLE, {{ &SpriteIndex::KID_SOUTH_0 }, EasingType::LINEAR }},
             { AnimationTrigger::NORTH_MOVE, { AnimationIndex::KID_NORTH, EasingType::LINEAR }},
             { AnimationTrigger::SOUTH_MOVE, { AnimationIndex::KID_SOUTH, EasingType::LINEAR }},
             { AnimationTrigger::EAST_MOVE, { AnimationIndex::KID_EAST, EasingType::LINEAR }},
@@ -683,7 +684,7 @@ namespace Resources {
         result.MemberCode = PartyMemberCode::C;
 
         result.Animations = {
-            { AnimationTrigger::IDLE, {{ new Frame(&SpriteIndex::KID_SOUTH_0)}, EasingType::LINEAR }},
+            { AnimationTrigger::IDLE, {{ &SpriteIndex::KID_SOUTH_0 }, EasingType::LINEAR }},
             { AnimationTrigger::NORTH_MOVE, { AnimationIndex::KID_NORTH, EasingType::LINEAR }},
             { AnimationTrigger::SOUTH_MOVE, { AnimationIndex::KID_SOUTH, EasingType::LINEAR }},
             { AnimationTrigger::EAST_MOVE, { AnimationIndex::KID_EAST, EasingType::LINEAR }},
@@ -808,7 +809,7 @@ namespace Resources {
         data.Map->party()->addRunes(runes);
         data.Message = "Woo, you picked up a bunch of runes!";
 
-        MapCell cell(Data::Grass);
+        MapCell cell(Data::Grass, data.Map->assets());
         data.Map->setCell(context->x(), context->y(), &cell);
         return data;
     }

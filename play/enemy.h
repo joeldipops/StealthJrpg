@@ -12,7 +12,7 @@ namespace Play {
 
     class Enemy : public NPC {
         public:
-            Enemy(const Resources::EnemyTemplate&);
+            Enemy(const Resources::EnemyTemplate&, Util::AssetCache*);
             bool aiMove(GameMap&);
             void aiAct(BattleField&);
             PlayStateContainer& onInspect(PlayStateContainer&);

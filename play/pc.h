@@ -9,7 +9,7 @@
 namespace Play {
     class PC : public Mob {
         public:
-            PC(const Resources::PCTemplate&);
+            PC(const Resources::PCTemplate&, Util::AssetCache*);
             ~PC(void);
             natural spellSlots(void) const;
             natural runeSlots(void) const;
